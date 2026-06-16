@@ -1,83 +1,121 @@
+import csv
 from datetime import datetime, date
 
 
 class Person:
-    # Liste der erlaubten Rollen zur Validierung
+    # 1. Klassenvariablen
     ERLAUBTE_ROLLEN = ["Athlet", "Trainer"]
+    _alle_personen = []  # Hier werden alle erstellten Personen-Objekte gesammelt
 
     def __init__(self, vorname: str, nachname: str, geburtsdatum: str, nationalitaet: str, rolle: str):
-        self._vorname = vorname
-        self._nachname = nachname
-        self._geburtsdatum = datetime.strptime(geburtsdatum, "%d.%m.%Y").date()
-        self._nationalitaet = nationalitaet
+        self.vorname = vorname
+        self.nachname = nachname
+        self.geburtsdatum = datetime.strptime(geburtsdatum, "%d.%m.%Y").date()
+        self.nationalitaet = nationalitaet
 
-        # Zusatzattribute
-        self._spezialisierung = []
-        self._erfolge = []
+        self.spezialisierung = []
+        self.erfolge = []
 
         self.set_role(rolle)
 
+        # Jedes Mal, wenn ein Objekt erstellt wird, registriert es sich in der Gesamtliste
+        Person._alle_personen.append(self)
+
+    # --- BESTEHENDE GETTER / SETTER ---
     def get_role(self) -> str:
-        """Gibt den aktuellen Wert der Rolle zurück."""
         return self._rolle
 
-    # --- KLASSISCHER SETTER ---
     def set_role(self, neue_rolle: str):
-        """Überprüft die neue Rolle und setzt sie, wenn sie gültig ist."""
-        # .strip().title() entfernt Leerzeichen und sorgt für Großschreibung des ersten Buchstabens
         formatierte_rolle = neue_rolle.strip().title()
-
         if formatierte_rolle not in Person.ERLAUBTE_ROLLEN:
-            raise ValueError(f"Ungültige Rolle '{neue_rolle}'. Erlaubt sind nur: {', '.join(Person.ERLAUBTE_ROLLEN)}")
-
-        # Zuweisung an das geschützte Attribut
+            raise ValueError(f"Ungültige Rolle '{neue_rolle}'. Erlaubt sind: {', '.join(Person.ERLAUBTE_ROLLEN)}")
         self._rolle = formatierte_rolle
 
-    # --- WEITERE HILFSMETHODEN ---
     def get_vollname(self) -> str:
-        return f"{self._vorname} {self._nachname}"
+        return f"{self.vorname} {self.nachname}"
 
     def get_alter(self) -> int:
         heute = date.today()
         return (
             heute.year
-            - self._geburtsdatum.year
-            - ((heute.month, heute.day) < (self._geburtsdatum.month, self._geburtsdatum.day))
+            - self.geburtsdatum.year
+            - ((heute.month, heute.day) < (self.geburtsdatum.month, self.geburtsdatum.day))
         )
 
     def spezialisierung_hinzufuegen(self, disziplin: str):
-        self._spezialisierung.append(disziplin)
+        self.spezialisierung.append(disziplin)
 
     def erfolg_eintragen(self, erfolg: str):
-        self._erfolge.append(erfolg)
+        self.erfolge.append(erfolg)
 
+    # --- NEU: GET-LISTEN FÜR ATHLETEN & TRAINER (Klassenmethoden) ---
+    @classmethod
+    def get_athleten(cls):
+        """Gibt eine Liste aller Objekte zurück, die die Rolle 'Athlet' haben."""
+        return [p for p in cls._alle_personen if p.get_role() == "Athlet"]
+
+    @classmethod
+    def get_trainer(cls):
+        """Gibt eine Liste aller Objekte zurück, die die Rolle 'Trainer' haben."""
+        return [p for p in cls._alle_personen if p.get_role() == "Trainer"]
+
+    # --- NEU: STATISCHE METHODE ZUM EINLESEN DER CSV ---
+    @staticmethod
+    def load_data_from_csv(dateiname: str):
+        """Liest eine CSV-Datei ein und erstellt automatisch die Personen-Objekte."""
+        dateipfad = f"data/{dateiname}"  # csv dateien sind immer im data ordner abgelegt
+        try:
+            with open(dateipfad, mode="r", encoding="utf-8") as file:
+                # DictReader nutzt die erste Zeile der CSV automatisch als Key-Namen
+                reader = csv.DictReader(file, delimiter=";")
+                for row in reader:
+                    # Objekt instanziieren
+                    person = Person(
+                        vorname=row["Vorname"],
+                        nachname=row["Nachname"],
+                        geburtsdatum=row["Geburtsdatum"],
+                        nationalitaet=row["Nationalitaet"],
+                        rolle=row["Rolle"],
+                    )
+                    # Optionale Zusatzattribute befüllen
+                    if row.get("Spezialisierung"):
+                        person.spezialisierung_hinzufuegen(row["Spezialisierung"])
+                    if row.get("Erfolge_Lizenzen"):
+                        person.erfolg_eintragen(row["Erfolge_Lizenzen"])
+            print(f"Erfolgreich: Daten aus '{dateipfad}' wurden geladen.")
+        except FileNotFoundError:
+            print(f"Fehler: Die Datei '{dateipfad}' wurde nicht gefunden.")
+
+    # --- STECKBRIEF ---
     def steckbrief_anzeigen(self):
-        trenner = "-" * 30  # trennt Zeilen
-        print(f"\n{trenner}\nPROFIL: {self.get_vollname().upper()}\n{trenner}")  # Überschrift Großbuchstaben
-
+        trenner = "-" * 30
+        print(f"\n{trenner}\nPROFIL: {self.get_vollname().upper()}\n{trenner}")
         print(f"Rolle:          {self.get_role()}")
-        print(f"Alter:          {self.get_alter()} Jahre ({self._geburtsdatum.strftime('%d.%m.%Y')})")
-        print(f"Nationalität:   {self._nationalitaet}")
-        print(f"Disziplin:      {', '.join(self._spezialisierung) if self._spezialisierung else 'Keine Angabe'}")
+        print(f"Alter:          {self.get_alter()} Jahre ({self.geburtsdatum.strftime('%d.%m.%Y')})")
+        print(f"Nationalität:   {self.nationalitaet}")
+        print(f"Fokus:          {', '.join(self.spezialisierung) if self.spezialisierung else 'Keine Angabe'}")
         print(trenner)
 
 
-# --- Testlauf der get/set-Variante ---
+# --- Anwendungsbeispiel ---
 if __name__ == "__main__":
-    # 1. Person erstellen (Rolle wird klein übergeben, der Setter korrigiert es)
-    triathlet = Person("Jan", "Frodeno", "18.08.1981", "Deutsch", "athlet")
+    Person.load_data_from_csv("triathlon_personen.csv")
 
-    # Rolle ausgeben mit get_role()
-    print(f"Erstellte Rolle für Jan: {triathlet.get_role()}")
+    alle_athleten = Person.get_athleten()
+    alle_trainer = Person.get_trainer()
 
-    # 2. Rolle ändern mit set_role()
-    print("\nJan Frodeno wird nun Trainer...")
-    triathlet.set_role("Trainer")
-    triathlet.steckbrief_anzeigen()
+    # Test-Ausgabe: Wie viele wurden geladen?
+    print(f"\nGeladene Athleten: {len(alle_athleten)}")
+    print(f"Geladene Trainer:  {len(alle_trainer)}")
 
-    # 3. Fehlerhafter Versuch einer Falscheingabe
-    print("\nVersuch, eine ungültige Rolle zu setzen:")
-    try:
-        triathlet.set_role("Manager")
-    except ValueError as e:
-        print(f"Fehler erfolgreich abgefangen: {e}")
+    # Kurzsteckbriefe aller Athleten anzeigen
+    print("\n--- ZEIGE ALLE ATHLETEN ---")
+    for athlet in alle_athleten:
+        print(
+            f"- {athlet.get_vollname()} ({athlet.get_alter()} Jahre, {athlet.nationalitaet if hasattr(athlet, 'nationalitaet') else 'K.A.'})"
+        )
+
+    # Steckbrief von Trainer Dan Lorang anzeigen
+    print("\n--- TRAINER PROFILE ---")
+    for trainer in alle_trainer:
+        trainer.steckbrief_anzeigen()
