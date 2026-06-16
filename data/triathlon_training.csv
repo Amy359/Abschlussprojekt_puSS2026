@@ -1,193 +1,385 @@
-﻿Datum;Athlet;Wochentag;Einheit_Des_Tages;Aktivität;Dauer_Minuten;Distanz_km;Fokus;Ø_Herzfrequenz;Max_Herzfrequenz;Kalorienverbrauch;Gefühl;Schmerzen_Beschwerden;Kommentar
-2026-06-01;Jan Frodeno;Montag;Einheit 1;Schwimmen;65;4.4;Intervalle;155;173;752;Sehr gut;Keine;Intervalle-Training im Pool.
-2026-06-01;Jan Frodeno;Montag;Einheit 2;Schwimmen;83;3.4;Intervalle;153;178;883;Müde;Leicht (Schulter);Intervalle-Training im Pool.
-2026-06-02;Jan Frodeno;Dienstag;Einheit 1;Laufen;59;10.6;Tempolauf;144;166;734;Sehr gut;Keine;Tempolauf Session.
-2026-06-02;Jan Frodeno;Dienstag;Einheit 2;Radfahren;60;29.1;Intervalle;135;167;710;Normal;Leicht (Achillessehne);Intervalle auf dem Rad.
-2026-06-03;Jan Frodeno;Mittwoch;Einheit 1;Radfahren;119;60.3;Kraftausdauer;141;170;1612;Normal;Keine;Kraftausdauer auf dem Rad.
-2026-06-03;Jan Frodeno;Mittwoch;Einheit 2;Schwimmen;80;2.7;Intervalle;149;166;753;Normal;Leicht (Knie);Intervalle-Training im Pool.
-2026-06-04;Jan Frodeno;Donnerstag;Einheit 1;Schwimmen;90;2.9;Ausdauer;148;166;834;Müde;Mittel (Knie);Ausdauer-Training im Pool.
-2026-06-04;Jan Frodeno;Donnerstag;Einheit 2;Schwimmen;72;4.0;Intervalle;154;179;837;Müde;Mittel (Achillessehne);Intervalle-Training im Pool.
-2026-06-05;Jan Frodeno;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Leicht (Regeneration);Geplante Regeneration.
-2026-06-06;Jan Frodeno;Samstag;Einheit 1;Laufen;53;11.3;Long Run;157;183;744;Sehr gut;Keine;Long Run Session.
-2026-06-06;Jan Frodeno;Samstag;Einheit 2;Laufen;52;11.9;Tempolauf;164;191;732;Sehr gut;Keine;Tempolauf Session.
-2026-06-07;Jan Frodeno;Sonntag;Einheit 1;Laufen;129;26.5;Long Run;146;177;1796;Gut;Keine;Long Run Session.
-2026-06-08;Jan Frodeno;Montag;Einheit 1;Schwimmen;85;3.1;Intervalle;150;175;947;Normal;Leicht (Knie);Intervalle-Training im Pool.
-2026-06-08;Jan Frodeno;Montag;Einheit 2;Laufen;57;12.1;Intervalle;162;186;798;Müde;Mittel (Oberschenkel);Intervalle Session.
-2026-06-09;Jan Frodeno;Dienstag;Einheit 1;Radfahren;87;40.9;Grundlagenausdauer;133;148;960;Gut;Keine;Grundlagenausdauer auf dem Rad.
-2026-06-09;Jan Frodeno;Dienstag;Einheit 2;Laufen;73;16.7;Long Run;157;183;981;Gut;Keine;Long Run Session.
-2026-06-10;Jan Frodeno;Mittwoch;Einheit 1;Radfahren;104;50.2;Kraftausdauer;140;157;1480;Sehr gut;Keine;Kraftausdauer auf dem Rad.
-2026-06-10;Jan Frodeno;Mittwoch;Einheit 2;Radfahren;80;41.1;Kraftausdauer;128;155;1020;Normal;Leicht (Schulter);Kraftausdauer auf dem Rad.
-2026-06-11;Jan Frodeno;Donnerstag;Einheit 1;Radfahren;119;61.6;Grundlagenausdauer;140;158;1756;Normal;Leicht (Achillessehne);Grundlagenausdauer auf dem Rad.
-2026-06-11;Jan Frodeno;Donnerstag;Einheit 2;Radfahren;83;38.5;Grundlagenausdauer;138;165;961;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
-2026-06-12;Jan Frodeno;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Leicht (Regeneration);Geplante Regeneration.
-2026-06-13;Jan Frodeno;Samstag;Einheit 1;Schwimmen;45;3.5;Ausdauer;137;165;487;Gut;Keine;Ausdauer-Training im Pool.
-2026-06-13;Jan Frodeno;Samstag;Einheit 2;Schwimmen;52;2.1;Intervalle;152;183;617;Normal;Keine;Intervalle-Training im Pool.
-2026-06-14;Jan Frodeno;Sonntag;Einheit 1;Schwimmen;45;3.7;Ausdauer;153;175;508;Müde;Leicht (Oberschenkel);Ausdauer-Training im Pool.
+Datum;Athlet;Wochentag;Einheit_Des_Tages;Aktivität;Dauer_Minuten;Distanz_km;Fokus;Ø_Herzfrequenz;Max_Herzfrequenz;Kalorienverbrauch;Gefühl;Schmerzen_Beschwerden;Kommentar
 2026-06-01;Anne Haug;Montag;Einheit 1;Laufen;68;14.5;Tempolauf;157;185;975;Normal;Keine;Tempolauf Session.
 2026-06-01;Anne Haug;Montag;Einheit 2;Schwimmen;71;2.4;Intervalle;139;169;805;Normal;Keine;Intervalle-Training im Pool.
-2026-06-02;Anne Haug;Dienstag;Einheit 1;Laufen;58;13.3;Long Run;158;187;883;Müde;Mittel (Achillessehne);Long Run Session.
-2026-06-02;Anne Haug;Dienstag;Einheit 2;Schwimmen;51;4.2;Ausdauer;136;168;586;Normal;Leicht (Achillessehne);Ausdauer-Training im Pool.
-2026-06-03;Anne Haug;Mittwoch;Einheit 1;Schwimmen;46;3.2;Intervalle;144;176;476;Sehr gut;Keine;Intervalle-Training im Pool.
-2026-06-03;Anne Haug;Mittwoch;Einheit 2;Radfahren;120;58.8;Kraftausdauer;130;161;1393;Gut;Keine;Kraftausdauer auf dem Rad.
-2026-06-04;Anne Haug;Donnerstag;Einheit 1;Radfahren;99;47.7;Kraftausdauer;132;159;1357;Sehr gut;Keine;Kraftausdauer auf dem Rad.
-2026-06-04;Anne Haug;Donnerstag;Einheit 2;Laufen;57;10.9;Lockerer Lauf;147;175;694;Sehr gut;Keine;Lockerer Lauf Session.
-2026-06-05;Anne Haug;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
-2026-06-06;Anne Haug;Samstag;Einheit 1;Radfahren;232;107.5;Grundlagenausdauer;125;149;2671;Gut;Keine;Grundlagenausdauer auf dem Rad.
-2026-06-06;Anne Haug;Samstag;Einheit 2;Laufen;73;13.8;Tempolauf;147;163;989;Müde;Mittel (Unterer Rücken);Tempolauf Session.
-2026-06-07;Anne Haug;Sonntag;Einheit 1;Laufen;116;26.9;Long Run;154;185;1533;Normal;Leicht (Achillessehne);Long Run Session.
-2026-06-08;Anne Haug;Montag;Einheit 1;Schwimmen;61;3.2;Ausdauer;148;169;601;Gut;Leicht (Wade);Ausdauer-Training im Pool.
-2026-06-08;Anne Haug;Montag;Einheit 2;Radfahren;93;44.7;Kraftausdauer;141;171;1319;Normal;Leicht (Achillessehne);Kraftausdauer auf dem Rad.
-2026-06-09;Anne Haug;Dienstag;Einheit 1;Schwimmen;58;2.0;Technik;137;165;674;Normal;Keine;Technik-Training im Pool.
-2026-06-09;Anne Haug;Dienstag;Einheit 2;Radfahren;94;43.5;Intervalle;125;149;1166;Gut;Keine;Intervalle auf dem Rad.
-2026-06-10;Anne Haug;Mittwoch;Einheit 1;Radfahren;95;46.6;Intervalle;142;160;1127;Normal;Leicht (Achillessehne);Intervalle auf dem Rad.
-2026-06-10;Anne Haug;Mittwoch;Einheit 2;Laufen;69;14.8;Tempolauf;160;189;901;Gut;Keine;Tempolauf Session.
-2026-06-11;Anne Haug;Donnerstag;Einheit 1;Schwimmen;61;4.4;Technik;140;170;568;Sehr gut;Keine;Technik-Training im Pool.
-2026-06-11;Anne Haug;Donnerstag;Einheit 2;Radfahren;106;52.5;Grundlagenausdauer;128;145;1380;Normal;Leicht (Unterer Rücken);Grundlagenausdauer auf dem Rad.
-2026-06-12;Anne Haug;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Leicht (Regeneration);Geplante Regeneration.
-2026-06-13;Anne Haug;Samstag;Einheit 1;Laufen;71;14.0;Lockerer Lauf;152;178;897;Normal;Keine;Lockerer Lauf Session.
-2026-06-13;Anne Haug;Samstag;Einheit 2;Schwimmen;45;4.2;Ausdauer;143;171;460;Sehr gut;Keine;Ausdauer-Training im Pool.
-2026-06-14;Anne Haug;Sonntag;Einheit 1;Schwimmen;51;2.1;Technik;138;157;473;Normal;Keine;Technik-Training im Pool.
-2026-06-01;Patrick Lange;Montag;Einheit 1;Radfahren;109;53.7;Kraftausdauer;145;162;1510;Sehr gut;Keine;Kraftausdauer auf dem Rad.
-2026-06-01;Patrick Lange;Montag;Einheit 2;Radfahren;80;37.2;Intervalle;139;154;1016;Sehr gut;Keine;Intervalle auf dem Rad.
-2026-06-02;Patrick Lange;Dienstag;Einheit 1;Laufen;56;11.4;Intervalle;168;197;751;Müde;Leicht (Schulter);Intervalle Session.
-2026-06-02;Patrick Lange;Dienstag;Einheit 2;Schwimmen;63;2.8;Intervalle;138;159;623;Müde;Leicht (Oberschenkel);Intervalle-Training im Pool.
-2026-06-03;Patrick Lange;Mittwoch;Einheit 1;Radfahren;97;47.3;Grundlagenausdauer;135;167;1143;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
-2026-06-03;Patrick Lange;Mittwoch;Einheit 2;Laufen;48;10.4;Tempolauf;145;168;583;Normal;Leicht (Unterer Rücken);Tempolauf Session.
-2026-06-04;Patrick Lange;Donnerstag;Einheit 1;Laufen;65;11.8;Intervalle;160;179;812;Müde;Mittel (Wade);Intervalle Session.
-2026-06-04;Patrick Lange;Donnerstag;Einheit 2;Radfahren;84;42.4;Grundlagenausdauer;132;151;1184;Gut;Keine;Grundlagenausdauer auf dem Rad.
-2026-06-05;Patrick Lange;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Leicht (Regeneration);Geplante Regeneration.
-2026-06-06;Patrick Lange;Samstag;Einheit 1;Laufen;45;10.5;Long Run;167;186;566;Sehr gut;Keine;Long Run Session.
-2026-06-06;Patrick Lange;Samstag;Einheit 2;Schwimmen;62;3.2;Intervalle;143;174;736;Gut;Keine;Intervalle-Training im Pool.
-2026-06-07;Patrick Lange;Sonntag;Einheit 1;Laufen;127;23.5;Long Run;147;175;1804;Normal;Keine;Long Run Session.
-2026-06-08;Patrick Lange;Montag;Einheit 1;Radfahren;100;50.3;Intervalle;135;154;1122;Sehr gut;Keine;Intervalle auf dem Rad.
-2026-06-08;Patrick Lange;Montag;Einheit 2;Laufen;52;9.5;Long Run;149;173;765;Gut;Keine;Long Run Session.
-2026-06-09;Patrick Lange;Dienstag;Einheit 1;Laufen;73;16.2;Long Run;153;180;1153;Gut;Leicht (Oberschenkel);Long Run Session.
-2026-06-09;Patrick Lange;Dienstag;Einheit 2;Laufen;71;14.2;Intervalle;148;169;958;Müde;Leicht (Achillessehne);Intervalle Session.
-2026-06-10;Patrick Lange;Mittwoch;Einheit 1;Laufen;59;13.8;Long Run;163;190;845;Gut;Keine;Long Run Session.
-2026-06-10;Patrick Lange;Mittwoch;Einheit 2;Schwimmen;85;2.4;Ausdauer;135;161;1007;Müde;Leicht (Unterer Rücken);Ausdauer-Training im Pool.
-2026-06-11;Patrick Lange;Donnerstag;Einheit 1;Schwimmen;85;2.2;Technik;146;161;904;Normal;Leicht (Schulter);Technik-Training im Pool.
-2026-06-11;Patrick Lange;Donnerstag;Einheit 2;Schwimmen;90;2.3;Intervalle;135;160;954;Normal;Leicht (Unterer Rücken);Intervalle-Training im Pool.
-2026-06-12;Patrick Lange;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Leicht (Regeneration);Geplante Regeneration.
-2026-06-13;Patrick Lange;Samstag;Einheit 1;Laufen;46;9.3;Long Run;158;183;701;Gut;Keine;Long Run Session.
-2026-06-13;Patrick Lange;Samstag;Einheit 2;Laufen;48;9.0;Lockerer Lauf;154;183;640;Normal;Keine;Lockerer Lauf Session.
-2026-06-14;Patrick Lange;Sonntag;Einheit 1;Radfahren;62;30.5;Intervalle;131;150;722;Normal;Keine;Intervalle auf dem Rad.
-2026-06-01;Lucy Charles-Barclay;Montag;Einheit 1;Radfahren;94;44.7;Kraftausdauer;137;165;1104;Sehr gut;Keine;Kraftausdauer auf dem Rad.
-2026-06-01;Lucy Charles-Barclay;Montag;Einheit 2;Laufen;65;15.4;Long Run;153;178;991;Gut;Leicht (Achillessehne);Long Run Session.
-2026-06-02;Lucy Charles-Barclay;Dienstag;Einheit 1;Laufen;61;11.6;Lockerer Lauf;159;181;767;Sehr gut;Keine;Lockerer Lauf Session.
-2026-06-02;Lucy Charles-Barclay;Dienstag;Einheit 2;Schwimmen;77;4.2;Intervalle;155;172;870;Normal;Leicht (Schulter);Intervalle-Training im Pool.
-2026-06-03;Lucy Charles-Barclay;Mittwoch;Einheit 1;Schwimmen;68;2.5;Ausdauer;139;155;734;Gut;Leicht (Oberschenkel);Ausdauer-Training im Pool.
-2026-06-03;Lucy Charles-Barclay;Mittwoch;Einheit 2;Schwimmen;51;3.2;Ausdauer;137;157;517;Normal;Keine;Ausdauer-Training im Pool.
-2026-06-04;Lucy Charles-Barclay;Donnerstag;Einheit 1;Laufen;48;10.0;Intervalle;157;186;599;Gut;Keine;Intervalle Session.
-2026-06-04;Lucy Charles-Barclay;Donnerstag;Einheit 2;Radfahren;103;53.0;Kraftausdauer;136;166;1167;Sehr gut;Keine;Kraftausdauer auf dem Rad.
-2026-06-05;Lucy Charles-Barclay;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
-2026-06-06;Lucy Charles-Barclay;Samstag;Einheit 1;Radfahren;189;88.6;Grundlagenausdauer;132;151;2206;Müde;Leicht (Unterer Rücken);Grundlagenausdauer auf dem Rad.
-2026-06-06;Lucy Charles-Barclay;Samstag;Einheit 2;Laufen;62;12.4;Intervalle;165;196;906;Müde;Leicht (Oberschenkel);Intervalle Session.
-2026-06-07;Lucy Charles-Barclay;Sonntag;Einheit 1;Radfahren;80;37.1;Grundlagenausdauer;139;166;950;Normal;Leicht (Wade);Grundlagenausdauer auf dem Rad.
-2026-06-08;Lucy Charles-Barclay;Montag;Einheit 1;Radfahren;86;41.0;Intervalle;129;161;1097;Gut;Keine;Intervalle auf dem Rad.
-2026-06-08;Lucy Charles-Barclay;Montag;Einheit 2;Radfahren;77;39.2;Kraftausdauer;135;162;929;Müde;Mittel (Oberschenkel);Kraftausdauer auf dem Rad.
-2026-06-09;Lucy Charles-Barclay;Dienstag;Einheit 1;Radfahren;69;34.1;Intervalle;132;152;850;Gut;Keine;Intervalle auf dem Rad.
-2026-06-09;Lucy Charles-Barclay;Dienstag;Einheit 2;Laufen;69;13.5;Lockerer Lauf;160;190;954;Müde;Mittel (Wade);Lockerer Lauf Session.
-2026-06-10;Lucy Charles-Barclay;Mittwoch;Einheit 1;Radfahren;61;30.5;Intervalle;138;158;753;Müde;Mittel (Schulter);Intervalle auf dem Rad.
-2026-06-10;Lucy Charles-Barclay;Mittwoch;Einheit 2;Laufen;72;14.8;Tempolauf;162;191;959;Müde;Mittel (Schulter);Tempolauf Session.
-2026-06-11;Lucy Charles-Barclay;Donnerstag;Einheit 1;Laufen;50;9.8;Lockerer Lauf;164;182;650;Normal;Keine;Lockerer Lauf Session.
-2026-06-11;Lucy Charles-Barclay;Donnerstag;Einheit 2;Laufen;65;14.9;Long Run;167;182;903;Müde;Mittel (Achillessehne);Long Run Session.
-2026-06-12;Lucy Charles-Barclay;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Leicht (Regeneration);Geplante Regeneration.
-2026-06-13;Lucy Charles-Barclay;Samstag;Einheit 1;Radfahren;151;68.3;Grundlagenausdauer;132;164;2045;Normal;Keine;Grundlagenausdauer auf dem Rad.
-2026-06-13;Lucy Charles-Barclay;Samstag;Einheit 2;Radfahren;61;30.8;Grundlagenausdauer;141;156;738;Normal;Keine;Grundlagenausdauer auf dem Rad.
-2026-06-14;Lucy Charles-Barclay;Sonntag;Einheit 1;Schwimmen;80;2.5;Intervalle;135;161;955;Gut;Leicht (Schulter);Intervalle-Training im Pool.
-2026-06-01;Kristian Blummenfelt;Montag;Einheit 1;Radfahren;74;34.4;Kraftausdauer;130;162;1022;Sehr gut;Keine;Kraftausdauer auf dem Rad.
-2026-06-01;Kristian Blummenfelt;Montag;Einheit 2;Laufen;58;10.8;Tempolauf;150;171;913;Sehr gut;Keine;Tempolauf Session.
-2026-06-02;Kristian Blummenfelt;Dienstag;Einheit 1;Schwimmen;80;3.3;Intervalle;142;160;957;Müde;Mittel (Unterer Rücken);Intervalle-Training im Pool.
-2026-06-02;Kristian Blummenfelt;Dienstag;Einheit 2;Laufen;66;13.2;Intervalle;152;184;952;Normal;Keine;Intervalle Session.
-2026-06-03;Kristian Blummenfelt;Mittwoch;Einheit 1;Radfahren;116;59.0;Kraftausdauer;126;150;1574;Gut;Keine;Kraftausdauer auf dem Rad.
-2026-06-03;Kristian Blummenfelt;Mittwoch;Einheit 2;Schwimmen;75;2.6;Ausdauer;149;181;719;Normal;Keine;Ausdauer-Training im Pool.
-2026-06-04;Kristian Blummenfelt;Donnerstag;Einheit 1;Laufen;71;14.1;Long Run;160;183;867;Müde;Leicht (Knie);Long Run Session.
-2026-06-04;Kristian Blummenfelt;Donnerstag;Einheit 2;Schwimmen;86;3.3;Intervalle;152;170;971;Normal;Keine;Intervalle-Training im Pool.
-2026-06-05;Kristian Blummenfelt;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Leicht (Regeneration);Geplante Regeneration.
-2026-06-06;Kristian Blummenfelt;Samstag;Einheit 1;Radfahren;228;104.0;Grundlagenausdauer;141;161;3396;Normal;Keine;Grundlagenausdauer auf dem Rad.
-2026-06-06;Kristian Blummenfelt;Samstag;Einheit 2;Radfahren;80;37.9;Intervalle;130;161;904;Gut;Keine;Intervalle auf dem Rad.
-2026-06-07;Kristian Blummenfelt;Sonntag;Einheit 1;Radfahren;120;58.4;Intervalle;137;154;1622;Gut;Keine;Intervalle auf dem Rad.
-2026-06-08;Kristian Blummenfelt;Montag;Einheit 1;Schwimmen;74;2.5;Technik;151;171;855;Gut;Keine;Technik-Training im Pool.
-2026-06-08;Kristian Blummenfelt;Montag;Einheit 2;Laufen;51;11.6;Intervalle;164;181;711;Normal;Leicht (Knie);Intervalle Session.
-2026-06-09;Kristian Blummenfelt;Dienstag;Einheit 1;Radfahren;101;49.2;Kraftausdauer;142;165;1187;Gut;Keine;Kraftausdauer auf dem Rad.
-2026-06-09;Kristian Blummenfelt;Dienstag;Einheit 2;Laufen;49;11.2;Tempolauf;167;183;716;Sehr gut;Keine;Tempolauf Session.
-2026-06-10;Kristian Blummenfelt;Mittwoch;Einheit 1;Laufen;72;14.2;Lockerer Lauf;151;169;1135;Gut;Keine;Lockerer Lauf Session.
-2026-06-10;Kristian Blummenfelt;Mittwoch;Einheit 2;Schwimmen;62;3.7;Intervalle;139;163;643;Gut;Keine;Intervalle-Training im Pool.
-2026-06-11;Kristian Blummenfelt;Donnerstag;Einheit 1;Laufen;46;10.2;Tempolauf;155;187;669;Müde;Mittel (Wade);Tempolauf Session.
-2026-06-11;Kristian Blummenfelt;Donnerstag;Einheit 2;Laufen;75;14.9;Lockerer Lauf;158;187;1009;Sehr gut;Keine;Lockerer Lauf Session.
-2026-06-12;Kristian Blummenfelt;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
-2026-06-13;Kristian Blummenfelt;Samstag;Einheit 1;Radfahren;237;119.0;Grundlagenausdauer;129;156;3460;Gut;Leicht (Wade);Grundlagenausdauer auf dem Rad.
-2026-06-13;Kristian Blummenfelt;Samstag;Einheit 2;Laufen;61;12.7;Lockerer Lauf;143;164;755;Normal;Leicht (Schulter);Lockerer Lauf Session.
-2026-06-14;Kristian Blummenfelt;Sonntag;Einheit 1;Radfahren;108;49.8;Grundlagenausdauer;131;159;1563;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
-2026-06-01;Gustav Iden;Montag;Einheit 1;Radfahren;102;47.3;Kraftausdauer;130;148;1220;Müde;Mittel (Wade);Kraftausdauer auf dem Rad.
-2026-06-01;Gustav Iden;Montag;Einheit 2;Schwimmen;68;3.3;Technik;148;175;759;Müde;Leicht (Wade);Technik-Training im Pool.
-2026-06-02;Gustav Iden;Dienstag;Einheit 1;Radfahren;105;54.4;Grundlagenausdauer;145;173;1465;Müde;Mittel (Wade);Grundlagenausdauer auf dem Rad.
-2026-06-02;Gustav Iden;Dienstag;Einheit 2;Schwimmen;58;2.5;Intervalle;137;161;583;Gut;Keine;Intervalle-Training im Pool.
-2026-06-03;Gustav Iden;Mittwoch;Einheit 1;Schwimmen;56;3.6;Technik;141;165;655;Müde;Leicht (Achillessehne);Technik-Training im Pool.
-2026-06-03;Gustav Iden;Mittwoch;Einheit 2;Schwimmen;80;3.6;Technik;155;187;909;Normal;Keine;Technik-Training im Pool.
-2026-06-04;Gustav Iden;Donnerstag;Einheit 1;Laufen;56;10.1;Long Run;158;190;775;Normal;Keine;Long Run Session.
-2026-06-04;Gustav Iden;Donnerstag;Einheit 2;Radfahren;91;41.6;Grundlagenausdauer;129;149;1204;Normal;Keine;Grundlagenausdauer auf dem Rad.
-2026-06-05;Gustav Iden;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
-2026-06-06;Gustav Iden;Samstag;Einheit 1;Radfahren;198;97.5;Grundlagenausdauer;143;159;2216;Normal;Leicht (Oberschenkel);Grundlagenausdauer auf dem Rad.
-2026-06-06;Gustav Iden;Samstag;Einheit 2;Radfahren;103;49.7;Grundlagenausdauer;136;160;1357;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
-2026-06-07;Gustav Iden;Sonntag;Einheit 1;Radfahren;78;35.5;Grundlagenausdauer;126;141;879;Müde;Leicht (Achillessehne);Grundlagenausdauer auf dem Rad.
-2026-06-08;Gustav Iden;Montag;Einheit 1;Laufen;48;10.9;Long Run;167;193;686;Müde;Mittel (Achillessehne);Long Run Session.
-2026-06-08;Gustav Iden;Montag;Einheit 2;Laufen;60;11.4;Lockerer Lauf;152;174;752;Sehr gut;Keine;Lockerer Lauf Session.
-2026-06-09;Gustav Iden;Dienstag;Einheit 1;Radfahren;65;31.7;Grundlagenausdauer;133;161;719;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
-2026-06-09;Gustav Iden;Dienstag;Einheit 2;Laufen;47;10.5;Lockerer Lauf;152;174;698;Normal;Keine;Lockerer Lauf Session.
-2026-06-10;Gustav Iden;Mittwoch;Einheit 1;Radfahren;75;37.5;Kraftausdauer;139;171;1032;Müde;Mittel (Unterer Rücken);Kraftausdauer auf dem Rad.
-2026-06-10;Gustav Iden;Mittwoch;Einheit 2;Schwimmen;77;3.0;Ausdauer;150;173;750;Gut;Keine;Ausdauer-Training im Pool.
-2026-06-11;Gustav Iden;Donnerstag;Einheit 1;Radfahren;72;35.4;Grundlagenausdauer;143;158;901;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
-2026-06-11;Gustav Iden;Donnerstag;Einheit 2;Radfahren;120;57.2;Grundlagenausdauer;126;141;1574;Gut;Leicht (Wade);Grundlagenausdauer auf dem Rad.
-2026-06-12;Gustav Iden;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Leicht (Regeneration);Geplante Regeneration.
-2026-06-13;Gustav Iden;Samstag;Einheit 1;Radfahren;180;91.8;Grundlagenausdauer;135;163;2172;Müde;Leicht (Wade);Grundlagenausdauer auf dem Rad.
-2026-06-13;Gustav Iden;Samstag;Einheit 2;Laufen;63;12.7;Lockerer Lauf;158;175;797;Sehr gut;Keine;Lockerer Lauf Session.
-2026-06-14;Gustav Iden;Sonntag;Einheit 1;Laufen;113;25.8;Long Run;160;180;1390;Gut;Keine;Long Run Session.
-2026-06-01;Daniela Ryf;Montag;Einheit 1;Radfahren;85;43.0;Grundlagenausdauer;138;169;1071;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
-2026-06-01;Daniela Ryf;Montag;Einheit 2;Schwimmen;57;2.7;Technik;140;163;602;Normal;Leicht (Wade);Technik-Training im Pool.
-2026-06-02;Daniela Ryf;Dienstag;Einheit 1;Schwimmen;61;4.3;Technik;136;152;588;Sehr gut;Keine;Technik-Training im Pool.
-2026-06-02;Daniela Ryf;Dienstag;Einheit 2;Radfahren;95;43.0;Intervalle;139;154;1364;Sehr gut;Keine;Intervalle auf dem Rad.
-2026-06-03;Daniela Ryf;Mittwoch;Einheit 1;Schwimmen;86;4.4;Intervalle;136;158;849;Gut;Keine;Intervalle-Training im Pool.
-2026-06-03;Daniela Ryf;Mittwoch;Einheit 2;Laufen;47;9.0;Intervalle;151;173;680;Sehr gut;Keine;Intervalle Session.
-2026-06-04;Daniela Ryf;Donnerstag;Einheit 1;Radfahren;119;54.1;Kraftausdauer;142;173;1388;Gut;Leicht (Oberschenkel);Kraftausdauer auf dem Rad.
-2026-06-04;Daniela Ryf;Donnerstag;Einheit 2;Radfahren;112;54.6;Grundlagenausdauer;132;159;1472;Müde;Leicht (Unterer Rücken);Grundlagenausdauer auf dem Rad.
-2026-06-05;Daniela Ryf;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Leicht (Regeneration);Geplante Regeneration.
-2026-06-06;Daniela Ryf;Samstag;Einheit 1;Schwimmen;60;2.0;Technik;147;172;640;Müde;Mittel (Wade);Technik-Training im Pool.
-2026-06-06;Daniela Ryf;Samstag;Einheit 2;Laufen;64;12.2;Tempolauf;147;176;911;Normal;Leicht (Unterer Rücken);Tempolauf Session.
-2026-06-07;Daniela Ryf;Sonntag;Einheit 1;Radfahren;77;38.2;Intervalle;139;171;875;Normal;Leicht (Achillessehne);Intervalle auf dem Rad.
-2026-06-08;Daniela Ryf;Montag;Einheit 1;Schwimmen;53;4.2;Intervalle;142;163;607;Müde;Mittel (Unterer Rücken);Intervalle-Training im Pool.
-2026-06-08;Daniela Ryf;Montag;Einheit 2;Laufen;49;9.3;Intervalle;159;178;610;Sehr gut;Keine;Intervalle Session.
-2026-06-09;Daniela Ryf;Dienstag;Einheit 1;Radfahren;65;31.5;Intervalle;138;168;889;Normal;Leicht (Knie);Intervalle auf dem Rad.
-2026-06-09;Daniela Ryf;Dienstag;Einheit 2;Laufen;75;13.9;Intervalle;163;194;1077;Normal;Leicht (Unterer Rücken);Intervalle Session.
-2026-06-10;Daniela Ryf;Mittwoch;Einheit 1;Schwimmen;52;4.2;Ausdauer;144;160;560;Gut;Keine;Ausdauer-Training im Pool.
-2026-06-10;Daniela Ryf;Mittwoch;Einheit 2;Radfahren;107;48.2;Intervalle;125;142;1323;Gut;Keine;Intervalle auf dem Rad.
-2026-06-11;Daniela Ryf;Donnerstag;Einheit 1;Laufen;59;11.5;Lockerer Lauf;157;189;885;Gut;Keine;Lockerer Lauf Session.
-2026-06-11;Daniela Ryf;Donnerstag;Einheit 2;Laufen;75;14.0;Long Run;146;165;901;Normal;Keine;Long Run Session.
-2026-06-12;Daniela Ryf;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
-2026-06-13;Daniela Ryf;Samstag;Einheit 1;Schwimmen;71;2.1;Ausdauer;154;186;701;Gut;Leicht (Oberschenkel);Ausdauer-Training im Pool.
-2026-06-13;Daniela Ryf;Samstag;Einheit 2;Radfahren;100;45.0;Intervalle;143;167;1148;Gut;Keine;Intervalle auf dem Rad.
-2026-06-14;Daniela Ryf;Sonntag;Einheit 1;Radfahren;88;44.8;Grundlagenausdauer;133;160;1122;Müde;Leicht (Achillessehne);Grundlagenausdauer auf dem Rad.
 2026-06-01;Chrissie Wellington;Montag;Einheit 1;Laufen;75;14.6;Intervalle;165;196;1086;Müde;Leicht (Knie);Intervalle Session.
 2026-06-01;Chrissie Wellington;Montag;Einheit 2;Radfahren;115;58.3;Kraftausdauer;128;155;1546;Sehr gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-01;Daniela Ryf;Montag;Einheit 1;Radfahren;85;43.0;Grundlagenausdauer;138;169;1071;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-01;Daniela Ryf;Montag;Einheit 2;Schwimmen;57;2.7;Technik;140;163;602;Normal;Leicht (Wade);Technik-Training im Pool.
+2026-06-01;Gustav Iden;Montag;Einheit 1;Radfahren;102;47.3;Kraftausdauer;130;148;1220;Müde;Mittel (Wade);Kraftausdauer auf dem Rad.
+2026-06-01;Gustav Iden;Montag;Einheit 2;Schwimmen;68;3.3;Technik;148;175;759;Müde;Leicht (Wade);Technik-Training im Pool.
+2026-06-01;Jan Frodeno;Montag;Einheit 1;Schwimmen;65;4.4;Intervalle;155;173;752;Sehr gut;Keine;Intervalle-Training im Pool.
+2026-06-01;Jan Frodeno;Montag;Einheit 2;Schwimmen;83;3.4;Intervalle;153;178;883;Müde;Leicht (Schulter);Intervalle-Training im Pool.
+2026-06-01;Kristian Blummenfelt;Montag;Einheit 1;Radfahren;74;34.4;Kraftausdauer;130;162;1022;Sehr gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-01;Kristian Blummenfelt;Montag;Einheit 2;Laufen;58;10.8;Tempolauf;150;171;913;Sehr gut;Keine;Tempolauf Session.
+2026-06-01;Lucy Charles-Barclay;Montag;Einheit 1;Radfahren;94;44.7;Kraftausdauer;137;165;1104;Sehr gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-01;Lucy Charles-Barclay;Montag;Einheit 2;Laufen;65;15.4;Long Run;153;178;991;Gut;Leicht (Achillessehne);Long Run Session.
+2026-06-01;Patrick Lange;Montag;Einheit 1;Radfahren;109;53.7;Kraftausdauer;145;162;1510;Sehr gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-01;Patrick Lange;Montag;Einheit 2;Radfahren;80;37.2;Intervalle;139;154;1016;Sehr gut;Keine;Intervalle auf dem Rad.
+2026-06-02;Anne Haug;Dienstag;Einheit 1;Laufen;58;13.3;Long Run;158;187;883;Müde;Mittel (Achillessehne);Long Run Session.
+2026-06-02;Anne Haug;Dienstag;Einheit 2;Schwimmen;51;4.2;Ausdauer;136;168;586;Normal;Leicht (Achillessehne);Ausdauer-Training im Pool.
 2026-06-02;Chrissie Wellington;Dienstag;Einheit 1;Schwimmen;58;2.7;Intervalle;147;172;561;Normal;Leicht (Schulter);Intervalle-Training im Pool.
 2026-06-02;Chrissie Wellington;Dienstag;Einheit 2;Schwimmen;51;3.0;Technik;154;178;510;Müde;Leicht (Knie);Technik-Training im Pool.
+2026-06-02;Daniela Ryf;Dienstag;Einheit 1;Schwimmen;61;4.3;Technik;136;152;588;Sehr gut;Keine;Technik-Training im Pool.
+2026-06-02;Daniela Ryf;Dienstag;Einheit 2;Radfahren;95;43.0;Intervalle;139;154;1364;Sehr gut;Keine;Intervalle auf dem Rad.
+2026-06-02;Gustav Iden;Dienstag;Einheit 1;Radfahren;105;54.4;Grundlagenausdauer;145;173;1465;Müde;Mittel (Wade);Grundlagenausdauer auf dem Rad.
+2026-06-02;Gustav Iden;Dienstag;Einheit 2;Schwimmen;58;2.5;Intervalle;137;161;583;Gut;Keine;Intervalle-Training im Pool.
+2026-06-02;Jan Frodeno;Dienstag;Einheit 1;Laufen;59;10.6;Tempolauf;144;166;734;Sehr gut;Keine;Tempolauf Session.
+2026-06-02;Jan Frodeno;Dienstag;Einheit 2;Radfahren;60;29.1;Intervalle;135;167;710;Normal;Leicht (Achillessehne);Intervalle auf dem Rad.
+2026-06-02;Kristian Blummenfelt;Dienstag;Einheit 1;Schwimmen;80;3.3;Intervalle;142;160;957;Müde;Mittel (Unterer Rücken);Intervalle-Training im Pool.
+2026-06-02;Kristian Blummenfelt;Dienstag;Einheit 2;Laufen;66;13.2;Intervalle;152;184;952;Normal;Keine;Intervalle Session.
+2026-06-02;Lucy Charles-Barclay;Dienstag;Einheit 1;Laufen;61;11.6;Lockerer Lauf;159;181;767;Sehr gut;Keine;Lockerer Lauf Session.
+2026-06-02;Lucy Charles-Barclay;Dienstag;Einheit 2;Schwimmen;77;4.2;Intervalle;155;172;870;Normal;Leicht (Schulter);Intervalle-Training im Pool.
+2026-06-02;Patrick Lange;Dienstag;Einheit 1;Laufen;56;11.4;Intervalle;168;197;751;Müde;Leicht (Schulter);Intervalle Session.
+2026-06-02;Patrick Lange;Dienstag;Einheit 2;Schwimmen;63;2.8;Intervalle;138;159;623;Müde;Leicht (Oberschenkel);Intervalle-Training im Pool.
+2026-06-03;Anne Haug;Mittwoch;Einheit 1;Schwimmen;46;3.2;Intervalle;144;176;476;Sehr gut;Keine;Intervalle-Training im Pool.
+2026-06-03;Anne Haug;Mittwoch;Einheit 2;Radfahren;120;58.8;Kraftausdauer;130;161;1393;Gut;Keine;Kraftausdauer auf dem Rad.
 2026-06-03;Chrissie Wellington;Mittwoch;Einheit 1;Schwimmen;84;2.8;Intervalle;152;172;891;Müde;Mittel (Wade);Intervalle-Training im Pool.
 2026-06-03;Chrissie Wellington;Mittwoch;Einheit 2;Laufen;53;12.3;Intervalle;156;182;687;Normal;Leicht (Oberschenkel);Intervalle Session.
+2026-06-03;Daniela Ryf;Mittwoch;Einheit 1;Schwimmen;86;4.4;Intervalle;136;158;849;Gut;Keine;Intervalle-Training im Pool.
+2026-06-03;Daniela Ryf;Mittwoch;Einheit 2;Laufen;47;9.0;Intervalle;151;173;680;Sehr gut;Keine;Intervalle Session.
+2026-06-03;Gustav Iden;Mittwoch;Einheit 1;Schwimmen;56;3.6;Technik;141;165;655;Müde;Leicht (Achillessehne);Technik-Training im Pool.
+2026-06-03;Gustav Iden;Mittwoch;Einheit 2;Schwimmen;80;3.6;Technik;155;187;909;Normal;Keine;Technik-Training im Pool.
+2026-06-03;Jan Frodeno;Mittwoch;Einheit 1;Radfahren;119;60.3;Kraftausdauer;141;170;1612;Normal;Keine;Kraftausdauer auf dem Rad.
+2026-06-03;Jan Frodeno;Mittwoch;Einheit 2;Schwimmen;80;2.7;Intervalle;149;166;753;Normal;Leicht (Knie);Intervalle-Training im Pool.
+2026-06-03;Kristian Blummenfelt;Mittwoch;Einheit 1;Radfahren;116;59.0;Kraftausdauer;126;150;1574;Gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-03;Kristian Blummenfelt;Mittwoch;Einheit 2;Schwimmen;75;2.6;Ausdauer;149;181;719;Normal;Keine;Ausdauer-Training im Pool.
+2026-06-03;Lucy Charles-Barclay;Mittwoch;Einheit 1;Schwimmen;68;2.5;Ausdauer;139;155;734;Gut;Leicht (Oberschenkel);Ausdauer-Training im Pool.
+2026-06-03;Lucy Charles-Barclay;Mittwoch;Einheit 2;Schwimmen;51;3.2;Ausdauer;137;157;517;Normal;Keine;Ausdauer-Training im Pool.
+2026-06-03;Patrick Lange;Mittwoch;Einheit 1;Radfahren;97;47.3;Grundlagenausdauer;135;167;1143;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-03;Patrick Lange;Mittwoch;Einheit 2;Laufen;48;10.4;Tempolauf;145;168;583;Normal;Leicht (Unterer Rücken);Tempolauf Session.
+2026-06-04;Anne Haug;Donnerstag;Einheit 1;Radfahren;99;47.7;Kraftausdauer;132;159;1357;Sehr gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-04;Anne Haug;Donnerstag;Einheit 2;Laufen;57;10.9;Lockerer Lauf;147;175;694;Sehr gut;Keine;Lockerer Lauf Session.
 2026-06-04;Chrissie Wellington;Donnerstag;Einheit 1;Schwimmen;84;2.8;Technik;148;169;924;Gut;Leicht (Unterer Rücken);Technik-Training im Pool.
 2026-06-04;Chrissie Wellington;Donnerstag;Einheit 2;Radfahren;84;40.7;Intervalle;126;141;1129;Sehr gut;Keine;Intervalle auf dem Rad.
-2026-06-05;Chrissie Wellington;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Leicht (Regeneration);Geplante Regeneration.
+2026-06-04;Daniela Ryf;Donnerstag;Einheit 1;Radfahren;119;54.1;Kraftausdauer;142;173;1388;Gut;Leicht (Oberschenkel);Kraftausdauer auf dem Rad.
+2026-06-04;Daniela Ryf;Donnerstag;Einheit 2;Radfahren;112;54.6;Grundlagenausdauer;132;159;1472;Müde;Leicht (Unterer Rücken);Grundlagenausdauer auf dem Rad.
+2026-06-04;Gustav Iden;Donnerstag;Einheit 1;Laufen;56;10.1;Long Run;158;190;775;Normal;Keine;Long Run Session.
+2026-06-04;Gustav Iden;Donnerstag;Einheit 2;Radfahren;91;41.6;Grundlagenausdauer;129;149;1204;Normal;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-04;Jan Frodeno;Donnerstag;Einheit 1;Schwimmen;90;2.9;Ausdauer;148;166;834;Müde;Mittel (Knie);Ausdauer-Training im Pool.
+2026-06-04;Jan Frodeno;Donnerstag;Einheit 2;Schwimmen;72;4.0;Intervalle;154;179;837;Müde;Mittel (Achillessehne);Intervalle-Training im Pool.
+2026-06-04;Kristian Blummenfelt;Donnerstag;Einheit 1;Laufen;71;14.1;Long Run;160;183;867;Müde;Leicht (Knie);Long Run Session.
+2026-06-04;Kristian Blummenfelt;Donnerstag;Einheit 2;Schwimmen;86;3.3;Intervalle;152;170;971;Normal;Keine;Intervalle-Training im Pool.
+2026-06-04;Lucy Charles-Barclay;Donnerstag;Einheit 1;Laufen;48;10.0;Intervalle;157;186;599;Gut;Keine;Intervalle Session.
+2026-06-04;Lucy Charles-Barclay;Donnerstag;Einheit 2;Radfahren;103;53.0;Kraftausdauer;136;166;1167;Sehr gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-04;Patrick Lange;Donnerstag;Einheit 1;Laufen;65;11.8;Intervalle;160;179;812;Müde;Mittel (Wade);Intervalle Session.
+2026-06-04;Patrick Lange;Donnerstag;Einheit 2;Radfahren;84;42.4;Grundlagenausdauer;132;151;1184;Gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-05;Anne Haug;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-05;Chrissie Wellington;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-05;Daniela Ryf;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-05;Gustav Iden;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-05;Jan Frodeno;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-05;Kristian Blummenfelt;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-05;Lucy Charles-Barclay;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-05;Patrick Lange;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-06;Anne Haug;Samstag;Einheit 1;Radfahren;232;107.5;Grundlagenausdauer;125;149;2671;Gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-06;Anne Haug;Samstag;Einheit 2;Laufen;73;13.8;Tempolauf;147;163;989;Müde;Mittel (Unterer Rücken);Tempolauf Session.
 2026-06-06;Chrissie Wellington;Samstag;Einheit 1;Laufen;61;13.0;Intervalle;168;196;833;Normal;Keine;Intervalle Session.
 2026-06-06;Chrissie Wellington;Samstag;Einheit 2;Laufen;71;16.3;Intervalle;153;184;1065;Gut;Keine;Intervalle Session.
+2026-06-06;Daniela Ryf;Samstag;Einheit 1;Schwimmen;60;2.0;Technik;147;172;640;Müde;Mittel (Wade);Technik-Training im Pool.
+2026-06-06;Daniela Ryf;Samstag;Einheit 2;Laufen;64;12.2;Tempolauf;147;176;911;Normal;Leicht (Unterer Rücken);Tempolauf Session.
+2026-06-06;Gustav Iden;Samstag;Einheit 1;Radfahren;198;97.5;Grundlagenausdauer;143;159;2216;Normal;Leicht (Oberschenkel);Grundlagenausdauer auf dem Rad.
+2026-06-06;Gustav Iden;Samstag;Einheit 2;Radfahren;103;49.7;Grundlagenausdauer;136;160;1357;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-06;Jan Frodeno;Samstag;Einheit 1;Laufen;53;11.3;Long Run;157;183;744;Sehr gut;Keine;Long Run Session.
+2026-06-06;Jan Frodeno;Samstag;Einheit 2;Laufen;52;11.9;Tempolauf;164;191;732;Sehr gut;Keine;Tempolauf Session.
+2026-06-06;Kristian Blummenfelt;Samstag;Einheit 1;Radfahren;228;104.0;Grundlagenausdauer;141;161;3396;Normal;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-06;Kristian Blummenfelt;Samstag;Einheit 2;Radfahren;80;37.9;Intervalle;130;161;904;Gut;Keine;Intervalle auf dem Rad.
+2026-06-06;Lucy Charles-Barclay;Samstag;Einheit 1;Radfahren;189;88.6;Grundlagenausdauer;132;151;2206;Müde;Leicht (Unterer Rücken);Grundlagenausdauer auf dem Rad.
+2026-06-06;Lucy Charles-Barclay;Samstag;Einheit 2;Laufen;62;12.4;Intervalle;165;196;906;Müde;Leicht (Oberschenkel);Intervalle Session.
+2026-06-06;Patrick Lange;Samstag;Einheit 1;Laufen;45;10.5;Long Run;167;186;566;Sehr gut;Keine;Long Run Session.
+2026-06-06;Patrick Lange;Samstag;Einheit 2;Schwimmen;62;3.2;Intervalle;143;174;736;Gut;Keine;Intervalle-Training im Pool.
+2026-06-07;Anne Haug;Sonntag;Einheit 1;Laufen;116;26.9;Long Run;154;185;1533;Normal;Leicht (Achillessehne);Long Run Session.
 2026-06-07;Chrissie Wellington;Sonntag;Einheit 1;Schwimmen;71;3.1;Intervalle;154;179;829;Normal;Keine;Intervalle-Training im Pool.
+2026-06-07;Daniela Ryf;Sonntag;Einheit 1;Radfahren;77;38.2;Intervalle;139;171;875;Normal;Leicht (Achillessehne);Intervalle auf dem Rad.
+2026-06-07;Gustav Iden;Sonntag;Einheit 1;Radfahren;78;35.5;Grundlagenausdauer;126;141;879;Müde;Leicht (Achillessehne);Grundlagenausdauer auf dem Rad.
+2026-06-07;Jan Frodeno;Sonntag;Einheit 1;Laufen;129;26.5;Long Run;146;177;1796;Gut;Keine;Long Run Session.
+2026-06-07;Kristian Blummenfelt;Sonntag;Einheit 1;Radfahren;120;58.4;Intervalle;137;154;1622;Gut;Keine;Intervalle auf dem Rad.
+2026-06-07;Lucy Charles-Barclay;Sonntag;Einheit 1;Radfahren;80;37.1;Grundlagenausdauer;139;166;950;Normal;Leicht (Wade);Grundlagenausdauer auf dem Rad.
+2026-06-07;Patrick Lange;Sonntag;Einheit 1;Laufen;127;23.5;Long Run;147;175;1804;Normal;Keine;Long Run Session.
+2026-06-08;Anne Haug;Montag;Einheit 1;Schwimmen;61;3.2;Ausdauer;148;169;601;Gut;Leicht (Wade);Ausdauer-Training im Pool.
+2026-06-08;Anne Haug;Montag;Einheit 2;Radfahren;93;44.7;Kraftausdauer;141;171;1319;Normal;Leicht (Achillessehne);Kraftausdauer auf dem Rad.
 2026-06-08;Chrissie Wellington;Montag;Einheit 1;Schwimmen;80;2.9;Intervalle;135;155;745;Gut;Keine;Intervalle-Training im Pool.
 2026-06-08;Chrissie Wellington;Montag;Einheit 2;Schwimmen;76;3.0;Intervalle;140;171;783;Gut;Leicht (Unterer Rücken);Intervalle-Training im Pool.
+2026-06-08;Daniela Ryf;Montag;Einheit 1;Schwimmen;53;4.2;Intervalle;142;163;607;Müde;Mittel (Unterer Rücken);Intervalle-Training im Pool.
+2026-06-08;Daniela Ryf;Montag;Einheit 2;Laufen;49;9.3;Intervalle;159;178;610;Sehr gut;Keine;Intervalle Session.
+2026-06-08;Gustav Iden;Montag;Einheit 1;Laufen;48;10.9;Long Run;167;193;686;Müde;Mittel (Achillessehne);Long Run Session.
+2026-06-08;Gustav Iden;Montag;Einheit 2;Laufen;60;11.4;Lockerer Lauf;152;174;752;Sehr gut;Keine;Lockerer Lauf Session.
+2026-06-08;Jan Frodeno;Montag;Einheit 1;Schwimmen;85;3.1;Intervalle;150;175;947;Normal;Leicht (Knie);Intervalle-Training im Pool.
+2026-06-08;Jan Frodeno;Montag;Einheit 2;Laufen;57;12.1;Intervalle;162;186;798;Müde;Mittel (Oberschenkel);Intervalle Session.
+2026-06-08;Kristian Blummenfelt;Montag;Einheit 1;Schwimmen;74;2.5;Technik;151;171;855;Gut;Keine;Technik-Training im Pool.
+2026-06-08;Kristian Blummenfelt;Montag;Einheit 2;Laufen;51;11.6;Intervalle;164;181;711;Normal;Leicht (Knie);Intervalle Session.
+2026-06-08;Lucy Charles-Barclay;Montag;Einheit 1;Radfahren;86;41.0;Intervalle;129;161;1097;Gut;Keine;Intervalle auf dem Rad.
+2026-06-08;Lucy Charles-Barclay;Montag;Einheit 2;Radfahren;77;39.2;Kraftausdauer;135;162;929;Müde;Mittel (Oberschenkel);Kraftausdauer auf dem Rad.
+2026-06-08;Patrick Lange;Montag;Einheit 1;Radfahren;100;50.3;Intervalle;135;154;1122;Sehr gut;Keine;Intervalle auf dem Rad.
+2026-06-08;Patrick Lange;Montag;Einheit 2;Laufen;52;9.5;Long Run;149;173;765;Gut;Keine;Long Run Session.
+2026-06-09;Anne Haug;Dienstag;Einheit 1;Schwimmen;58;2.0;Technik;137;165;674;Normal;Keine;Technik-Training im Pool.
+2026-06-09;Anne Haug;Dienstag;Einheit 2;Radfahren;94;43.5;Intervalle;125;149;1166;Gut;Keine;Intervalle auf dem Rad.
 2026-06-09;Chrissie Wellington;Dienstag;Einheit 1;Radfahren;61;27.8;Intervalle;128;143;699;Müde;Mittel (Knie);Intervalle auf dem Rad.
 2026-06-09;Chrissie Wellington;Dienstag;Einheit 2;Schwimmen;74;2.9;Intervalle;151;175;886;Sehr gut;Keine;Intervalle-Training im Pool.
+2026-06-09;Daniela Ryf;Dienstag;Einheit 1;Radfahren;65;31.5;Intervalle;138;168;889;Normal;Leicht (Knie);Intervalle auf dem Rad.
+2026-06-09;Daniela Ryf;Dienstag;Einheit 2;Laufen;75;13.9;Intervalle;163;194;1077;Normal;Leicht (Unterer Rücken);Intervalle Session.
+2026-06-09;Gustav Iden;Dienstag;Einheit 1;Radfahren;65;31.7;Grundlagenausdauer;133;161;719;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-09;Gustav Iden;Dienstag;Einheit 2;Laufen;47;10.5;Lockerer Lauf;152;174;698;Normal;Keine;Lockerer Lauf Session.
+2026-06-09;Jan Frodeno;Dienstag;Einheit 1;Radfahren;87;40.9;Grundlagenausdauer;133;148;960;Gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-09;Jan Frodeno;Dienstag;Einheit 2;Laufen;73;16.7;Long Run;157;183;981;Gut;Keine;Long Run Session.
+2026-06-09;Kristian Blummenfelt;Dienstag;Einheit 1;Radfahren;101;49.2;Kraftausdauer;142;165;1187;Gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-09;Kristian Blummenfelt;Dienstag;Einheit 2;Laufen;49;11.2;Tempolauf;167;183;716;Sehr gut;Keine;Tempolauf Session.
+2026-06-09;Lucy Charles-Barclay;Dienstag;Einheit 1;Radfahren;69;34.1;Intervalle;132;152;850;Gut;Keine;Intervalle auf dem Rad.
+2026-06-09;Lucy Charles-Barclay;Dienstag;Einheit 2;Laufen;69;13.5;Lockerer Lauf;160;190;954;Müde;Mittel (Wade);Lockerer Lauf Session.
+2026-06-09;Patrick Lange;Dienstag;Einheit 1;Laufen;73;16.2;Long Run;153;180;1153;Gut;Leicht (Oberschenkel);Long Run Session.
+2026-06-09;Patrick Lange;Dienstag;Einheit 2;Laufen;71;14.2;Intervalle;148;169;958;Müde;Leicht (Achillessehne);Intervalle Session.
+2026-06-10;Anne Haug;Mittwoch;Einheit 1;Radfahren;95;46.6;Intervalle;142;160;1127;Normal;Leicht (Achillessehne);Intervalle auf dem Rad.
+2026-06-10;Anne Haug;Mittwoch;Einheit 2;Laufen;69;14.8;Tempolauf;160;189;901;Gut;Keine;Tempolauf Session.
 2026-06-10;Chrissie Wellington;Mittwoch;Einheit 1;Radfahren;75;35.4;Kraftausdauer;125;146;854;Sehr gut;Keine;Kraftausdauer auf dem Rad.
 2026-06-10;Chrissie Wellington;Mittwoch;Einheit 2;Radfahren;102;49.2;Grundlagenausdauer;138;170;1162;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-10;Daniela Ryf;Mittwoch;Einheit 1;Schwimmen;52;4.2;Ausdauer;144;160;560;Gut;Keine;Ausdauer-Training im Pool.
+2026-06-10;Daniela Ryf;Mittwoch;Einheit 2;Radfahren;107;48.2;Intervalle;125;142;1323;Gut;Keine;Intervalle auf dem Rad.
+2026-06-10;Gustav Iden;Mittwoch;Einheit 1;Radfahren;75;37.5;Kraftausdauer;139;171;1032;Müde;Mittel (Unterer Rücken);Kraftausdauer auf dem Rad.
+2026-06-10;Gustav Iden;Mittwoch;Einheit 2;Schwimmen;77;3.0;Ausdauer;150;173;750;Gut;Keine;Ausdauer-Training im Pool.
+2026-06-10;Jan Frodeno;Mittwoch;Einheit 1;Radfahren;104;50.2;Kraftausdauer;140;157;1480;Sehr gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-10;Jan Frodeno;Mittwoch;Einheit 2;Radfahren;80;41.1;Kraftausdauer;128;155;1020;Normal;Leicht (Schulter);Kraftausdauer auf dem Rad.
+2026-06-10;Kristian Blummenfelt;Mittwoch;Einheit 1;Laufen;72;14.2;Lockerer Lauf;151;169;1135;Gut;Keine;Lockerer Lauf Session.
+2026-06-10;Kristian Blummenfelt;Mittwoch;Einheit 2;Schwimmen;62;3.7;Intervalle;139;163;643;Gut;Keine;Intervalle-Training im Pool.
+2026-06-10;Lucy Charles-Barclay;Mittwoch;Einheit 1;Radfahren;61;30.5;Intervalle;138;158;753;Müde;Mittel (Schulter);Intervalle auf dem Rad.
+2026-06-10;Lucy Charles-Barclay;Mittwoch;Einheit 2;Laufen;72;14.8;Tempolauf;162;191;959;Müde;Mittel (Schulter);Tempolauf Session.
+2026-06-10;Patrick Lange;Mittwoch;Einheit 1;Laufen;59;13.8;Long Run;163;190;845;Gut;Keine;Long Run Session.
+2026-06-10;Patrick Lange;Mittwoch;Einheit 2;Schwimmen;85;2.4;Ausdauer;135;161;1007;Müde;Leicht (Unterer Rücken);Ausdauer-Training im Pool.
+2026-06-11;Anne Haug;Donnerstag;Einheit 1;Schwimmen;61;4.4;Technik;140;170;568;Sehr gut;Keine;Technik-Training im Pool.
+2026-06-11;Anne Haug;Donnerstag;Einheit 2;Radfahren;106;52.5;Grundlagenausdauer;128;145;1380;Normal;Leicht (Unterer Rücken);Grundlagenausdauer auf dem Rad.
 2026-06-11;Chrissie Wellington;Donnerstag;Einheit 1;Schwimmen;80;2.9;Ausdauer;140;159;749;Normal;Keine;Ausdauer-Training im Pool.
 2026-06-11;Chrissie Wellington;Donnerstag;Einheit 2;Schwimmen;54;3.2;Ausdauer;138;157;634;Müde;Mittel (Wade);Ausdauer-Training im Pool.
+2026-06-11;Daniela Ryf;Donnerstag;Einheit 1;Laufen;59;11.5;Lockerer Lauf;157;189;885;Gut;Keine;Lockerer Lauf Session.
+2026-06-11;Daniela Ryf;Donnerstag;Einheit 2;Laufen;75;14.0;Long Run;146;165;901;Normal;Keine;Long Run Session.
+2026-06-11;Gustav Iden;Donnerstag;Einheit 1;Radfahren;72;35.4;Grundlagenausdauer;143;158;901;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-11;Gustav Iden;Donnerstag;Einheit 2;Radfahren;120;57.2;Grundlagenausdauer;126;141;1574;Gut;Leicht (Wade);Grundlagenausdauer auf dem Rad.
+2026-06-11;Jan Frodeno;Donnerstag;Einheit 1;Radfahren;119;61.6;Grundlagenausdauer;140;158;1756;Normal;Leicht (Achillessehne);Grundlagenausdauer auf dem Rad.
+2026-06-11;Jan Frodeno;Donnerstag;Einheit 2;Radfahren;83;38.5;Grundlagenausdauer;138;165;961;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-11;Kristian Blummenfelt;Donnerstag;Einheit 1;Laufen;46;10.2;Tempolauf;155;187;669;Müde;Mittel (Wade);Tempolauf Session.
+2026-06-11;Kristian Blummenfelt;Donnerstag;Einheit 2;Laufen;75;14.9;Lockerer Lauf;158;187;1009;Sehr gut;Keine;Lockerer Lauf Session.
+2026-06-11;Lucy Charles-Barclay;Donnerstag;Einheit 1;Laufen;50;9.8;Lockerer Lauf;164;182;650;Normal;Keine;Lockerer Lauf Session.
+2026-06-11;Lucy Charles-Barclay;Donnerstag;Einheit 2;Laufen;65;14.9;Long Run;167;182;903;Müde;Mittel (Achillessehne);Long Run Session.
+2026-06-11;Patrick Lange;Donnerstag;Einheit 1;Schwimmen;85;2.2;Technik;146;161;904;Normal;Leicht (Schulter);Technik-Training im Pool.
+2026-06-11;Patrick Lange;Donnerstag;Einheit 2;Schwimmen;90;2.3;Intervalle;135;160;954;Normal;Leicht (Unterer Rücken);Intervalle-Training im Pool.
+2026-06-12;Anne Haug;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
 2026-06-12;Chrissie Wellington;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-12;Daniela Ryf;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-12;Gustav Iden;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-12;Jan Frodeno;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-12;Kristian Blummenfelt;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-12;Lucy Charles-Barclay;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-12;Patrick Lange;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-13;Anne Haug;Samstag;Einheit 1;Laufen;71;14.0;Lockerer Lauf;152;178;897;Normal;Keine;Lockerer Lauf Session.
+2026-06-13;Anne Haug;Samstag;Einheit 2;Schwimmen;45;4.2;Ausdauer;143;171;460;Sehr gut;Keine;Ausdauer-Training im Pool.
 2026-06-13;Chrissie Wellington;Samstag;Einheit 1;Schwimmen;50;3.7;Technik;148;165;581;Sehr gut;Keine;Technik-Training im Pool.
 2026-06-13;Chrissie Wellington;Samstag;Einheit 2;Radfahren;91;43.8;Grundlagenausdauer;136;163;1272;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-13;Daniela Ryf;Samstag;Einheit 1;Schwimmen;71;2.1;Ausdauer;154;186;701;Gut;Leicht (Oberschenkel);Ausdauer-Training im Pool.
+2026-06-13;Daniela Ryf;Samstag;Einheit 2;Radfahren;100;45.0;Intervalle;143;167;1148;Gut;Keine;Intervalle auf dem Rad.
+2026-06-13;Gustav Iden;Samstag;Einheit 1;Radfahren;180;91.8;Grundlagenausdauer;135;163;2172;Müde;Leicht (Wade);Grundlagenausdauer auf dem Rad.
+2026-06-13;Gustav Iden;Samstag;Einheit 2;Laufen;63;12.7;Lockerer Lauf;158;175;797;Sehr gut;Keine;Lockerer Lauf Session.
+2026-06-13;Jan Frodeno;Samstag;Einheit 1;Schwimmen;45;3.5;Ausdauer;137;165;487;Gut;Keine;Ausdauer-Training im Pool.
+2026-06-13;Jan Frodeno;Samstag;Einheit 2;Schwimmen;52;2.1;Intervalle;152;183;617;Normal;Keine;Intervalle-Training im Pool.
+2026-06-13;Kristian Blummenfelt;Samstag;Einheit 1;Radfahren;237;119.0;Grundlagenausdauer;129;156;3460;Gut;Leicht (Wade);Grundlagenausdauer auf dem Rad.
+2026-06-13;Kristian Blummenfelt;Samstag;Einheit 2;Laufen;61;12.7;Lockerer Lauf;143;164;755;Normal;Leicht (Schulter);Lockerer Lauf Session.
+2026-06-13;Lucy Charles-Barclay;Samstag;Einheit 1;Radfahren;151;68.3;Grundlagenausdauer;132;164;2045;Normal;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-13;Lucy Charles-Barclay;Samstag;Einheit 2;Radfahren;61;30.8;Grundlagenausdauer;141;156;738;Normal;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-13;Patrick Lange;Samstag;Einheit 1;Laufen;46;9.3;Long Run;158;183;701;Gut;Keine;Long Run Session.
+2026-06-13;Patrick Lange;Samstag;Einheit 2;Laufen;48;9.0;Lockerer Lauf;154;183;640;Normal;Keine;Lockerer Lauf Session.
+2026-06-14;Anne Haug;Sonntag;Einheit 1;Schwimmen;51;2.1;Technik;138;157;473;Normal;Keine;Technik-Training im Pool.
 2026-06-14;Chrissie Wellington;Sonntag;Einheit 1;Radfahren;71;35.1;Kraftausdauer;133;156;983;Gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-14;Daniela Ryf;Sonntag;Einheit 1;Radfahren;88;44.8;Grundlagenausdauer;133;160;1122;Müde;Leicht (Achillessehne);Grundlagenausdauer auf dem Rad.
+2026-06-14;Gustav Iden;Sonntag;Einheit 1;Laufen;113;25.8;Long Run;160;180;1390;Gut;Keine;Long Run Session.
+2026-06-14;Jan Frodeno;Sonntag;Einheit 1;Schwimmen;45;3.7;Ausdauer;153;175;508;Müde;Leicht (Oberschenkel);Ausdauer-Training im Pool.
+2026-06-14;Kristian Blummenfelt;Sonntag;Einheit 1;Radfahren;108;49.8;Grundlagenausdauer;131;159;1563;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-14;Lucy Charles-Barclay;Sonntag;Einheit 1;Schwimmen;80;2.5;Intervalle;135;161;955;Gut;Leicht (Schulter);Intervalle-Training im Pool.
+2026-06-14;Patrick Lange;Sonntag;Einheit 1;Radfahren;62;30.5;Intervalle;131;150;722;Normal;Keine;Intervalle auf dem Rad.
+2026-06-15;Anne Haug;Montag;Einheit 1;Laufen;68;14.5;Tempolauf;157;185;975;Normal;Keine;Tempolauf Session.
+2026-06-15;Anne Haug;Montag;Einheit 2;Schwimmen;71;2.4;Intervalle;139;169;805;Normal;Keine;Intervalle-Training im Pool.
+2026-06-15;Chrissie Wellington;Montag;Einheit 1;Laufen;75;14.6;Intervalle;165;196;1086;Müde;Leicht (Knie);Intervalle Session.
+2026-06-15;Chrissie Wellington;Montag;Einheit 2;Radfahren;115;58.3;Kraftausdauer;128;155;1546;Sehr gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-15;Daniela Ryf;Montag;Einheit 1;Radfahren;85;43.0;Grundlagenausdauer;138;169;1071;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-15;Daniela Ryf;Montag;Einheit 2;Schwimmen;57;2.7;Technik;140;163;602;Normal;Leicht (Wade);Technik-Training im Pool.
+2026-06-15;Gustav Iden;Montag;Einheit 1;Radfahren;102;47.3;Kraftausdauer;130;148;1220;Müde;Mittel (Wade);Kraftausdauer auf dem Rad.
+2026-06-15;Gustav Iden;Montag;Einheit 2;Schwimmen;68;3.3;Technik;148;175;759;Müde;Leicht (Wade);Technik-Training im Pool.
+2026-06-15;Jan Frodeno;Montag;Einheit 1;Schwimmen;65;4.4;Intervalle;155;173;752;Sehr gut;Keine;Intervalle-Training im Pool.
+2026-06-15;Jan Frodeno;Montag;Einheit 2;Schwimmen;83;3.4;Intervalle;153;178;883;Müde;Leicht (Schulter);Intervalle-Training im Pool.
+2026-06-15;Kristian Blummenfelt;Montag;Einheit 1;Radfahren;74;34.4;Kraftausdauer;130;162;1022;Sehr gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-15;Kristian Blummenfelt;Montag;Einheit 2;Laufen;58;10.8;Tempolauf;150;171;913;Sehr gut;Keine;Tempolauf Session.
+2026-06-15;Lucy Charles-Barclay;Montag;Einheit 1;Radfahren;94;44.7;Kraftausdauer;137;165;1104;Sehr gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-15;Lucy Charles-Barclay;Montag;Einheit 2;Laufen;65;15.4;Long Run;153;178;991;Gut;Leicht (Achillessehne);Long Run Session.
+2026-06-15;Patrick Lange;Montag;Einheit 1;Radfahren;109;53.7;Kraftausdauer;145;162;1510;Sehr gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-15;Patrick Lange;Montag;Einheit 2;Radfahren;80;37.2;Intervalle;139;154;1016;Sehr gut;Keine;Intervalle auf dem Rad.
+2026-06-16;Anne Haug;Dienstag;Einheit 1;Laufen;58;13.3;Long Run;158;187;883;Müde;Mittel (Achillessehne);Long Run Session.
+2026-06-16;Anne Haug;Dienstag;Einheit 2;Schwimmen;51;4.2;Ausdauer;136;168;586;Normal;Leicht (Achillessehne);Ausdauer-Training im Pool.
+2026-06-16;Chrissie Wellington;Dienstag;Einheit 1;Schwimmen;58;2.7;Intervalle;147;172;561;Normal;Leicht (Schulter);Intervalle-Training im Pool.
+2026-06-16;Chrissie Wellington;Dienstag;Einheit 2;Schwimmen;51;3.0;Technik;154;178;510;Müde;Leicht (Knie);Technik-Training im Pool.
+2026-06-16;Daniela Ryf;Dienstag;Einheit 1;Schwimmen;61;4.3;Technik;136;152;588;Sehr gut;Keine;Technik-Training im Pool.
+2026-06-16;Daniela Ryf;Dienstag;Einheit 2;Radfahren;95;43.0;Intervalle;139;154;1364;Sehr gut;Keine;Intervalle auf dem Rad.
+2026-06-16;Gustav Iden;Dienstag;Einheit 1;Radfahren;105;54.4;Grundlagenausdauer;145;173;1465;Müde;Mittel (Wade);Grundlagenausdauer auf dem Rad.
+2026-06-16;Gustav Iden;Dienstag;Einheit 2;Schwimmen;58;2.5;Intervalle;137;161;583;Gut;Keine;Intervalle-Training im Pool.
+2026-06-16;Jan Frodeno;Dienstag;Einheit 1;Laufen;59;10.6;Tempolauf;144;166;734;Sehr gut;Keine;Tempolauf Session.
+2026-06-16;Jan Frodeno;Dienstag;Einheit 2;Radfahren;60;29.1;Intervalle;135;167;710;Normal;Leicht (Achillessehne);Intervalle auf dem Rad.
+2026-06-16;Kristian Blummenfelt;Dienstag;Einheit 1;Schwimmen;80;3.3;Intervalle;142;160;957;Müde;Mittel (Unterer Rücken);Intervalle-Training im Pool.
+2026-06-16;Kristian Blummenfelt;Dienstag;Einheit 2;Laufen;66;13.2;Intervalle;152;184;952;Normal;Keine;Intervalle Session.
+2026-06-16;Lucy Charles-Barclay;Dienstag;Einheit 1;Laufen;61;11.6;Lockerer Lauf;159;181;767;Sehr gut;Keine;Lockerer Lauf Session.
+2026-06-16;Lucy Charles-Barclay;Dienstag;Einheit 2;Schwimmen;77;4.2;Intervalle;155;172;870;Normal;Leicht (Schulter);Intervalle-Training im Pool.
+2026-06-16;Patrick Lange;Dienstag;Einheit 1;Laufen;56;11.4;Intervalle;168;197;751;Müde;Leicht (Schulter);Intervalle Session.
+2026-06-16;Patrick Lange;Dienstag;Einheit 2;Schwimmen;63;2.8;Intervalle;138;159;623;Müde;Leicht (Oberschenkel);Intervalle-Training im Pool.
+2026-06-17;Anne Haug;Mittwoch;Einheit 1;Schwimmen;46;3.2;Intervalle;144;176;476;Sehr gut;Keine;Intervalle-Training im Pool.
+2026-06-17;Anne Haug;Mittwoch;Einheit 2;Radfahren;120;58.8;Kraftausdauer;130;161;1393;Gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-17;Chrissie Wellington;Mittwoch;Einheit 1;Schwimmen;84;2.8;Intervalle;152;172;891;Müde;Mittel (Wade);Intervalle-Training im Pool.
+2026-06-17;Chrissie Wellington;Mittwoch;Einheit 2;Laufen;53;12.3;Intervalle;156;182;687;Normal;Leicht (Oberschenkel);Intervalle Session.
+2026-06-17;Daniela Ryf;Mittwoch;Einheit 1;Schwimmen;86;4.4;Intervalle;136;158;849;Gut;Keine;Intervalle-Training im Pool.
+2026-06-17;Daniela Ryf;Mittwoch;Einheit 2;Laufen;47;9.0;Intervalle;151;173;680;Sehr gut;Keine;Intervalle Session.
+2026-06-17;Gustav Iden;Mittwoch;Einheit 1;Schwimmen;56;3.6;Technik;141;165;655;Müde;Leicht (Achillessehne);Technik-Training im Pool.
+2026-06-17;Gustav Iden;Mittwoch;Einheit 2;Schwimmen;80;3.6;Technik;155;187;909;Normal;Keine;Technik-Training im Pool.
+2026-06-17;Jan Frodeno;Mittwoch;Einheit 1;Radfahren;119;60.3;Kraftausdauer;141;170;1612;Normal;Keine;Kraftausdauer auf dem Rad.
+2026-06-17;Jan Frodeno;Mittwoch;Einheit 2;Schwimmen;80;2.7;Intervalle;149;166;753;Normal;Leicht (Knie);Intervalle-Training im Pool.
+2026-06-17;Kristian Blummenfelt;Mittwoch;Einheit 1;Radfahren;116;59.0;Kraftausdauer;126;150;1574;Gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-17;Kristian Blummenfelt;Mittwoch;Einheit 2;Schwimmen;75;2.6;Ausdauer;149;181;719;Normal;Keine;Ausdauer-Training im Pool.
+2026-06-17;Lucy Charles-Barclay;Mittwoch;Einheit 1;Schwimmen;68;2.5;Ausdauer;139;155;734;Gut;Leicht (Oberschenkel);Ausdauer-Training im Pool.
+2026-06-17;Lucy Charles-Barclay;Mittwoch;Einheit 2;Schwimmen;51;3.2;Ausdauer;137;157;517;Normal;Keine;Ausdauer-Training im Pool.
+2026-06-17;Patrick Lange;Mittwoch;Einheit 1;Radfahren;97;47.3;Grundlagenausdauer;135;167;1143;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-17;Patrick Lange;Mittwoch;Einheit 2;Laufen;48;10.4;Tempolauf;145;168;583;Normal;Leicht (Unterer Rücken);Tempolauf Session.
+2026-06-18;Anne Haug;Donnerstag;Einheit 1;Radfahren;99;47.7;Kraftausdauer;132;159;1357;Sehr gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-18;Anne Haug;Donnerstag;Einheit 2;Laufen;57;10.9;Lockerer Lauf;147;175;694;Sehr gut;Keine;Lockerer Lauf Session.
+2026-06-18;Chrissie Wellington;Donnerstag;Einheit 1;Schwimmen;84;2.8;Technik;148;169;924;Gut;Leicht (Unterer Rücken);Technik-Training im Pool.
+2026-06-18;Chrissie Wellington;Donnerstag;Einheit 2;Radfahren;84;40.7;Intervalle;126;141;1129;Sehr gut;Keine;Intervalle auf dem Rad.
+2026-06-18;Daniela Ryf;Donnerstag;Einheit 1;Radfahren;119;54.1;Kraftausdauer;142;173;1388;Gut;Leicht (Oberschenkel);Kraftausdauer auf dem Rad.
+2026-06-18;Daniela Ryf;Donnerstag;Einheit 2;Radfahren;112;54.6;Grundlagenausdauer;132;159;1472;Müde;Leicht (Unterer Rücken);Grundlagenausdauer auf dem Rad.
+2026-06-18;Gustav Iden;Donnerstag;Einheit 1;Laufen;56;10.1;Long Run;158;190;775;Normal;Keine;Long Run Session.
+2026-06-18;Gustav Iden;Donnerstag;Einheit 2;Radfahren;91;41.6;Grundlagenausdauer;129;149;1204;Normal;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-18;Jan Frodeno;Donnerstag;Einheit 1;Schwimmen;90;2.9;Ausdauer;148;166;834;Müde;Mittel (Knie);Ausdauer-Training im Pool.
+2026-06-18;Jan Frodeno;Donnerstag;Einheit 2;Schwimmen;72;4.0;Intervalle;154;179;837;Müde;Mittel (Achillessehne);Intervalle-Training im Pool.
+2026-06-18;Kristian Blummenfelt;Donnerstag;Einheit 1;Laufen;71;14.1;Long Run;160;183;867;Müde;Leicht (Knie);Long Run Session.
+2026-06-18;Kristian Blummenfelt;Donnerstag;Einheit 2;Schwimmen;86;3.3;Intervalle;152;170;971;Normal;Keine;Intervalle-Training im Pool.
+2026-06-18;Lucy Charles-Barclay;Donnerstag;Einheit 1;Laufen;48;10.0;Intervalle;157;186;599;Gut;Keine;Intervalle Session.
+2026-06-18;Lucy Charles-Barclay;Donnerstag;Einheit 2;Radfahren;103;53.0;Kraftausdauer;136;166;1167;Sehr gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-18;Patrick Lange;Donnerstag;Einheit 1;Laufen;65;11.8;Intervalle;160;179;812;Müde;Mittel (Wade);Intervalle Session.
+2026-06-18;Patrick Lange;Donnerstag;Einheit 2;Radfahren;84;42.4;Grundlagenausdauer;132;151;1184;Gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-19;Anne Haug;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-19;Chrissie Wellington;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-19;Daniela Ryf;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-19;Gustav Iden;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-19;Jan Frodeno;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-19;Kristian Blummenfelt;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-19;Lucy Charles-Barclay;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-19;Patrick Lange;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-20;Anne Haug;Samstag;Einheit 1;Radfahren;232;107.5;Grundlagenausdauer;125;149;2671;Gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-20;Anne Haug;Samstag;Einheit 2;Laufen;73;13.8;Tempolauf;147;163;989;Müde;Mittel (Unterer Rücken);Tempolauf Session.
+2026-06-20;Chrissie Wellington;Samstag;Einheit 1;Laufen;61;13.0;Intervalle;168;196;833;Normal;Keine;Intervalle Session.
+2026-06-20;Chrissie Wellington;Samstag;Einheit 2;Laufen;71;16.3;Intervalle;153;184;1065;Gut;Keine;Intervalle Session.
+2026-06-20;Daniela Ryf;Samstag;Einheit 1;Schwimmen;60;2.0;Technik;147;172;640;Müde;Mittel (Wade);Technik-Training im Pool.
+2026-06-20;Daniela Ryf;Samstag;Einheit 2;Laufen;64;12.2;Tempolauf;147;176;911;Normal;Leicht (Unterer Rücken);Tempolauf Session.
+2026-06-20;Gustav Iden;Samstag;Einheit 1;Radfahren;198;97.5;Grundlagenausdauer;143;159;2216;Normal;Leicht (Oberschenkel);Grundlagenausdauer auf dem Rad.
+2026-06-20;Gustav Iden;Samstag;Einheit 2;Radfahren;103;49.7;Grundlagenausdauer;136;160;1357;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-20;Jan Frodeno;Samstag;Einheit 1;Laufen;53;11.3;Long Run;157;183;744;Sehr gut;Keine;Long Run Session.
+2026-06-20;Jan Frodeno;Samstag;Einheit 2;Laufen;52;11.9;Tempolauf;164;191;732;Sehr gut;Keine;Tempolauf Session.
+2026-06-20;Kristian Blummenfelt;Samstag;Einheit 1;Radfahren;228;104.0;Grundlagenausdauer;141;161;3396;Normal;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-20;Kristian Blummenfelt;Samstag;Einheit 2;Radfahren;80;37.9;Intervalle;130;161;904;Gut;Keine;Intervalle auf dem Rad.
+2026-06-20;Lucy Charles-Barclay;Samstag;Einheit 1;Radfahren;189;88.6;Grundlagenausdauer;132;151;2206;Müde;Leicht (Unterer Rücken);Grundlagenausdauer auf dem Rad.
+2026-06-20;Lucy Charles-Barclay;Samstag;Einheit 2;Laufen;62;12.4;Intervalle;165;196;906;Müde;Leicht (Oberschenkel);Intervalle Session.
+2026-06-20;Patrick Lange;Samstag;Einheit 1;Laufen;45;10.5;Long Run;167;186;566;Sehr gut;Keine;Long Run Session.
+2026-06-20;Patrick Lange;Samstag;Einheit 2;Schwimmen;62;3.2;Intervalle;143;174;736;Gut;Keine;Intervalle-Training im Pool.
+2026-06-21;Anne Haug;Sonntag;Einheit 1;Laufen;116;26.9;Long Run;154;185;1533;Normal;Leicht (Achillessehne);Long Run Session.
+2026-06-21;Chrissie Wellington;Sonntag;Einheit 1;Schwimmen;71;3.1;Intervalle;154;179;829;Normal;Keine;Intervalle-Training im Pool.
+2026-06-21;Daniela Ryf;Sonntag;Einheit 1;Radfahren;77;38.2;Intervalle;139;171;875;Normal;Leicht (Achillessehne);Intervalle auf dem Rad.
+2026-06-21;Gustav Iden;Sonntag;Einheit 1;Radfahren;78;35.5;Grundlagenausdauer;126;141;879;Müde;Leicht (Achillessehne);Grundlagenausdauer auf dem Rad.
+2026-06-21;Jan Frodeno;Sonntag;Einheit 1;Laufen;129;26.5;Long Run;146;177;1796;Gut;Keine;Long Run Session.
+2026-06-21;Kristian Blummenfelt;Sonntag;Einheit 1;Radfahren;120;58.4;Intervalle;137;154;1622;Gut;Keine;Intervalle auf dem Rad.
+2026-06-21;Lucy Charles-Barclay;Sonntag;Einheit 1;Radfahren;80;37.1;Grundlagenausdauer;139;166;950;Normal;Leicht (Wade);Grundlagenausdauer auf dem Rad.
+2026-06-21;Patrick Lange;Sonntag;Einheit 1;Laufen;127;23.5;Long Run;147;175;1804;Normal;Keine;Long Run Session.
+2026-06-22;Anne Haug;Montag;Einheit 1;Schwimmen;61;3.2;Ausdauer;148;169;601;Gut;Leicht (Wade);Ausdauer-Training im Pool.
+2026-06-22;Anne Haug;Montag;Einheit 2;Radfahren;93;44.7;Kraftausdauer;141;171;1319;Normal;Leicht (Achillessehne);Kraftausdauer auf dem Rad.
+2026-06-22;Chrissie Wellington;Montag;Einheit 1;Schwimmen;80;2.9;Intervalle;135;155;745;Gut;Keine;Intervalle-Training im Pool.
+2026-06-22;Chrissie Wellington;Montag;Einheit 2;Schwimmen;76;3.0;Intervalle;140;171;783;Gut;Leicht (Unterer Rücken);Intervalle-Training im Pool.
+2026-06-22;Daniela Ryf;Montag;Einheit 1;Schwimmen;53;4.2;Intervalle;142;163;607;Müde;Mittel (Unterer Rücken);Intervalle-Training im Pool.
+2026-06-22;Daniela Ryf;Montag;Einheit 2;Laufen;49;9.3;Intervalle;159;178;610;Sehr gut;Keine;Intervalle Session.
+2026-06-22;Gustav Iden;Montag;Einheit 1;Laufen;48;10.9;Long Run;167;193;686;Müde;Mittel (Achillessehne);Long Run Session.
+2026-06-22;Gustav Iden;Montag;Einheit 2;Laufen;60;11.4;Lockerer Lauf;152;174;752;Sehr gut;Keine;Lockerer Lauf Session.
+2026-06-22;Jan Frodeno;Montag;Einheit 1;Schwimmen;85;3.1;Intervalle;150;175;947;Normal;Leicht (Knie);Intervalle-Training im Pool.
+2026-06-22;Jan Frodeno;Montag;Einheit 2;Laufen;57;12.1;Intervalle;162;186;798;Müde;Mittel (Oberschenkel);Intervalle Session.
+2026-06-22;Kristian Blummenfelt;Montag;Einheit 1;Schwimmen;74;2.5;Technik;151;171;855;Gut;Keine;Technik-Training im Pool.
+2026-06-22;Kristian Blummenfelt;Montag;Einheit 2;Laufen;51;11.6;Intervalle;164;181;711;Normal;Leicht (Knie);Intervalle Session.
+2026-06-22;Lucy Charles-Barclay;Montag;Einheit 1;Radfahren;86;41.0;Intervalle;129;161;1097;Gut;Keine;Intervalle auf dem Rad.
+2026-06-22;Lucy Charles-Barclay;Montag;Einheit 2;Radfahren;77;39.2;Kraftausdauer;135;162;929;Müde;Mittel (Oberschenkel);Kraftausdauer auf dem Rad.
+2026-06-22;Patrick Lange;Montag;Einheit 1;Radfahren;100;50.3;Intervalle;135;154;1122;Sehr gut;Keine;Intervalle auf dem Rad.
+2026-06-22;Patrick Lange;Montag;Einheit 2;Laufen;52;9.5;Long Run;149;173;765;Gut;Keine;Long Run Session.
+2026-06-23;Anne Haug;Dienstag;Einheit 1;Schwimmen;58;2.0;Technik;137;165;674;Normal;Keine;Technik-Training im Pool.
+2026-06-23;Anne Haug;Dienstag;Einheit 2;Radfahren;94;43.5;Intervalle;125;149;1166;Gut;Keine;Intervalle auf dem Rad.
+2026-06-23;Chrissie Wellington;Dienstag;Einheit 1;Radfahren;61;27.8;Intervalle;128;143;699;Müde;Mittel (Knie);Intervalle auf dem Rad.
+2026-06-23;Chrissie Wellington;Dienstag;Einheit 2;Schwimmen;74;2.9;Intervalle;151;175;886;Sehr gut;Keine;Intervalle-Training im Pool.
+2026-06-23;Daniela Ryf;Dienstag;Einheit 1;Radfahren;65;31.5;Intervalle;138;168;889;Normal;Leicht (Knie);Intervalle auf dem Rad.
+2026-06-23;Daniela Ryf;Dienstag;Einheit 2;Laufen;75;13.9;Intervalle;163;194;1077;Normal;Leicht (Unterer Rücken);Intervalle Session.
+2026-06-23;Gustav Iden;Dienstag;Einheit 1;Radfahren;65;31.7;Grundlagenausdauer;133;161;719;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-23;Gustav Iden;Dienstag;Einheit 2;Laufen;47;10.5;Lockerer Lauf;152;174;698;Normal;Keine;Lockerer Lauf Session.
+2026-06-23;Jan Frodeno;Dienstag;Einheit 1;Radfahren;87;40.9;Grundlagenausdauer;133;148;960;Gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-23;Jan Frodeno;Dienstag;Einheit 2;Laufen;73;16.7;Long Run;157;183;981;Gut;Keine;Long Run Session.
+2026-06-23;Kristian Blummenfelt;Dienstag;Einheit 1;Radfahren;101;49.2;Kraftausdauer;142;165;1187;Gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-23;Kristian Blummenfelt;Dienstag;Einheit 2;Laufen;49;11.2;Tempolauf;167;183;716;Sehr gut;Keine;Tempolauf Session.
+2026-06-23;Lucy Charles-Barclay;Dienstag;Einheit 1;Radfahren;69;34.1;Intervalle;132;152;850;Gut;Keine;Intervalle auf dem Rad.
+2026-06-23;Lucy Charles-Barclay;Dienstag;Einheit 2;Laufen;69;13.5;Lockerer Lauf;160;190;954;Müde;Mittel (Wade);Lockerer Lauf Session.
+2026-06-23;Patrick Lange;Dienstag;Einheit 1;Laufen;73;16.2;Long Run;153;180;1153;Gut;Leicht (Oberschenkel);Long Run Session.
+2026-06-23;Patrick Lange;Dienstag;Einheit 2;Laufen;71;14.2;Intervalle;148;169;958;Müde;Leicht (Achillessehne);Intervalle Session.
+2026-06-24;Anne Haug;Mittwoch;Einheit 1;Radfahren;95;46.6;Intervalle;142;160;1127;Normal;Leicht (Achillessehne);Intervalle auf dem Rad.
+2026-06-24;Anne Haug;Mittwoch;Einheit 2;Laufen;69;14.8;Tempolauf;160;189;901;Gut;Keine;Tempolauf Session.
+2026-06-24;Chrissie Wellington;Mittwoch;Einheit 1;Radfahren;75;35.4;Kraftausdauer;125;146;854;Sehr gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-24;Chrissie Wellington;Mittwoch;Einheit 2;Radfahren;102;49.2;Grundlagenausdauer;138;170;1162;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-24;Daniela Ryf;Mittwoch;Einheit 1;Schwimmen;52;4.2;Ausdauer;144;160;560;Gut;Keine;Ausdauer-Training im Pool.
+2026-06-24;Daniela Ryf;Mittwoch;Einheit 2;Radfahren;107;48.2;Intervalle;125;142;1323;Gut;Keine;Intervalle auf dem Rad.
+2026-06-24;Gustav Iden;Mittwoch;Einheit 1;Radfahren;75;37.5;Kraftausdauer;139;171;1032;Müde;Mittel (Unterer Rücken);Kraftausdauer auf dem Rad.
+2026-06-24;Gustav Iden;Mittwoch;Einheit 2;Schwimmen;77;3.0;Ausdauer;150;173;750;Gut;Keine;Ausdauer-Training im Pool.
+2026-06-24;Jan Frodeno;Mittwoch;Einheit 1;Radfahren;104;50.2;Kraftausdauer;140;157;1480;Sehr gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-24;Jan Frodeno;Mittwoch;Einheit 2;Radfahren;80;41.1;Kraftausdauer;128;155;1020;Normal;Leicht (Schulter);Kraftausdauer auf dem Rad.
+2026-06-24;Kristian Blummenfelt;Mittwoch;Einheit 1;Laufen;72;14.2;Lockerer Lauf;151;169;1135;Gut;Keine;Lockerer Lauf Session.
+2026-06-24;Kristian Blummenfelt;Mittwoch;Einheit 2;Schwimmen;62;3.7;Intervalle;139;163;643;Gut;Keine;Intervalle-Training im Pool.
+2026-06-24;Lucy Charles-Barclay;Mittwoch;Einheit 1;Radfahren;61;30.5;Intervalle;138;158;753;Müde;Mittel (Schulter);Intervalle auf dem Rad.
+2026-06-24;Lucy Charles-Barclay;Mittwoch;Einheit 2;Laufen;72;14.8;Tempolauf;162;191;959;Müde;Mittel (Schulter);Tempolauf Session.
+2026-06-24;Patrick Lange;Mittwoch;Einheit 1;Laufen;59;13.8;Long Run;163;190;845;Gut;Keine;Long Run Session.
+2026-06-24;Patrick Lange;Mittwoch;Einheit 2;Schwimmen;85;2.4;Ausdauer;135;161;1007;Müde;Leicht (Unterer Rücken);Ausdauer-Training im Pool.
+2026-06-25;Anne Haug;Donnerstag;Einheit 1;Schwimmen;61;4.4;Technik;140;170;568;Sehr gut;Keine;Technik-Training im Pool.
+2026-06-25;Anne Haug;Donnerstag;Einheit 2;Radfahren;106;52.5;Grundlagenausdauer;128;145;1380;Normal;Leicht (Unterer Rücken);Grundlagenausdauer auf dem Rad.
+2026-06-25;Chrissie Wellington;Donnerstag;Einheit 1;Schwimmen;80;2.9;Ausdauer;140;159;749;Normal;Keine;Ausdauer-Training im Pool.
+2026-06-25;Chrissie Wellington;Donnerstag;Einheit 2;Schwimmen;54;3.2;Ausdauer;138;157;634;Müde;Mittel (Wade);Ausdauer-Training im Pool.
+2026-06-25;Daniela Ryf;Donnerstag;Einheit 1;Laufen;59;11.5;Lockerer Lauf;157;189;885;Gut;Keine;Lockerer Lauf Session.
+2026-06-25;Daniela Ryf;Donnerstag;Einheit 2;Laufen;75;14.0;Long Run;146;165;901;Normal;Keine;Long Run Session.
+2026-06-25;Gustav Iden;Donnerstag;Einheit 1;Radfahren;72;35.4;Grundlagenausdauer;143;158;901;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-25;Gustav Iden;Donnerstag;Einheit 2;Radfahren;120;57.2;Grundlagenausdauer;126;141;1574;Gut;Leicht (Wade);Grundlagenausdauer auf dem Rad.
+2026-06-25;Jan Frodeno;Donnerstag;Einheit 1;Radfahren;119;61.6;Grundlagenausdauer;140;158;1756;Normal;Leicht (Achillessehne);Grundlagenausdauer auf dem Rad.
+2026-06-25;Jan Frodeno;Donnerstag;Einheit 2;Radfahren;83;38.5;Grundlagenausdauer;138;165;961;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-25;Kristian Blummenfelt;Donnerstag;Einheit 1;Laufen;46;10.2;Tempolauf;155;187;669;Müde;Mittel (Wade);Tempolauf Session.
+2026-06-25;Kristian Blummenfelt;Donnerstag;Einheit 2;Laufen;75;14.9;Lockerer Lauf;158;187;1009;Sehr gut;Keine;Lockerer Lauf Session.
+2026-06-25;Lucy Charles-Barclay;Donnerstag;Einheit 1;Laufen;50;9.8;Lockerer Lauf;164;182;650;Normal;Keine;Lockerer Lauf Session.
+2026-06-25;Lucy Charles-Barclay;Donnerstag;Einheit 2;Laufen;65;14.9;Long Run;167;182;903;Müde;Mittel (Achillessehne);Long Run Session.
+2026-06-25;Patrick Lange;Donnerstag;Einheit 1;Schwimmen;85;2.2;Technik;146;161;904;Normal;Leicht (Schulter);Technik-Training im Pool.
+2026-06-25;Patrick Lange;Donnerstag;Einheit 2;Schwimmen;90;2.3;Intervalle;135;160;954;Normal;Leicht (Unterer Rücken);Intervalle-Training im Pool.
+2026-06-26;Anne Haug;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-26;Chrissie Wellington;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-26;Daniela Ryf;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-26;Gustav Iden;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-26;Jan Frodeno;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-26;Kristian Blummenfelt;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-26;Lucy Charles-Barclay;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-26;Patrick Lange;Freitag;Einheit 1;Ruhetag;0;0.0;Erholung;0;0;0;Gut;Keine;Geplante Regeneration.
+2026-06-27;Anne Haug;Samstag;Einheit 1;Laufen;71;14.0;Lockerer Lauf;152;178;897;Normal;Keine;Lockerer Lauf Session.
+2026-06-27;Anne Haug;Samstag;Einheit 2;Schwimmen;45;4.2;Ausdauer;143;171;460;Sehr gut;Keine;Ausdauer-Training im Pool.
+2026-06-27;Chrissie Wellington;Samstag;Einheit 1;Schwimmen;50;3.7;Technik;148;165;581;Sehr gut;Keine;Technik-Training im Pool.
+2026-06-27;Chrissie Wellington;Samstag;Einheit 2;Radfahren;91;43.8;Grundlagenausdauer;136;163;1272;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-27;Daniela Ryf;Samstag;Einheit 1;Schwimmen;71;2.1;Ausdauer;154;186;701;Gut;Leicht (Oberschenkel);Ausdauer-Training im Pool.
+2026-06-27;Daniela Ryf;Samstag;Einheit 2;Radfahren;100;45.0;Intervalle;143;167;1148;Gut;Keine;Intervalle auf dem Rad.
+2026-06-27;Gustav Iden;Samstag;Einheit 1;Radfahren;180;91.8;Grundlagenausdauer;135;163;2172;Müde;Leicht (Wade);Grundlagenausdauer auf dem Rad.
+2026-06-27;Gustav Iden;Samstag;Einheit 2;Laufen;63;12.7;Lockerer Lauf;158;175;797;Sehr gut;Keine;Lockerer Lauf Session.
+2026-06-27;Jan Frodeno;Samstag;Einheit 1;Schwimmen;45;3.5;Ausdauer;137;165;487;Gut;Keine;Ausdauer-Training im Pool.
+2026-06-27;Jan Frodeno;Samstag;Einheit 2;Schwimmen;52;2.1;Intervalle;152;183;617;Normal;Keine;Intervalle-Training im Pool.
+2026-06-27;Kristian Blummenfelt;Samstag;Einheit 1;Radfahren;237;119.0;Grundlagenausdauer;129;156;3460;Gut;Leicht (Wade);Grundlagenausdauer auf dem Rad.
+2026-06-27;Kristian Blummenfelt;Samstag;Einheit 2;Laufen;61;12.7;Lockerer Lauf;143;164;755;Normal;Leicht (Schulter);Lockerer Lauf Session.
+2026-06-27;Lucy Charles-Barclay;Samstag;Einheit 1;Radfahren;151;68.3;Grundlagenausdauer;132;164;2045;Normal;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-27;Lucy Charles-Barclay;Samstag;Einheit 2;Radfahren;61;30.8;Grundlagenausdauer;141;156;738;Normal;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-27;Patrick Lange;Samstag;Einheit 1;Laufen;46;9.3;Long Run;158;183;701;Gut;Keine;Long Run Session.
+2026-06-27;Patrick Lange;Samstag;Einheit 2;Laufen;48;9.0;Lockerer Lauf;154;183;640;Normal;Keine;Lockerer Lauf Session.
+2026-06-28;Anne Haug;Sonntag;Einheit 1;Schwimmen;51;2.1;Technik;138;157;473;Normal;Keine;Technik-Training im Pool.
+2026-06-28;Chrissie Wellington;Sonntag;Einheit 1;Radfahren;71;35.1;Kraftausdauer;133;156;983;Gut;Keine;Kraftausdauer auf dem Rad.
+2026-06-28;Daniela Ryf;Sonntag;Einheit 1;Radfahren;88;44.8;Grundlagenausdauer;133;160;1122;Müde;Leicht (Achillessehne);Grundlagenausdauer auf dem Rad.
+2026-06-28;Gustav Iden;Sonntag;Einheit 1;Laufen;113;25.8;Long Run;160;180;1390;Gut;Keine;Long Run Session.
+2026-06-28;Jan Frodeno;Sonntag;Einheit 1;Schwimmen;45;3.7;Ausdauer;153;175;508;Müde;Leicht (Oberschenkel);Ausdauer-Training im Pool.
+2026-06-28;Kristian Blummenfelt;Sonntag;Einheit 1;Radfahren;108;49.8;Grundlagenausdauer;131;159;1563;Sehr gut;Keine;Grundlagenausdauer auf dem Rad.
+2026-06-28;Lucy Charles-Barclay;Sonntag;Einheit 1;Schwimmen;80;2.5;Intervalle;135;161;955;Gut;Leicht (Schulter);Intervalle-Training im Pool.
+2026-06-28;Patrick Lange;Sonntag;Einheit 1;Radfahren;62;30.5;Intervalle;131;150;722;Normal;Keine;Intervalle auf dem Rad.
