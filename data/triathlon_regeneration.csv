@@ -1,0 +1,113 @@
+Datum;Wochentag;Athlet;Schlaf_Dauer;Schlaf_Gefuehl;Ernaehrung_Kalorien_kcal;Kohlenhydrate_g;Proteine_g;Fette_g;Ernaehrung_Qualitaet;Krank_Status;Ruhepuls_bpm;HRV_ms;Regenerations_Massnahme
+2026-06-01;Montag;Jan Frodeno;8 Std. 12 Min.;Schlecht;4366;665;172;100;Hervorragend (Clean);Nein;41;75;Blackroll & Stretching
+2026-06-01;Montag;Anne Haug;9 Std. 24 Min.;Mittelmäßig;3992;567;158;95;Gut;Nein;40;79;Eisbad
+2026-06-01;Montag;Patrick Lange;8 Std. 6 Min.;Gut;4982;782;199;124;Gut;Nein;37;77;Blackroll & Stretching
+2026-06-01;Montag;Lucy Charles-Barclay;9 Std. 24 Min.;Schlecht;4903;711;189;127;Gut;Nein;36;106;Blackroll & Stretching
+2026-06-01;Montag;Kristian Blummenfelt;8 Std. 0 Min.;Gut;4246;639;188;98;Suboptimal;Nein;43;95;Kompressionskleidung
+2026-06-01;Montag;Gustav Iden;9 Std. 18 Min.;Sehr gut;4174;578;173;101;Hervorragend (Clean);Nein;38;93;Blackroll & Stretching
+2026-06-01;Montag;Daniela Ryf;7 Std. 48 Min.;Mittelmäßig;3747;607;176;87;Hervorragend (Clean);Nein;41;101;Sauna
+2026-06-01;Montag;Chrissie Wellington;7 Std. 36 Min.;Gut;4747;755;214;114;Hervorragend (Clean);Nein;41;97;Eisbad
+2026-06-02;Dienstag;Jan Frodeno;9 Std. 18 Min.;Gut;3563;553;167;90;Gut;Nein;39;75;Blackroll & Stretching
+2026-06-02;Dienstag;Anne Haug;7 Std. 42 Min.;Sehr gut;4105;596;180;111;Hervorragend (Clean);Nein;37;77;Keine
+2026-06-02;Dienstag;Patrick Lange;8 Std. 6 Min.;Sehr gut;4303;678;195;116;Ausgewogen;Nein;40;103;Keine
+2026-06-02;Dienstag;Lucy Charles-Barclay;9 Std. 18 Min.;Gut;3747;536;160;100;Ausgewogen;Nein;39;82;Blackroll & Stretching
+2026-06-02;Dienstag;Kristian Blummenfelt;7 Std. 42 Min.;Mittelmäßig;4851;706;213;126;Hervorragend (Clean);Leicht angeschlagen;49;49;Kompressionskleidung
+2026-06-02;Dienstag;Gustav Iden;8 Std. 6 Min.;Sehr gut;4084;623;178;91;Hervorragend (Clean);Nein;37;92;Eisbad
+2026-06-02;Dienstag;Daniela Ryf;9 Std. 30 Min.;Sehr gut;4624;723;187;121;Hervorragend (Clean);Nein;40;78;Blackroll & Stretching
+2026-06-02;Dienstag;Chrissie Wellington;9 Std. 12 Min.;Gut;3257;451;146;84;Hervorragend (Clean);Nein;41;81;Eisbad
+2026-06-03;Mittwoch;Jan Frodeno;8 Std. 54 Min.;Gut;5301;747;221;121;Ausgewogen;Nein;41;103;Eisbad
+2026-06-03;Mittwoch;Anne Haug;8 Std. 36 Min.;Gut;4110;574;200;111;Gut;Nein;41;106;Eisbad
+2026-06-03;Mittwoch;Patrick Lange;9 Std. 18 Min.;Gut;4368;609;172;118;Gut;Nein;41;75;Massage
+2026-06-03;Mittwoch;Lucy Charles-Barclay;7 Std. 48 Min.;Gut;3942;606;158;103;Hervorragend (Clean);Nein;41;104;Sauna
+2026-06-03;Mittwoch;Kristian Blummenfelt;8 Std. 48 Min.;Gut;4386;643;179;103;Suboptimal;Nein;41;102;Keine
+2026-06-03;Mittwoch;Gustav Iden;8 Std. 30 Min.;Gut;4056;577;188;96;Hervorragend (Clean);Nein;43;108;Massage
+2026-06-03;Mittwoch;Daniela Ryf;9 Std. 18 Min.;Gut;3544;569;151;97;Suboptimal;Nein;39;104;Eisbad
+2026-06-03;Mittwoch;Chrissie Wellington;8 Std. 6 Min.;Sehr gut;4134;665;190;104;Hervorragend (Clean);Nein;37;93;Kompressionskleidung
+2026-06-04;Donnerstag;Jan Frodeno;9 Std. 18 Min.;Gut;4368;677;183;104;Ausgewogen;Nein;43;92;Keine
+2026-06-04;Donnerstag;Anne Haug;8 Std. 30 Min.;Gut;4700;728;223;127;Hervorragend (Clean);Nein;40;76;Massage
+2026-06-04;Donnerstag;Patrick Lange;8 Std. 24 Min.;Gut;4282;652;162;96;Ausgewogen;Nein;40;101;Massage
+2026-06-04;Donnerstag;Lucy Charles-Barclay;7 Std. 54 Min.;Gut;3851;534;169;97;Gut;Nein;40;86;Kompressionskleidung
+2026-06-04;Donnerstag;Kristian Blummenfelt;9 Std. 6 Min.;Sehr gut;4276;596;161;117;Ausgewogen;Nein;37;80;Blackroll & Stretching
+2026-06-04;Donnerstag;Gustav Iden;8 Std. 0 Min.;Gut;4693;722;192;129;Gut;Nein;39;83;Blackroll & Stretching
+2026-06-04;Donnerstag;Daniela Ryf;8 Std. 12 Min.;Gut;4874;684;185;109;Ausgewogen;Nein;36;92;Blackroll & Stretching
+2026-06-04;Donnerstag;Chrissie Wellington;8 Std. 24 Min.;Sehr gut;4486;661;202;115;Hervorragend (Clean);Nein;40;104;Blackroll & Stretching
+2026-06-05;Freitag;Jan Frodeno;8 Std. 48 Min.;Sehr gut;2570;394;97;65;Ausgewogen;Nein;41;91;Blackroll & Stretching
+2026-06-05;Freitag;Anne Haug;8 Std. 36 Min.;Mittelmäßig;2886;466;140;67;Hervorragend (Clean);Nein;36;98;Massage
+2026-06-05;Freitag;Patrick Lange;7 Std. 36 Min.;Gut;3344;461;159;79;Hervorragend (Clean);Nein;43;100;Blackroll & Stretching
+2026-06-05;Freitag;Lucy Charles-Barclay;9 Std. 6 Min.;Sehr gut;2677;418;127;74;Gut;Nein;38;107;Keine
+2026-06-05;Freitag;Kristian Blummenfelt;9 Std. 12 Min.;Gut;3250;508;126;88;Gut;Nein;43;88;Eisbad
+2026-06-05;Freitag;Gustav Iden;7 Std. 30 Min.;Mittelmäßig;2591;376;127;71;Gut;Nein;38;86;Blackroll & Stretching
+2026-06-05;Freitag;Daniela Ryf;8 Std. 48 Min.;Gut;3291;517;127;82;Hervorragend (Clean);Nein;43;87;Blackroll & Stretching
+2026-06-05;Freitag;Chrissie Wellington;7 Std. 42 Min.;Sehr gut;3261;498;126;73;Gut;Nein;41;77;Keine
+2026-06-06;Samstag;Jan Frodeno;7 Std. 42 Min.;Schlecht;3850;565;183;105;Suboptimal;Nein;36;102;Blackroll & Stretching
+2026-06-06;Samstag;Anne Haug;8 Std. 36 Min.;Gut;6566;921;286;146;Gut;Nein;36;97;Massage
+2026-06-06;Samstag;Patrick Lange;9 Std. 0 Min.;Mittelmäßig;4264;626;175;115;Hervorragend (Clean);Leicht angeschlagen;54;40;Massage
+2026-06-06;Samstag;Lucy Charles-Barclay;9 Std. 18 Min.;Gut;6104;850;271;168;Gut;Nein;39;96;Sauna
+2026-06-06;Samstag;Kristian Blummenfelt;8 Std. 42 Min.;Mittelmäßig;6345;917;313;172;Gut;Nein;37;91;Eisbad
+2026-06-06;Samstag;Gustav Iden;8 Std. 12 Min.;Gut;5650;914;281;147;Gut;Nein;41;80;Keine
+2026-06-06;Samstag;Daniela Ryf;9 Std. 18 Min.;Mittelmäßig;4500;700;203;110;Ausgewogen;Nein;36;88;Massage
+2026-06-06;Samstag;Chrissie Wellington;9 Std. 6 Min.;Schlecht;4048;616;171;111;Ausgewogen;Nein;39;84;Blackroll & Stretching
+2026-06-07;Sonntag;Jan Frodeno;7 Std. 36 Min.;Mittelmäßig;4608;748;230;116;Gut;Leicht angeschlagen;49;49;Keine
+2026-06-07;Sonntag;Anne Haug;7 Std. 48 Min.;Schlecht;4139;592;189;106;Hervorragend (Clean);Nein;40;102;Sauna
+2026-06-07;Sonntag;Patrick Lange;8 Std. 30 Min.;Mittelmäßig;4355;659;211;106;Hervorragend (Clean);Nein;40;99;Keine
+2026-06-07;Sonntag;Lucy Charles-Barclay;7 Std. 54 Min.;Sehr gut;2964;433;133;72;Gut;Nein;40;102;Eisbad
+2026-06-07;Sonntag;Kristian Blummenfelt;8 Std. 18 Min.;Gut;4484;722;176;122;Gut;Nein;43;92;Blackroll & Stretching
+2026-06-07;Sonntag;Gustav Iden;8 Std. 12 Min.;Gut;3119;434;121;71;Hervorragend (Clean);Nein;37;87;Blackroll & Stretching
+2026-06-07;Sonntag;Daniela Ryf;9 Std. 18 Min.;Gut;3542;502;141;79;Hervorragend (Clean);Nein;36;79;Massage
+2026-06-07;Sonntag;Chrissie Wellington;8 Std. 24 Min.;Sehr gut;3193;479;147;71;Gut;Nein;42;107;Massage
+2026-06-08;Montag;Jan Frodeno;7 Std. 36 Min.;Sehr gut;4551;710;181;106;Hervorragend (Clean);Nein;38;91;Blackroll & Stretching
+2026-06-08;Montag;Anne Haug;9 Std. 0 Min.;Sehr gut;4172;648;203;104;Gut;Nein;40;83;Blackroll & Stretching
+2026-06-08;Montag;Patrick Lange;8 Std. 0 Min.;Gut;3907;568;156;93;Hervorragend (Clean);Nein;41;102;Blackroll & Stretching
+2026-06-08;Montag;Lucy Charles-Barclay;8 Std. 30 Min.;Sehr gut;4563;694;213;112;Hervorragend (Clean);Nein;41;94;Blackroll & Stretching
+2026-06-08;Montag;Kristian Blummenfelt;8 Std. 12 Min.;Schlecht;4171;598;161;96;Hervorragend (Clean);Nein;38;81;Massage
+2026-06-08;Montag;Gustav Iden;9 Std. 18 Min.;Mittelmäßig;3962;585;197;90;Hervorragend (Clean);Leicht angeschlagen;53;45;Keine
+2026-06-08;Montag;Daniela Ryf;7 Std. 48 Min.;Gut;4146;627;185;98;Gut;Nein;39;92;Eisbad
+2026-06-08;Montag;Chrissie Wellington;8 Std. 0 Min.;Sehr gut;4138;598;185;95;Gut;Nein;38;79;Massage
+2026-06-09;Dienstag;Jan Frodeno;7 Std. 36 Min.;Schlecht;4263;672;173;110;Gut;Nein;39;87;Blackroll & Stretching
+2026-06-09;Dienstag;Anne Haug;9 Std. 24 Min.;Mittelmäßig;4805;675;224;131;Hervorragend (Clean);Nein;40;104;Sauna
+2026-06-09;Dienstag;Patrick Lange;7 Std. 48 Min.;Gut;4312;610;170;115;Gut;Nein;43;88;Blackroll & Stretching
+2026-06-09;Dienstag;Lucy Charles-Barclay;9 Std. 6 Min.;Gut;4180;623;172;110;Gut;Nein;39;94;Keine
+2026-06-09;Dienstag;Kristian Blummenfelt;9 Std. 18 Min.;Gut;4019;647;182;96;Hervorragend (Clean);Nein;40;106;Blackroll & Stretching
+2026-06-09;Dienstag;Gustav Iden;9 Std. 6 Min.;Sehr gut;3728;535;174;83;Gut;Nein;38;103;Keine
+2026-06-09;Dienstag;Daniela Ryf;7 Std. 42 Min.;Mittelmäßig;4093;603;194;94;Hervorragend (Clean);Nein;41;99;Sauna
+2026-06-09;Dienstag;Chrissie Wellington;8 Std. 36 Min.;Sehr gut;3930;558;192;100;Gut;Nein;37;95;Kompressionskleidung
+2026-06-10;Mittwoch;Jan Frodeno;8 Std. 30 Min.;Mittelmäßig;4518;719;222;114;Gut;Leicht angeschlagen;49;51;Sauna
+2026-06-10;Mittwoch;Anne Haug;8 Std. 42 Min.;Schlecht;4764;766;233;117;Hervorragend (Clean);Ja (Erkältung);48;58;Keine
+2026-06-10;Mittwoch;Patrick Lange;9 Std. 12 Min.;Gut;4443;655;169;107;Ausgewogen;Nein;39;93;Eisbad
+2026-06-10;Mittwoch;Lucy Charles-Barclay;9 Std. 18 Min.;Gut;4058;632;175;95;Gut;Nein;39;89;Massage
+2026-06-10;Mittwoch;Kristian Blummenfelt;9 Std. 18 Min.;Mittelmäßig;4358;668;164;112;Hervorragend (Clean);Leicht angeschlagen;50;41;Massage
+2026-06-10;Mittwoch;Gustav Iden;9 Std. 30 Min.;Gut;4377;609;205;102;Ausgewogen;Nein;36;91;Massage
+2026-06-10;Mittwoch;Daniela Ryf;8 Std. 36 Min.;Sehr gut;4658;693;205;114;Gut;Nein;37;105;Massage
+2026-06-10;Mittwoch;Chrissie Wellington;9 Std. 24 Min.;Gut;4286;658;182;95;Hervorragend (Clean);Nein;36;82;Sauna
+2026-06-11;Donnerstag;Jan Frodeno;8 Std. 0 Min.;Gut;4736;663;224;109;Gut;Nein;37;100;Massage
+2026-06-11;Donnerstag;Anne Haug;9 Std. 12 Min.;Mittelmäßig;4345;670;174;103;Ausgewogen;Nein;37;75;Massage
+2026-06-11;Donnerstag;Patrick Lange;7 Std. 54 Min.;Gut;4279;683;204;103;Hervorragend (Clean);Nein;38;96;Blackroll & Stretching
+2026-06-11;Donnerstag;Lucy Charles-Barclay;8 Std. 18 Min.;Gut;3989;577;196;105;Hervorragend (Clean);Nein;43;102;Blackroll & Stretching
+2026-06-11;Donnerstag;Kristian Blummenfelt;8 Std. 24 Min.;Sehr gut;3946;596;179;93;Hervorragend (Clean);Nein;40;81;Kompressionskleidung
+2026-06-11;Donnerstag;Gustav Iden;8 Std. 0 Min.;Sehr gut;5389;756;240;127;Gut;Nein;37;75;Keine
+2026-06-11;Donnerstag;Daniela Ryf;7 Std. 48 Min.;Mittelmäßig;4659;710;209;120;Hervorragend (Clean);Nein;39;93;Blackroll & Stretching
+2026-06-11;Donnerstag;Chrissie Wellington;7 Std. 36 Min.;Sehr gut;4121;575;185;97;Hervorragend (Clean);Nein;41;85;Blackroll & Stretching
+2026-06-12;Freitag;Jan Frodeno;8 Std. 36 Min.;Gut;3163;508;147;74;Hervorragend (Clean);Nein;36;92;Blackroll & Stretching
+2026-06-12;Freitag;Anne Haug;8 Std. 42 Min.;Gut;3270;458;125;85;Gut;Nein;37;103;Blackroll & Stretching
+2026-06-12;Freitag;Patrick Lange;9 Std. 6 Min.;Gut;2772;422;116;63;Ausgewogen;Nein;39;81;Kompressionskleidung
+2026-06-12;Freitag;Lucy Charles-Barclay;8 Std. 36 Min.;Mittelmäßig;3232;509;147;84;Ausgewogen;Nein;37;109;Blackroll & Stretching
+2026-06-12;Freitag;Kristian Blummenfelt;9 Std. 24 Min.;Sehr gut;3205;514;127;81;Ausgewogen;Nein;38;107;Sauna
+2026-06-12;Freitag;Gustav Iden;9 Std. 24 Min.;Mittelmäßig;2974;473;142;71;Ausgewogen;Nein;37;79;Blackroll & Stretching
+2026-06-12;Freitag;Daniela Ryf;7 Std. 42 Min.;Gut;2839;441;108;68;Gut;Nein;41;106;Eisbad
+2026-06-12;Freitag;Chrissie Wellington;8 Std. 42 Min.;Mittelmäßig;2524;401;95;68;Gut;Leicht angeschlagen;54;47;Keine
+2026-06-13;Samstag;Jan Frodeno;9 Std. 0 Min.;Gut;3583;548;173;99;Gut;Nein;41;83;Blackroll & Stretching
+2026-06-13;Samstag;Anne Haug;7 Std. 42 Min.;Schlecht;3644;528;147;81;Hervorragend (Clean);Ja (Erkältung);50;53;Blackroll & Stretching
+2026-06-13;Samstag;Patrick Lange;7 Std. 54 Min.;Mittelmäßig;4127;576;176;111;Ausgewogen;Nein;37;109;Blackroll & Stretching
+2026-06-13;Samstag;Lucy Charles-Barclay;8 Std. 0 Min.;Mittelmäßig;5432;829;238;127;Hervorragend (Clean);Nein;42;87;Massage
+2026-06-13;Samstag;Kristian Blummenfelt;7 Std. 36 Min.;Schlecht;7098;1140;354;164;Hervorragend (Clean);Nein;37;103;Sauna
+2026-06-13;Samstag;Gustav Iden;7 Std. 54 Min.;Sehr gut;5505;838;246;125;Ausgewogen;Nein;43;108;Massage
+2026-06-13;Samstag;Daniela Ryf;9 Std. 12 Min.;Mittelmäßig;4504;681;173;110;Hervorragend (Clean);Nein;39;77;Sauna
+2026-06-13;Samstag;Chrissie Wellington;7 Std. 54 Min.;Gut;3929;623;171;97;Gut;Nein;41;94;Eisbad
+2026-06-14;Sonntag;Jan Frodeno;8 Std. 0 Min.;Mittelmäßig;3305;508;159;89;Gut;Nein;41;96;Sauna
+2026-06-14;Sonntag;Anne Haug;9 Std. 0 Min.;Sehr gut;3353;534;126;89;Hervorragend (Clean);Nein;37;103;Sauna
+2026-06-14;Sonntag;Patrick Lange;9 Std. 12 Min.;Gut;2728;394;123;75;Gut;Nein;40;102;Blackroll & Stretching
+2026-06-14;Sonntag;Lucy Charles-Barclay;7 Std. 42 Min.;Gut;3496;564;146;89;Ausgewogen;Nein;41;77;Kompressionskleidung
+2026-06-14;Sonntag;Kristian Blummenfelt;8 Std. 6 Min.;Gut;3630;551;151;93;Hervorragend (Clean);Nein;43;101;Kompressionskleidung
+2026-06-14;Sonntag;Gustav Iden;7 Std. 48 Min.;Gut;3414;471;141;85;Gut;Nein;38;109;Blackroll & Stretching
+2026-06-14;Sonntag;Daniela Ryf;8 Std. 24 Min.;Gut;3285;516;151;77;Hervorragend (Clean);Nein;38;108;Sauna
+2026-06-14;Sonntag;Chrissie Wellington;7 Std. 48 Min.;Schlecht;3926;581;178;95;Hervorragend (Clean);Ja (Erkältung);54;44;Blackroll & Stretching
