@@ -6,3 +6,4 @@ In diesem Projekt wird ein Dashboard zur Trainings- und Regenerationsanalyse fü
 pdm venv create
 pdm use -f .\.venv\Scripts\python.exe
 pdm install
+pip install streamlit-calendar
