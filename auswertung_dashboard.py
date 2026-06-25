@@ -84,16 +84,27 @@ with tab_training:
 
     with col_right:
         st.subheader("⚠️ Schmerz- & Beschwerdeprotokoll")
-        schmerzen = df_t_ath[df_t_ath["Schmerzen"].notna() & (df_t_ath["Schmerzen"].str.lower() != "keine")]
-        if not schmerzen.empty:
-            df_schmerz = schmerzen["Schmerzen"].value_counts().reset_index()
+        schmerzen_df = df_t_ath[df_t_ath["Schmerzen"].notna() & (df_t_ath["Schmerzen"].str.lower() != "keine")]
+        
+        if not schmerzen_df.empty:
+            # 1. Zählung der Vorkommen
+            df_schmerz = schmerzen_df["Schmerzen"].value_counts().reset_index()
             df_schmerz.columns = ["Beschwerde", "Anzahl"]
-            df_schmerz = df_schmerz.sort_values(by="Anzahl", ascending=False)
             
-            # Farb-Tabelle
-            def highlight_row(x):
-                return ['background-color: #fca5a5'] * len(x)
-            st.table(df_schmerz.style.apply(highlight_row, axis=1))
+            # 2. Hilfsfunktion zur Kategorisierung der Farbe
+            def get_color(beschwerde):
+                b = str(beschwerde).lower()
+                if "leicht" in b: return 'background-color: #86efac' # Grün
+                if "mittel" in b: return 'background-color: #fdba74' # Orange
+                if "stark" in b: return 'background-color: #fca5a5'  # Rot
+                return 'background-color: #e5e7eb' # Default Grau
+
+            # 3. Styling-Funktion
+            def style_row(row):
+                return [get_color(row['Beschwerde'])] * len(row)
+
+            # Tabelle anzeigen
+            st.table(df_schmerz.style.apply(style_row, axis=1))
         else:
             st.write("🟢 Keine Schmerzen dokumentiert.")
 
