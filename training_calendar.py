@@ -1,23 +1,3 @@
-"""
-training_calendar.py
-====================
-Wiederverwendbares Streamlit-Kalender-Modul für Triathlon-Trainingsdaten.
-
-CSV-Format (Semikolon-getrennt):
-    Datum;Athlet;Wochentag;Einheit_Des_Tages;Aktivität;Dauer_Minuten;Distanz_km;
-    Fokus;Ø_Herzfrequenz;Max_Herzfrequenz;Kalorienverbrauch;Gefühl;
-    Schmerzen_Beschwerden;Kommentar
-
-Import ins Dashboard:
-    from training_calendar import render_calendar
-
-    # Als Trainer (alle Athleten auswählbar):
-    render_calendar(role="trainer")
-
-    # Als Athlet (nur eigene Daten):
-    render_calendar(role="athlete", current_user="Anne Haug")
-"""
-
 import calendar
 import pandas as pd
 import streamlit as st
