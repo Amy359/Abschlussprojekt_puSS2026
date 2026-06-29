@@ -42,6 +42,13 @@ class Person:
             - ((heute.month, heute.day) < (self.geburtsdatum.month, self.geburtsdatum.day))
         )
 
+    def get_loginname(self):
+        return f"{self.vorname.lower()}.{self.nachname.lower()}"
+
+    @property  # Methode als Attribut
+    def id(self):
+        return self.get_loginname()
+
     def spezialisierung_hinzufuegen(self, disziplin: str):
         self.spezialisierung.append(disziplin)
 
@@ -49,7 +56,7 @@ class Person:
         self.erfolge.append(erfolg)
 
     # --- NEU: GET-LISTEN FÜR ATHLETEN & TRAINER (Klassenmethoden) ---
-    @classmethod
+    @classmethod  # Eingabeparameter ist ganze Klasse, nicht nur ein konkretes Objekt
     def get_athleten(cls):
         """Gibt eine Liste aller Objekte zurück, die die Rolle 'Athlet' haben."""
         return [p for p in cls._alle_personen if p.get_role() == "Athlet"]
@@ -59,8 +66,12 @@ class Person:
         """Gibt eine Liste aller Objekte zurück, die die Rolle 'Trainer' haben."""
         return [p for p in cls._alle_personen if p.get_role() == "Trainer"]
 
-    # --- NEU: STATISCHE METHODE ZUM EINLESEN DER CSV ---
-    @staticmethod
+    @classmethod
+    def daten_geladen(cls):
+        return len(cls._alle_personen) > 0
+
+    # --- STATISCHE METHODE ZUM EINLESEN DER CSV ---
+    @staticmethod  # benötigt kein Objekt/ Klasse als Eingabeparameter
     def load_data_from_csv(dateiname: str):
         """Liest eine CSV-Datei ein und erstellt automatisch die Personen-Objekte."""
         dateipfad = f"data/{dateiname}"  # csv dateien sind immer im data ordner abgelegt
