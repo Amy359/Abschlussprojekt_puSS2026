@@ -81,6 +81,15 @@ def zeige_auswertung(athlet_name, df_train, df_regen):
         df_distanz = df_t_ath[df_t_ath["Aktivitaet"].str.lower() != "ruhetag"]
         kw_aktivitaet = df_distanz.groupby(["KW", "Aktivitaet"])["Distanz_km"].sum().reset_index()
 
+        AKTIVITAET_FARBEN = {
+            "Schwimmen": "#3B82F6",
+            "Radfahren": "#F59E0B",
+            "Laufen":    "#10B981",
+            "Kraft":     "#8B5CF6",
+            "Ruhetag":   "#9CA3AF",
+            "Sonstiges": "#EC4899",
+        }
+
         fig_km = px.bar(
             kw_aktivitaet,
             x="KW",
@@ -88,6 +97,7 @@ def zeige_auswertung(athlet_name, df_train, df_regen):
             color="Aktivitaet",
             barmode="group",
             title="Wöchentliche Trainingsdistanzen (exkl. Ruhetage)",
+            color_discrete_map=AKTIVITAET_FARBEN,
         )
         st.plotly_chart(fig_km, use_container_width=True)
 
