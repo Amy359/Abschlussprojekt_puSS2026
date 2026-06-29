@@ -2,7 +2,7 @@ import streamlit as st
 
 from personenklasse import Person
 from login import login, logout
-import athlet_dashboard
+import athlete_dashboard
 import trainer_dashboard
 
 
@@ -40,4 +40,4 @@ else:
         trainer_dashboard.trainer_dashboard(person)
 
     else:
-        athlet_dashboard.athlet_dashboard(person)
+        athlete_dashboard.athlet_dashboard(person)
