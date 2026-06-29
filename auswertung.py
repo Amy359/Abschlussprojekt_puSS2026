@@ -12,7 +12,7 @@ def extrahiere_schlaf_stunden(schlaf_str):
         stunden = float(teile[0])
         minuten = float(teile[2]) if len(teile) > 2 else 0.0
         return stunden + (minuten / 60.0)
-    except:
+    except (ValueError, IndexError):
         return 0.0
 
 
