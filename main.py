@@ -1,7 +1,7 @@
 import streamlit as st
 
 from personenklasse import Person
-from login import login, logout
+from login import login, logout, set_background
 import athlete_dashboard
 import trainer_dashboard
 
@@ -29,6 +29,7 @@ if "person" not in st.session_state:
 # Login oder Dashboard
 # --------------------------------
 if not st.session_state.logged_in:
+    set_background("images/background.jpg")
     login()
 
 else:
