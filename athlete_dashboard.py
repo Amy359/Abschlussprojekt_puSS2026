@@ -100,17 +100,24 @@ def athlete_dashboard(person):
     df_train, df_regen = lade_daten()
 
     # Sidebar
-    st.sidebar.title(f"👋 Hallo, {athlet_name}!")
-    menu = st.sidebar.radio(
-    "Navigation",
-    [
-        "📅 Mein Kalender",
-        "🏋️ Training eingeben",
-        "🛌 Regeneration eingeben",
-        "📊 Meine Auswertung",
-        "📥 Daten exportieren",
-    ],
+    st.sidebar.title(f"Hallo, {athlet_name}!")
+    menu = st.sidebar.selectbox(
+        "Menü",
+        [
+            "📅 Mein Kalender",
+            "✏️ Eingaben",
+            "📊 Meine Auswertung",
+            "📥 Daten exportieren",
+        ],
     )
+
+    # Untermenü für "Eingaben"
+    eingabe_typ = None
+    if menu == "✏️ Eingaben":
+        eingabe_typ = st.sidebar.selectbox(
+            "Was möchtest du eingeben?",
+            ["🏋️ Training", "🛌 Regeneration"],
+        )
 
     # --- Seiten ---
 
@@ -123,11 +130,11 @@ def athlete_dashboard(person):
             csv_path=Path("data/triathlon_training.csv"),
         )
 
-    elif menu == "🏋️ Training eingeben":
-        zeige_training_eingabe(athlet_name)
-
-    elif menu == "🛌 Regeneration eingeben":
-        zeige_regen_eingabe(athlet_name)
+    elif menu == "✏️ Eingaben":
+        if eingabe_typ == "🏋️ Training":
+            zeige_training_eingabe(athlet_name)
+        elif eingabe_typ == "🛌 Regeneration":
+            zeige_regen_eingabe(athlet_name)
 
     elif menu == "📊 Meine Auswertung":
         zeige_auswertung(athlet_name, df_train, df_regen)

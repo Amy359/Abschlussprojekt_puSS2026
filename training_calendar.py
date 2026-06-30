@@ -14,6 +14,10 @@ from typing import Optional
 # CSV liegt in: <Projektordner>/data/triathlon_training.csv
 CSV_PATH = Path(__file__).parent / "data" / "triathlon_training.csv"
 
+# CSV liegt in: <Projektordner>/data/wettkaempfe.csv
+WETTKAMPF_CSV_PATH = Path(__file__).parent / "data" / "wettkaempfe.csv"
+WETTKAMPF_FARBE = "#DC2626"   # Rot – Markierung für Wettkampftage
+
 AKTIVITAET_FARBEN: dict[str, str] = {
     "Schwimmen":  "#3B82F6",   # Blau
     "Radfahren":  "#F59E0B",   # Amber
@@ -137,14 +141,63 @@ class TrainingData:
 
 
 # ---------------------------------------------------------------------------
+# Wettkampf-Daten-Klasse
+# ---------------------------------------------------------------------------
+
+class CompetitionData:
+    """Lädt und verwaltet die Wettkampfdaten aus wettkaempfe.csv."""
+
+    def __init__(self, csv_path: Path = WETTKAMPF_CSV_PATH):
+        self.csv_path = csv_path
+        self._df: Optional[pd.DataFrame] = None
+
+    def load(self) -> pd.DataFrame:
+        if self._df is not None:
+            return self._df
+
+        if not self.csv_path.exists():
+            # Wettkämpfe sind optional – ohne CSV einfach leeres DataFrame
+            self._df = pd.DataFrame(
+                columns=["ID", "Datum", "Athlet", "Wettkampf", "Ort",
+                         "Distanz", "Status", "Ergebnis"]
+            )
+            return self._df
+
+        df = pd.read_csv(self.csv_path, sep=";", encoding="utf-8")
+        df.columns = [c.strip() for c in df.columns]
+
+        df["Datum"] = pd.to_datetime(df["Datum"], format="%Y-%m-%d", errors="coerce")
+        df = df.dropna(subset=["Datum"])
+
+        for col in ["Athlet", "Wettkampf", "Ort", "Distanz", "Status", "Ergebnis"]:
+            if col in df.columns:
+                df[col] = df[col].fillna("").astype(str).str.strip()
+
+        self._df = df.reset_index(drop=True)
+        return self._df
+
+    def get_for_athlete(self, athlete: str) -> pd.DataFrame:
+        df = self.load()
+        return df[df["Athlet"] == athlete].copy()
+
+    def get_for_month(self, df: pd.DataFrame, year: int, month: int) -> pd.DataFrame:
+        mask = (df["Datum"].dt.year == year) & (df["Datum"].dt.month == month)
+        return df[mask]
+
+    def get_for_date(self, df: pd.DataFrame, target: date) -> pd.DataFrame:
+        return df[df["Datum"].dt.date == target]
+
+
+# ---------------------------------------------------------------------------
 # Kalender-Klasse
 # ---------------------------------------------------------------------------
 
 class TrainingCalendar:
     """Rendert den interaktiven Trainings-Kalender in Streamlit."""
 
-    def __init__(self, data: TrainingData):
+    def __init__(self, data: TrainingData, competitions: Optional[CompetitionData] = None):
         self.data = data
+        self.competitions = competitions or CompetitionData()
 
     # -- Öffentliche Methode -------------------------------------------------
 
@@ -166,6 +219,7 @@ class TrainingCalendar:
             return
 
         df_athlete = self.data.get_for_athlete(selected_athlete)
+        df_comp_athlete = self.competitions.get_for_athlete(selected_athlete)
 
         st.markdown("---")
         self._render_month_navigation()
@@ -179,10 +233,13 @@ class TrainingCalendar:
         self._render_legend()
 
         df_month = self.data.get_for_month(df_athlete, year, month)
-        self._render_calendar_grid(df_month, year, month)
+        df_comp_month = self.competitions.get_for_month(df_comp_athlete, year, month)
+        self._render_calendar_grid(df_month, df_comp_month, year, month)
 
         if st.session_state.get("cal_selected_date"):
-            self._render_day_detail(df_athlete, st.session_state["cal_selected_date"])
+            self._render_day_detail(
+                df_athlete, df_comp_athlete, st.session_state["cal_selected_date"]
+            )
 
         self._render_monthly_stats(df_month, selected_athlete)
 
@@ -286,11 +343,19 @@ class TrainingCalendar:
                 f"{aktivitaet}</span>"
             )
         st.markdown(" ".join(parts), unsafe_allow_html=True)
+        st.markdown(
+            f"<span style='border-left:5px solid {WETTKAMPF_FARBE};padding-left:6px;"
+            f"font-size:0.78rem;color:{WETTKAMPF_FARBE};font-weight:600'>"
+            f"🏆 Wettkampftag</span>",
+            unsafe_allow_html=True,
+        )
         st.markdown("")
 
     # -- Kalender-Grid -------------------------------------------------------
 
-    def _render_calendar_grid(self, df_month: pd.DataFrame, year: int, month: int):
+    def _render_calendar_grid(
+        self, df_month: pd.DataFrame, df_comp_month: pd.DataFrame, year: int, month: int
+    ):
         today = date.today()
         selected = st.session_state.get("cal_selected_date")
 
@@ -312,6 +377,11 @@ class TrainingCalendar:
                    border-radius:50%; margin:1px; }
         .cal-info { font-size:0.65rem; color:#6B7280; margin-top:3px; }
         .cal-ruhe { font-size:0.7rem; color:#9CA3AF; margin-top:3px; }
+        .cal-wettkampf {
+            font-size:0.65rem; font-weight:700; color:#7F1D1D;
+            background:#FEE2E2; border-radius:6px; padding:2px 5px;
+            margin-top:4px; line-height:1.3;
+        }
         </style>
         <table class="cal-table"><thead><tr>
         """
@@ -330,6 +400,8 @@ class TrainingCalendar:
                 current_date = date(year, month, day_num)
                 df_day = self.data.get_for_date(df_month, current_date)
                 aktiv_df = df_day[~df_day["_ist_ruhetag"]]
+                df_comp_day = self.competitions.get_for_date(df_comp_month, current_date)
+                is_wettkampf = not df_comp_day.empty
 
                 is_today    = current_date == today
                 is_selected = current_date == selected
@@ -339,6 +411,13 @@ class TrainingCalendar:
                 bg     = "#EFF6FF" if is_today else (
                          "#FFFBEB" if is_selected else "#FAFAFA")
                 num_color = "#1D4ED8" if is_today else "#374151"
+
+                # Wettkampftag überschreibt Rahmen/Hintergrund (außer heute/ausgewählt bleibt sichtbar als Akzent)
+                wettkampf_border_accent = ""
+                if is_wettkampf:
+                    wettkampf_border_accent = f"border-left:5px solid {WETTKAMPF_FARBE};"
+                    if not is_today and not is_selected:
+                        bg = "#FEF2F2"
 
                 # Punkte
                 dots = ""
@@ -362,9 +441,15 @@ class TrainingCalendar:
                 ).any() if not aktiv_df.empty else False
                 schmerz = '<span style="color:#EF4444;font-size:0.7rem">⚠️</span>' if hat_schmerzen else ""
 
+                # Wettkampf-Badge
+                wettkampf_html = ""
+                if is_wettkampf:
+                    namen = ", ".join(df_comp_day["Wettkampf"].unique())
+                    wettkampf_html = f'<div class="cal-wettkampf">🏆 {namen}</div>'
+
                 html += f"""
                 <td class="cal-td">
-                  <div class="cal-cell" style="border:{border};background:{bg}">
+                  <div class="cal-cell" style="border:{border};background:{bg};{wettkampf_border_accent}">
                     <div style="display:flex;justify-content:space-between;align-items:center">
                       <span class="cal-num" style="color:{num_color}">{day_num}</span>
                       {schmerz}
@@ -372,6 +457,7 @@ class TrainingCalendar:
                     <div class="cal-dots">{dots}</div>
                     {ruhe_html}
                     {dauer_html}
+                    {wettkampf_html}
                   </div>
                 </td>"""
             html += "</tr>"
@@ -400,14 +486,34 @@ class TrainingCalendar:
 
     # -- Tag-Detail ----------------------------------------------------------
 
-    def _render_day_detail(self, df_athlete: pd.DataFrame, selected_date: date):
+    def _render_day_detail(
+        self, df_athlete: pd.DataFrame, df_comp_athlete: pd.DataFrame, selected_date: date
+    ):
         df_day = self.data.get_for_date(df_athlete, selected_date)
+        df_comp_day = self.competitions.get_for_date(df_comp_athlete, selected_date)
 
         wochentag = df_day["Wochentag"].iloc[0] if not df_day.empty else ""
         st.markdown("---")
         st.markdown(
             f"### 📋 {wochentag}, {selected_date.strftime('%d. %B %Y')}"
         )
+
+        # Wettkampf-Hinweis
+        if not df_comp_day.empty:
+            for _, wk in df_comp_day.iterrows():
+                st.markdown(
+                    f"<div style='border:2px solid {WETTKAMPF_FARBE};border-radius:10px;"
+                    f"padding:12px 16px;background:#FEF2F2;margin-bottom:10px'>"
+                    f"<span style='font-size:1.1rem;font-weight:700;color:{WETTKAMPF_FARBE}'>"
+                    f"🏆 {wk.get('Wettkampf', '')}</span><br>"
+                    f"<span style='font-size:0.85rem;color:#374151'>"
+                    f"📍 {wk.get('Ort', '')} &nbsp;·&nbsp; "
+                    f"📏 {wk.get('Distanz', '')} &nbsp;·&nbsp; "
+                    f"📌 {wk.get('Status', '')}"
+                    f"{' &nbsp;·&nbsp; 🥇 ' + str(wk.get('Ergebnis')) if str(wk.get('Ergebnis', '')).strip() else ''}"
+                    f"</span></div>",
+                    unsafe_allow_html=True,
+                )
 
         # Ruhetag
         ruhe = df_day[df_day["_ist_ruhetag"]]
@@ -569,16 +675,18 @@ def render_calendar(
     role: str = "trainer",
     current_user: Optional[str] = None,
     csv_path: Path = CSV_PATH,
+    wettkaempfe_csv: Path = WETTKAMPF_CSV_PATH,
 ):
     """
     Haupt-Einstiegspunkt für den Import in ein anderes Dashboard.
 
     Parameters
     ----------
-    role         : "trainer"  → Athleten per Dropdown auswählbar
-                   "athlete"  → nur current_user sichtbar, keine Auswahl
-    current_user : Athlet-Name (Pflicht bei role="athlete")
-    csv_path     : Pfad zur CSV (Standard: triathlon_training.csv)
+    role            : "trainer"  → Athleten per Dropdown auswählbar
+                      "athlete"  → nur current_user sichtbar, keine Auswahl
+    current_user    : Athlet-Name (Pflicht bei role="athlete")
+    csv_path        : Pfad zur Trainings-CSV (Standard: triathlon_training.csv)
+    wettkaempfe_csv : Pfad zur Wettkampf-CSV (Standard: wettkaempfe.csv)
 
     Beispiel
     --------
@@ -590,8 +698,9 @@ def render_calendar(
     else:
         render_calendar(role="athlete", current_user=st.session_state["username"])
     """
-    data     = TrainingData(csv_path=csv_path)
-    cal      = TrainingCalendar(data)
+    data         = TrainingData(csv_path=csv_path)
+    competitions = CompetitionData(csv_path=wettkaempfe_csv)
+    cal          = TrainingCalendar(data, competitions)
     cal.render(role=role, current_user=current_user)
 
 

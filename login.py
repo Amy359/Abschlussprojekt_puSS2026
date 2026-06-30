@@ -91,6 +91,10 @@ def login():
                     st.rerun()
                 else:
                     st.error("Benutzername oder Passwort falsch!")
+            
+            if st.button("Registrieren"):
+                st.session_state.page = "register"
+                st.rerun()
 
 
 def logout():
