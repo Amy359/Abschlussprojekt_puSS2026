@@ -82,7 +82,15 @@ def login():
             username = st.text_input("Benutzername")
             password = st.text_input("Passwort", type="password")
 
-            anmelden = st.button("Anmelden", use_container_width=True)
+            if st.button("Anmelden", width="stretch"):
+                person = check_login(username, password)
+
+                if person:
+                    st.session_state.logged_in = True
+                    st.session_state.person = person
+                    st.rerun()
+                else:
+                    st.error("Benutzername oder Passwort falsch!")
 
 
 def logout():
