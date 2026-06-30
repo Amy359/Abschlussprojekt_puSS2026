@@ -8,3 +8,4 @@ pdm use -f .\.venv\Scripts\python.exe
 pdm install
 pip install streamlit-calendar
 pip install plotly
+pip install openpyxl
