@@ -112,7 +112,7 @@ def zeige_auswertung(athlet_name, df_train, df_regen):
     else:
         default_index = len(monats_optionen) - 1  # letzter verfügbarer Monat
 
-    st.markdown("### 📅 Monat auswählen")
+    st.markdown("### Monat auswählen")
     selected_monat = st.selectbox(
         "Monat", monats_optionen, index=default_index, key="auswertung_monat_select"
     )
@@ -131,8 +131,8 @@ def zeige_auswertung(athlet_name, df_train, df_regen):
 
     # --- TAB 1: TRAINING ---
     with tab_training:
-        st.markdown(f"## 📊 Trainingsübersicht: {athlet_name}")
-        st.markdown(f"### 📅 {selected_monat}")
+        st.markdown(f"## Trainingsübersicht: {athlet_name}")
+        st.markdown(f"### {selected_monat}")
 
         df_distanz = df_t_ath[df_t_ath["Aktivitaet"].str.lower() != "ruhetag"].copy()
         woche_aktivitaet = (
@@ -226,8 +226,8 @@ def zeige_auswertung(athlet_name, df_train, df_regen):
 
     # --- TAB 2: REGENERATION ---
     with tab_recovery:
-        st.markdown(f"## 🛌 Regenerations- & Vitalwerte: {athlet_name}")
-        st.markdown(f"### 📅 {selected_monat}")
+        st.markdown(f"## Regenerations- & Vitalwerte: {athlet_name}")
+        st.markdown(f"### {selected_monat}")
 
         schlaf_avg = df_r_ath["Schlaf_Stunden"].mean()
         h, m = (int(schlaf_avg), int((schlaf_avg - int(schlaf_avg)) * 60)) if pd.notna(schlaf_avg) else (0, 0)

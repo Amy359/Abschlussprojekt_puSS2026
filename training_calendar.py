@@ -1,4 +1,5 @@
 import calendar
+import altair as alt
 import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
@@ -6,25 +7,21 @@ from datetime import date
 from pathlib import Path
 from typing import Optional
 
-
-# ---------------------------------------------------------------------------
-# Konstanten
-# ---------------------------------------------------------------------------
-
-# CSV liegt in: <Projektordner>/data/triathlon_training.csv
 CSV_PATH = Path(__file__).parent / "data" / "triathlon_training.csv"
 
-# CSV liegt in: <Projektordner>/data/wettkaempfe.csv
 WETTKAMPF_CSV_PATH = Path(__file__).parent / "data" / "wettkaempfe.csv"
-WETTKAMPF_FARBE = "#DC2626"   # Rot – Markierung für Wettkampftage
+WETTKAMPF_FARBE = "#DC2626"   
+
+FEEDBACK_CSV_PATH = Path(__file__).parent / "data" / "feedback.csv"
+FEEDBACK_COLUMNS = ["Zeitstempel", "Athlet", "Jahr", "Monat", "Nachricht", "Gelesen"]
 
 AKTIVITAET_FARBEN: dict[str, str] = {
-    "Schwimmen":  "#3B82F6",   # Blau
-    "Radfahren":  "#F59E0B",   # Amber
-    "Laufen":     "#10B981",   # Grün
-    "Kraft":      "#8B5CF6",   # Lila
-    "Ruhetag":    "#9CA3AF",   # Grau
-    "Sonstiges":  "#EC4899",   # Pink
+    "Schwimmen":  "#3B82F6",   
+    "Radfahren":  "#F59E0B",   
+    "Laufen":     "#10B981",   
+    "Kraft":      "#8B5CF6",   
+    "Ruhetag":    "#9CA3AF",   
+    "Sonstiges":  "#EC4899",   
 }
 
 GEFUEHL_EMOJI: dict[str, str] = {
@@ -48,10 +45,6 @@ MONATE_DE  = [
 ]
 
 
-# ---------------------------------------------------------------------------
-# Hilfsfunktion: Schmerzen-Kategorie
-# ---------------------------------------------------------------------------
-
 def _schmerzen_kategorie(wert: str) -> str:
     """Gibt 'Keine', 'Leicht', 'Mittel' oder 'Stark' zurück."""
     w = str(wert).strip()
@@ -66,10 +59,6 @@ def _schmerzen_kategorie(wert: str) -> str:
     return "Leicht"
 
 
-# ---------------------------------------------------------------------------
-# Daten-Klasse
-# ---------------------------------------------------------------------------
-
 class TrainingData:
     """Lädt und verwaltet die Trainingsdaten aus der CSV."""
 
@@ -77,7 +66,7 @@ class TrainingData:
         self.csv_path = csv_path
         self._df: Optional[pd.DataFrame] = None
 
-    # -- Laden ---------------------------------------------------------------
+    
 
     def load(self) -> pd.DataFrame:
         """Liest CSV (Semikolon), normalisiert Typen, cacht das Ergebnis."""
@@ -99,32 +88,31 @@ class TrainingData:
         return self._df
 
     def _normalize(self, df: pd.DataFrame) -> pd.DataFrame:
-        # Leerzeichen aus Spaltennamen
+        
         df.columns = [c.strip() for c in df.columns]
 
         # Datum
         df["Datum"] = pd.to_datetime(df["Datum"], format="%Y-%m-%d", errors="coerce")
         df = df.dropna(subset=["Datum"])
 
-        # Numerische Felder
+        
         for col in ["Dauer_Minuten", "Distanz_km", "Ø_Herzfrequenz",
                     "Max_Herzfrequenz", "Kalorienverbrauch"]:
             if col in df.columns:
                 df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0)
 
-        # Textspalten
+        
         for col in ["Athlet", "Wochentag", "Einheit_Des_Tages", "Aktivität",
                     "Fokus", "Gefühl", "Schmerzen_Beschwerden", "Kommentar"]:
             if col in df.columns:
                 df[col] = df[col].fillna("").astype(str).str.strip()
 
-        # Ruhetag: Dauer 0 → kein echter Sport
+        
         df["_ist_ruhetag"] = df["Aktivität"].str.lower() == "ruhetag"
 
         return df.reset_index(drop=True)
 
-    # -- Abfragen ------------------------------------------------------------
-
+    
     def get_athletes(self) -> list[str]:
         df = self.load()
         return sorted(df["Athlet"].dropna().unique().tolist())
@@ -140,9 +128,6 @@ class TrainingData:
         return df[df["Datum"].dt.date == target]
 
 
-# ---------------------------------------------------------------------------
-# Wettkampf-Daten-Klasse
-# ---------------------------------------------------------------------------
 
 class CompetitionData:
     """Lädt und verwaltet die Wettkampfdaten aus wettkaempfe.csv."""
@@ -188,29 +173,115 @@ class CompetitionData:
         return df[df["Datum"].dt.date == target]
 
 
-# ---------------------------------------------------------------------------
-# Kalender-Klasse
-# ---------------------------------------------------------------------------
+
+class FeedbackData:
+    """Speichert und lädt Feedback-Nachrichten von Athlet:innen an den Trainer."""
+
+    def __init__(self, csv_path: Path = FEEDBACK_CSV_PATH):
+        self.csv_path = csv_path
+
+    def _ensure_file(self):
+        self.csv_path.parent.mkdir(parents=True, exist_ok=True)
+        if not self.csv_path.exists():
+            pd.DataFrame(columns=FEEDBACK_COLUMNS).to_csv(
+                self.csv_path, sep=";", index=False
+            )
+
+    def load(self) -> pd.DataFrame:
+        self._ensure_file()
+        try:
+            df = pd.read_csv(self.csv_path, sep=";", encoding="utf-8")
+        except pd.errors.EmptyDataError:
+            df = pd.DataFrame(columns=FEEDBACK_COLUMNS)
+
+        for col in FEEDBACK_COLUMNS:
+            if col not in df.columns:
+                df[col] = False if col == "Gelesen" else ""
+
+        df["Gelesen"] = df["Gelesen"].apply(
+            lambda x: str(x).strip().lower() in ("true", "1", "wahr")
+        )
+        return df
+
+    def add(self, athlet: str, jahr: int, monat: int, nachricht: str):
+        df = self.load()
+        neu = pd.DataFrame([{
+            "Zeitstempel": pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "Athlet":      athlet,
+            "Jahr":        jahr,
+            "Monat":       monat,
+            "Nachricht":   nachricht,
+            "Gelesen":     False,
+        }])
+        df = pd.concat([df, neu], ignore_index=True)
+        df.to_csv(self.csv_path, sep=";", index=False)
+
+    def get_for_athlete(self, athlet: str) -> pd.DataFrame:
+        df = self.load()
+        return df[df["Athlet"] == athlet].sort_values("Zeitstempel", ascending=False)
+
+    def get_unread(self) -> pd.DataFrame:
+        df = self.load()
+        return df[~df["Gelesen"]].sort_values("Zeitstempel", ascending=False)
+
+    def mark_as_read(self, index):
+        df = self.load()
+        if index in df.index:
+            df.loc[index, "Gelesen"] = True
+            df.to_csv(self.csv_path, sep=";", index=False)
+
+
+def render_trainer_feedback_inbox(
+    csv_path: Path = FEEDBACK_CSV_PATH, only_unread: bool = True
+):
+    """
+    Zeigt das Athleten-Feedback für den Trainer an.
+
+    Für die Einbindung in trainer_dashboard.py:
+
+        from training_calendar import render_trainer_feedback_inbox
+        render_trainer_feedback_inbox()
+    """
+    fb = FeedbackData(csv_path)
+    df = fb.get_unread() if only_unread else fb.load().sort_values(
+        "Zeitstempel", ascending=False
+    )
+
+    st.markdown("### 📬 Athleten-Feedback")
+    if df.empty:
+        st.caption("Kein neues Feedback." if only_unread else "Noch kein Feedback vorhanden.")
+        return
+
+    for idx, r in df.iterrows():
+        with st.container(border=True):
+            c1, c2 = st.columns([4, 1])
+            with c1:
+                st.markdown(f"**{r['Athlet']}** · {r['Zeitstempel']}")
+                st.write(r["Nachricht"])
+            with c2:
+                if not r["Gelesen"]:
+                    if st.button("✅ Gelesen", key=f"inbox_read_{idx}"):
+                        fb.mark_as_read(idx)
+                        st.rerun()
+
+
 
 class TrainingCalendar:
     """Rendert den interaktiven Trainings-Kalender in Streamlit."""
 
-    def __init__(self, data: TrainingData, competitions: Optional[CompetitionData] = None):
+    def __init__(
+        self,
+        data: TrainingData,
+        competitions: Optional[CompetitionData] = None,
+        feedback: Optional[FeedbackData] = None,
+    ):
         self.data = data
         self.competitions = competitions or CompetitionData()
+        self.feedback = feedback or FeedbackData()
 
     # -- Öffentliche Methode -------------------------------------------------
 
     def render(self, role: str = "trainer", current_user: Optional[str] = None):
-        """
-        Hauptmethode.
-
-        Parameters
-        ----------
-        role         : "trainer" → Athleten-Auswahl möglich
-                       "athlete" → nur current_user sichtbar
-        current_user : Name des Athleten bei role="athlete"
-        """
         self._init_session_state()
 
         selected_athlete = self._render_athlete_selector(role, current_user)
@@ -228,7 +299,7 @@ class TrainingCalendar:
         month = st.session_state["cal_month"]
 
         st.markdown(
-            f"### 📅 {MONATE_DE[month - 1]} {year} · {selected_athlete}"
+            f"### {MONATE_DE[month - 1]} {year} · {selected_athlete}"
         )
         self._render_legend()
 
@@ -241,9 +312,10 @@ class TrainingCalendar:
                 df_athlete, df_comp_athlete, st.session_state["cal_selected_date"]
             )
 
+        self._render_feedback_section(selected_athlete, role, year, month)
+
         self._render_monthly_stats(df_month, selected_athlete)
 
-    # -- Session State -------------------------------------------------------
 
     @staticmethod
     def _init_session_state():
@@ -256,7 +328,6 @@ class TrainingCalendar:
             if k not in st.session_state:
                 st.session_state[k] = v
 
-    # -- Athleten-Auswahl ----------------------------------------------------
 
     def _render_athlete_selector(
         self, role: str, current_user: Optional[str]
@@ -283,7 +354,6 @@ class TrainingCalendar:
             help="Als Trainer kannst du jeden Athleten einsehen."
         )
 
-    # -- Monat-Navigation ----------------------------------------------------
 
     @staticmethod
     def _render_month_navigation():
@@ -346,12 +416,11 @@ class TrainingCalendar:
         st.markdown(
             f"<span style='border-left:5px solid {WETTKAMPF_FARBE};padding-left:6px;"
             f"font-size:0.78rem;color:{WETTKAMPF_FARBE};font-weight:600'>"
-            f"🏆 Wettkampftag</span>",
+            f"Wettkampftag</span>",
             unsafe_allow_html=True,
         )
         st.markdown("")
 
-    # -- Kalender-Grid -------------------------------------------------------
 
     def _render_calendar_grid(
         self, df_month: pd.DataFrame, df_comp_month: pd.DataFrame, year: int, month: int
@@ -359,7 +428,7 @@ class TrainingCalendar:
         today = date.today()
         selected = st.session_state.get("cal_selected_date")
 
-        # Gesamtes Grid als eine HTML-Tabelle aufbauen
+    
         html = """
         <style>
         .cal-table { width:100%; border-collapse:separate; border-spacing:4px; }
@@ -477,7 +546,7 @@ class TrainingCalendar:
         tage_labels = {d: d.strftime("%d. %b (%A)") for d in alle_tage}
 
         selected_day = st.selectbox(
-            "📅 Tag auswählen für Details",
+            "Tag auswählen für Details",
             options=[None] + alle_tage,
             format_func=lambda d: "– kein Tag ausgewählt –" if d is None else tage_labels[d],
             key="cal_day_select",
@@ -518,7 +587,7 @@ class TrainingCalendar:
         # Ruhetag
         ruhe = df_day[df_day["_ist_ruhetag"]]
         if not ruhe.empty:
-            st.info("😴 **Geplante Regeneration** – Kein aktives Training.")
+            st.info(" **Geplante Regeneration** – Kein aktives Training.")
 
         aktiv_df = df_day[~df_day["_ist_ruhetag"]]
         if aktiv_df.empty and ruhe.empty:
@@ -561,26 +630,97 @@ class TrainingCalendar:
                         unsafe_allow_html=True,
                     )
 
-                # Metriken
                 m1, m2, m3, m4, m5 = st.columns(5)
-                m1.metric("⏱️ Dauer",    f"{dauer} min")
-                m2.metric("📏 Distanz",  f"{distanz:.1f} km" if distanz else "–")
-                m3.metric("❤️ Ø HF",     f"{hf_avg} bpm" if hf_avg else "–")
-                m4.metric("💥 Max HF",   f"{hf_max} bpm" if hf_max else "–")
-                m5.metric("🔥 Kalorien", f"{kalorien} kcal" if kalorien else "–")
+                m1.metric("Dauer",    f"{dauer} min")
+                m2.metric("Distanz",  f"{distanz:.1f} km" if distanz else "–")
+                m3.metric("Ø HF",     f"{hf_avg} bpm" if hf_avg else "–")
+                m4.metric("Max HF",   f"{hf_max} bpm" if hf_max else "–")
+                m5.metric("Kalorien", f"{kalorien} kcal" if kalorien else "–")
 
-                # Schmerzen
+                
                 st.markdown(
                     f"<span style='background:{s_color};color:white;padding:2px 8px;"
-                    f"border-radius:8px;font-size:0.75rem'>⚠️ {schmerzen}</span>",
+                    f"border-radius:8px;font-size:0.75rem'> {schmerzen}</span>",
                     unsafe_allow_html=True,
                 )
 
-                # Kommentar
+               
                 if kommentar:
                     st.caption(f"💬 {kommentar}")
 
-    # -- Monats-Statistik ----------------------------------------------------
+
+    # -- Feedback --------------------------------------------------------
+
+    def _render_feedback_section(self, athlete: str, role: str, year: int, month: int):
+        st.markdown("---")
+        st.markdown("### 💬 Feedback an den Trainer")
+
+        if role == "athlete":
+            with st.form(key="feedback_form", clear_on_submit=True):
+                nachricht = st.text_area(
+                    "Wie lief dein Training? Anmerkungen, Beschwerden oder Fragen "
+                    "gehen direkt an deinen Trainer.",
+                    height=100,
+                    placeholder="z. B. Rechtes Knie zwickt seit dem Lauf am Dienstag …",
+                )
+                submitted = st.form_submit_button("Feedback senden")
+                if submitted:
+                    if nachricht.strip():
+                        self.feedback.add(athlete, year, month, nachricht.strip())
+                        st.success("✅ Dein Feedback wurde an den Trainer gesendet.")
+                    else:
+                        st.warning("Bitte gib eine Nachricht ein, bevor du sie sendest.")
+
+            eigene = self.feedback.get_for_athlete(athlete)
+            if not eigene.empty:
+                with st.expander("Bisher gesendetes Feedback anzeigen"):
+                    for _, r in eigene.iterrows():
+                        status = "✅ gelesen" if r["Gelesen"] else "🕓 noch ungelesen"
+                        st.markdown(f"**{r['Zeitstempel']}** ({status}) – {r['Nachricht']}")
+
+        else:
+            # Trainer-Ansicht: Verlauf des ausgewählten Athleten, direkt quittierbar
+            verlauf = self.feedback.get_for_athlete(athlete)
+            if verlauf.empty:
+                st.caption("Noch kein Feedback von diesem Athleten erhalten.")
+            else:
+                for idx, r in verlauf.iterrows():
+                    icon = "✅" if r["Gelesen"] else "🆕"
+                    with st.container(border=True):
+                        st.markdown(
+                            f"{icon} **{r['Zeitstempel']}** — "
+                            f"{MONATE_DE[int(r['Monat']) - 1]} {int(r['Jahr'])}"
+                        )
+                        st.write(r["Nachricht"])
+                        if not r["Gelesen"]:
+                            if st.button("Als gelesen markieren", key=f"cal_read_{idx}"):
+                                self.feedback.mark_as_read(idx)
+                                st.rerun()
+
+    @staticmethod
+    def _aktivitaet_bar_chart(df: pd.DataFrame, value_col: str, y_title: str):
+        """Balkendiagramm, dessen Balkenfarben zu AKTIVITAET_FARBEN passen
+        (also identisch zu den Farben im Kalender/der Legende)."""
+        vorhandene = [a for a in AKTIVITAET_FARBEN if a in df["Aktivität"].unique()]
+        chart = (
+            alt.Chart(df)
+            .mark_bar()
+            .encode(
+                x=alt.X("Aktivität:N", sort=vorhandene, title=None),
+                y=alt.Y(f"{value_col}:Q", title=y_title),
+                color=alt.Color(
+                    "Aktivität:N",
+                    scale=alt.Scale(
+                        domain=vorhandene,
+                        range=[AKTIVITAET_FARBEN[a] for a in vorhandene],
+                    ),
+                    legend=None,
+                ),
+                tooltip=["Aktivität", alt.Tooltip(f"{value_col}:Q", title=y_title)],
+            )
+            .properties(height=280)
+        )
+        st.altair_chart(chart, use_container_width=True)
 
     def _render_monthly_stats(self, df_month: pd.DataFrame, athlet: str):
         aktiv = df_month[~df_month["_ist_ruhetag"]]
@@ -588,7 +728,7 @@ class TrainingCalendar:
             return
 
         st.markdown("---")
-        st.markdown(f"### 📊 Monatsübersicht – {athlet}")
+        st.markdown(f"### Monatsübersicht – {athlet}")
 
         total_einheiten = len(aktiv)
         total_min       = int(aktiv["Dauer_Minuten"].sum())
@@ -603,17 +743,20 @@ class TrainingCalendar:
 
         # KPI-Zeile 1
         c1, c2, c3, c4 = st.columns(4)
-        c1.metric("🏅 Einheiten",       total_einheiten)
-        c2.metric("⏱️ Gesamtdauer",
+        c1.metric("Einheiten",       total_einheiten)
+        c2.metric("Gesamtdauer",
                   f"{total_min // 60}h {total_min % 60}min")
-        c3.metric("📏 Distanz",         f"{total_km:.1f} km")
-        c4.metric("🔥 Kalorien",        f"{total_kcal:,} kcal")
+        c3.metric("Distanz",         f"{total_km:.1f} km")
+        c4.metric("Kalorien",        f"{total_kcal:,} kcal")
 
         # KPI-Zeile 2
         c5, c6, c7, _ = st.columns(4)
-        c5.metric("❤️ Ø Herzfrequenz", f"{avg_hf} bpm" if avg_hf else "–")
-        c6.metric("😴 Ruhetage",        ruhetage)
-        c7.metric("⚠️ Schmerz-Einh.",  schmerzen_count)
+        c5.metric("Ø Herzfrequenz", f"{avg_hf} bpm" if avg_hf else "–")
+        c6.metric("Ruhetage",        ruhetage)
+        c7.metric("Schmerz-Einh.",  schmerzen_count)
+
+        # Größerer Abstand zwischen den Kennzahlen und den Diagrammen
+        st.markdown("<div style='margin-top:2.5rem'></div>", unsafe_allow_html=True)
 
         # Disziplin-Verteilung
         col_chart1, col_chart2 = st.columns(2)
@@ -626,7 +769,7 @@ class TrainingCalendar:
                 .reset_index()
                 .sort_values("Dauer_Minuten", ascending=False)
             )
-            st.bar_chart(dist_dauer.set_index("Aktivität")["Dauer_Minuten"])
+            self._aktivitaet_bar_chart(dist_dauer, "Dauer_Minuten", "Minuten")
 
         with col_chart2:
             st.markdown("**Distanz nach Aktivität (km)**")
@@ -636,7 +779,7 @@ class TrainingCalendar:
                 .reset_index()
                 .sort_values("Distanz_km", ascending=False)
             )
-            st.bar_chart(dist_km.set_index("Aktivität")["Distanz_km"])
+            self._aktivitaet_bar_chart(dist_km, "Distanz_km", "km")
 
         # Gefühls-Verteilung
         st.markdown("**Tagesgefühl-Verteilung**")
@@ -649,10 +792,20 @@ class TrainingCalendar:
         gefuehl_counts["Gefühl"] = gefuehl_counts["Gefühl"].apply(
             lambda g: f"{GEFUEHL_EMOJI.get(g, '')} {g}"
         )
-        st.bar_chart(gefuehl_counts.set_index("Gefühl")["Anzahl"])
+        gefuehl_chart = (
+            alt.Chart(gefuehl_counts)
+            .mark_bar(color="#9CA3AF")
+            .encode(
+                x=alt.X("Gefühl:N", sort=None, title=None),
+                y=alt.Y("Anzahl:Q"),
+                tooltip=["Gefühl", "Anzahl"],
+            )
+            .properties(height=280)
+        )
+        st.altair_chart(gefuehl_chart, use_container_width=True)
 
         # Schmerzen-Übersicht
-        with st.expander("⚠️ Schmerzen & Beschwerden im Monat"):
+        with st.expander("Schmerzen & Beschwerden im Monat"):
             schmerz_df = aktiv[
                 aktiv["Schmerzen_Beschwerden"].apply(
                     lambda x: _schmerzen_kategorie(x) != "Keine"
@@ -660,22 +813,20 @@ class TrainingCalendar:
             ][["Datum", "Aktivität", "Schmerzen_Beschwerden", "Gefühl", "Kommentar"]]
 
             if schmerz_df.empty:
-                st.success("Keine Beschwerden im gewählten Monat 🎉")
+                st.success("Keine Beschwerden im gewählten Monat")
             else:
                 schmerz_df = schmerz_df.copy()
                 schmerz_df["Datum"] = schmerz_df["Datum"].dt.strftime("%d.%m.%Y")
                 st.dataframe(schmerz_df, use_container_width=True, hide_index=True)
 
 
-# ---------------------------------------------------------------------------
-# Öffentliche Convenience-Funktion (Import-Interface)
-# ---------------------------------------------------------------------------
 
 def render_calendar(
     role: str = "trainer",
     current_user: Optional[str] = None,
     csv_path: Path = CSV_PATH,
     wettkaempfe_csv: Path = WETTKAMPF_CSV_PATH,
+    feedback_csv: Path = FEEDBACK_CSV_PATH,
 ):
     """
     Haupt-Einstiegspunkt für den Import in ein anderes Dashboard.
@@ -687,6 +838,7 @@ def render_calendar(
     current_user    : Athlet-Name (Pflicht bei role="athlete")
     csv_path        : Pfad zur Trainings-CSV (Standard: triathlon_training.csv)
     wettkaempfe_csv : Pfad zur Wettkampf-CSV (Standard: wettkaempfe.csv)
+    feedback_csv    : Pfad zur Feedback-CSV (Standard: feedback.csv)
 
     Beispiel
     --------
@@ -697,16 +849,20 @@ def render_calendar(
         render_calendar(role="trainer", csv_path="data/triathlon_training.csv")
     else:
         render_calendar(role="athlete", current_user=st.session_state["username"])
+
+    Um das Athleten-Feedback im Trainer-Dashboard (trainer_dashboard.py)
+    zusätzlich als eigene Inbox anzuzeigen (z. B. auf der Startseite):
+
+        from training_calendar import render_trainer_feedback_inbox
+        render_trainer_feedback_inbox()
     """
     data         = TrainingData(csv_path=csv_path)
     competitions = CompetitionData(csv_path=wettkaempfe_csv)
-    cal          = TrainingCalendar(data, competitions)
+    feedback     = FeedbackData(csv_path=feedback_csv)
+    cal          = TrainingCalendar(data, competitions, feedback)
     cal.render(role=role, current_user=current_user)
 
 
-# ---------------------------------------------------------------------------
-# Standalone-Demo  →  streamlit run training_calendar.py
-# ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
     st.set_page_config(

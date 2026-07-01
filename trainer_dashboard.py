@@ -7,6 +7,10 @@ from streamlit_calendar import calendar
 from personenklasse import Person
 from auswertung import lade_daten, zeige_auswertung
 
+#für die feedback box das einfügen:
+# from training_calendar import render_trainer_feedback_inbox
+#render_trainer_feedback_inbox()
+
 
 # HILFSFUNKTIONEN
 def lade_wettkaempfe():

@@ -100,7 +100,7 @@ def login():
 def logout():
     """Zeigt den Logout-Button an."""
 
-    if st.sidebar.button("🚪 Logout"):
+    if st.sidebar.button("Logout"):
         st.session_state.logged_in = False
         st.session_state.person = None
 
