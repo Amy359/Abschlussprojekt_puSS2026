@@ -10,38 +10,48 @@ from typing import Optional
 CSV_PATH = Path(__file__).parent / "data" / "triathlon_training.csv"
 
 WETTKAMPF_CSV_PATH = Path(__file__).parent / "data" / "wettkaempfe.csv"
-WETTKAMPF_FARBE = "#DC2626"   
+WETTKAMPF_FARBE = "#DC2626"
 
 FEEDBACK_CSV_PATH = Path(__file__).parent / "data" / "feedback.csv"
 FEEDBACK_COLUMNS = ["Zeitstempel", "Athlet", "Jahr", "Monat", "Nachricht", "Gelesen"]
 
 AKTIVITAET_FARBEN: dict[str, str] = {
-    "Schwimmen":  "#3B82F6",   
-    "Radfahren":  "#F59E0B",   
-    "Laufen":     "#10B981",   
-    "Kraft":      "#8B5CF6",   
-    "Ruhetag":    "#9CA3AF",   
-    "Sonstiges":  "#EC4899",   
+    "Schwimmen": "#3B82F6",
+    "Radfahren": "#FF33B1",
+    "Laufen": "#0B7A55",
+    "Kraft": "#8B5CF6",
+    "Ruhetag": "#9CA3AF",
+    "Sonstiges": "#FFEB38",
 }
 
 GEFUEHL_EMOJI: dict[str, str] = {
     "Sehr gut": "😄",
-    "Gut":      "🙂",
-    "Normal":   "😐",
-    "Müde":     "😓",
+    "Gut": "🙂",
+    "Normal": "😐",
+    "Müde": "😓",
 }
 
 SCHMERZEN_FARBE: dict[str, str] = {
-    "Keine":  "#10B981",
+    "Keine": "#10B981",
     "Leicht": "#F59E0B",
     "Mittel": "#EF4444",
-    "Stark":  "#7F1D1D",
+    "Stark": "#7F1D1D",
 }
 
 WOCHENTAGE = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
-MONATE_DE  = [
-    "Januar", "Februar", "März", "April", "Mai", "Juni",
-    "Juli", "August", "September", "Oktober", "November", "Dezember",
+MONATE_DE = [
+    "Januar",
+    "Februar",
+    "März",
+    "April",
+    "Mai",
+    "Juni",
+    "Juli",
+    "August",
+    "September",
+    "Oktober",
+    "November",
+    "Dezember",
 ]
 
 
@@ -66,8 +76,6 @@ class TrainingData:
         self.csv_path = csv_path
         self._df: Optional[pd.DataFrame] = None
 
-    
-
     def load(self) -> pd.DataFrame:
         """Liest CSV (Semikolon), normalisiert Typen, cacht das Ergebnis."""
         if self._df is not None:
@@ -88,31 +96,34 @@ class TrainingData:
         return self._df
 
     def _normalize(self, df: pd.DataFrame) -> pd.DataFrame:
-        
+
         df.columns = [c.strip() for c in df.columns]
 
         # Datum
         df["Datum"] = pd.to_datetime(df["Datum"], format="%Y-%m-%d", errors="coerce")
         df = df.dropna(subset=["Datum"])
 
-        
-        for col in ["Dauer_Minuten", "Distanz_km", "Ø_Herzfrequenz",
-                    "Max_Herzfrequenz", "Kalorienverbrauch"]:
+        for col in ["Dauer_Minuten", "Distanz_km", "Ø_Herzfrequenz", "Max_Herzfrequenz", "Kalorienverbrauch"]:
             if col in df.columns:
                 df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0)
 
-        
-        for col in ["Athlet", "Wochentag", "Einheit_Des_Tages", "Aktivität",
-                    "Fokus", "Gefühl", "Schmerzen_Beschwerden", "Kommentar"]:
+        for col in [
+            "Athlet",
+            "Wochentag",
+            "Einheit_Des_Tages",
+            "Aktivität",
+            "Fokus",
+            "Gefühl",
+            "Schmerzen_Beschwerden",
+            "Kommentar",
+        ]:
             if col in df.columns:
                 df[col] = df[col].fillna("").astype(str).str.strip()
 
-        
         df["_ist_ruhetag"] = df["Aktivität"].str.lower() == "ruhetag"
 
         return df.reset_index(drop=True)
 
-    
     def get_athletes(self) -> list[str]:
         df = self.load()
         return sorted(df["Athlet"].dropna().unique().tolist())
@@ -126,7 +137,6 @@ class TrainingData:
 
     def get_for_date(self, df: pd.DataFrame, target: date) -> pd.DataFrame:
         return df[df["Datum"].dt.date == target]
-
 
 
 class CompetitionData:
@@ -143,8 +153,7 @@ class CompetitionData:
         if not self.csv_path.exists():
             # Wettkämpfe sind optional – ohne CSV einfach leeres DataFrame
             self._df = pd.DataFrame(
-                columns=["ID", "Datum", "Athlet", "Wettkampf", "Ort",
-                         "Distanz", "Status", "Ergebnis"]
+                columns=["ID", "Datum", "Athlet", "Wettkampf", "Ort", "Distanz", "Status", "Ergebnis"]
             )
             return self._df
 
@@ -173,7 +182,6 @@ class CompetitionData:
         return df[df["Datum"].dt.date == target]
 
 
-
 class FeedbackData:
     """Speichert und lädt Feedback-Nachrichten von Athlet:innen an den Trainer."""
 
@@ -183,9 +191,7 @@ class FeedbackData:
     def _ensure_file(self):
         self.csv_path.parent.mkdir(parents=True, exist_ok=True)
         if not self.csv_path.exists():
-            pd.DataFrame(columns=FEEDBACK_COLUMNS).to_csv(
-                self.csv_path, sep=";", index=False
-            )
+            pd.DataFrame(columns=FEEDBACK_COLUMNS).to_csv(self.csv_path, sep=";", index=False)
 
     def load(self) -> pd.DataFrame:
         self._ensure_file()
@@ -194,25 +200,28 @@ class FeedbackData:
         except pd.errors.EmptyDataError:
             df = pd.DataFrame(columns=FEEDBACK_COLUMNS)
 
+        df.columns = [c.strip() for c in df.columns]
         for col in FEEDBACK_COLUMNS:
             if col not in df.columns:
                 df[col] = False if col == "Gelesen" else ""
 
-        df["Gelesen"] = df["Gelesen"].apply(
-            lambda x: str(x).strip().lower() in ("true", "1", "wahr")
-        )
+        df["Gelesen"] = df["Gelesen"].apply(lambda x: str(x).strip().lower() in ("true", "1", "wahr")).astype(bool)
         return df
 
     def add(self, athlet: str, jahr: int, monat: int, nachricht: str):
         df = self.load()
-        neu = pd.DataFrame([{
-            "Zeitstempel": pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "Athlet":      athlet,
-            "Jahr":        jahr,
-            "Monat":       monat,
-            "Nachricht":   nachricht,
-            "Gelesen":     False,
-        }])
+        neu = pd.DataFrame(
+            [
+                {
+                    "Zeitstempel": pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "Athlet": athlet,
+                    "Jahr": jahr,
+                    "Monat": monat,
+                    "Nachricht": nachricht,
+                    "Gelesen": False,
+                }
+            ]
+        )
         df = pd.concat([df, neu], ignore_index=True)
         df.to_csv(self.csv_path, sep=";", index=False)
 
@@ -231,9 +240,7 @@ class FeedbackData:
             df.to_csv(self.csv_path, sep=";", index=False)
 
 
-def render_trainer_feedback_inbox(
-    csv_path: Path = FEEDBACK_CSV_PATH, only_unread: bool = True
-):
+def render_trainer_feedback_inbox(csv_path: Path = FEEDBACK_CSV_PATH, only_unread: bool = True):
     """
     Zeigt das Athleten-Feedback für den Trainer an.
 
@@ -243,9 +250,7 @@ def render_trainer_feedback_inbox(
         render_trainer_feedback_inbox()
     """
     fb = FeedbackData(csv_path)
-    df = fb.get_unread() if only_unread else fb.load().sort_values(
-        "Zeitstempel", ascending=False
-    )
+    df = fb.get_unread() if only_unread else fb.load().sort_values("Zeitstempel", ascending=False)
 
     st.markdown("### 📬 Athleten-Feedback")
     if df.empty:
@@ -263,7 +268,6 @@ def render_trainer_feedback_inbox(
                     if st.button("✅ Gelesen", key=f"inbox_read_{idx}"):
                         fb.mark_as_read(idx)
                         st.rerun()
-
 
 
 class TrainingCalendar:
@@ -295,12 +299,10 @@ class TrainingCalendar:
         st.markdown("---")
         self._render_month_navigation()
 
-        year  = st.session_state["cal_year"]
+        year = st.session_state["cal_year"]
         month = st.session_state["cal_month"]
 
-        st.markdown(
-            f"### {MONATE_DE[month - 1]} {year} · {selected_athlete}"
-        )
+        st.markdown(f"### {MONATE_DE[month - 1]} {year} · {selected_athlete}")
         self._render_legend()
 
         df_month = self.data.get_for_month(df_athlete, year, month)
@@ -308,30 +310,24 @@ class TrainingCalendar:
         self._render_calendar_grid(df_month, df_comp_month, year, month)
 
         if st.session_state.get("cal_selected_date"):
-            self._render_day_detail(
-                df_athlete, df_comp_athlete, st.session_state["cal_selected_date"]
-            )
+            self._render_day_detail(df_athlete, df_comp_athlete, st.session_state["cal_selected_date"])
 
         self._render_feedback_section(selected_athlete, role, year, month)
 
         self._render_monthly_stats(df_month, selected_athlete)
 
-
     @staticmethod
     def _init_session_state():
         today = date.today()
         for k, v in {
-            "cal_year":          today.year,
-            "cal_month":         today.month,
+            "cal_year": today.year,
+            "cal_month": today.month,
             "cal_selected_date": None,
         }.items():
             if k not in st.session_state:
                 st.session_state[k] = v
 
-
-    def _render_athlete_selector(
-        self, role: str, current_user: Optional[str]
-    ) -> Optional[str]:
+    def _render_athlete_selector(self, role: str, current_user: Optional[str]) -> Optional[str]:
         athletes = self.data.get_athletes()
 
         if role == "athlete":
@@ -350,10 +346,8 @@ class TrainingCalendar:
             st.error("Keine Athleten gefunden.")
             return None
         return st.selectbox(
-            "Athlet", athletes, key="cal_athlete_select",
-            help="Als Trainer kannst du jeden Athleten einsehen."
+            "Athlet", athletes, key="cal_athlete_select", help="Als Trainer kannst du jeden Athleten einsehen."
         )
-
 
     @staticmethod
     def _render_month_navigation():
@@ -365,7 +359,7 @@ class TrainingCalendar:
                 y = st.session_state["cal_year"]
                 if m == 1:
                     st.session_state["cal_month"] = 12
-                    st.session_state["cal_year"]  = y - 1
+                    st.session_state["cal_year"] = y - 1
                 else:
                     st.session_state["cal_month"] = m - 1
                 st.session_state["cal_selected_date"] = None
@@ -374,7 +368,8 @@ class TrainingCalendar:
             ca, cb = st.columns(2)
             with ca:
                 new_month = st.selectbox(
-                    "Monat", range(1, 13),
+                    "Monat",
+                    range(1, 13),
                     index=st.session_state["cal_month"] - 1,
                     format_func=lambda m: MONATE_DE[m - 1],
                     key="cal_month_sel",
@@ -383,9 +378,12 @@ class TrainingCalendar:
                 st.session_state["cal_month"] = new_month
             with cb:
                 new_year = st.number_input(
-                    "Jahr", min_value=2020, max_value=2030,
+                    "Jahr",
+                    min_value=2020,
+                    max_value=2030,
                     value=st.session_state["cal_year"],
-                    step=1, key="cal_year_inp",
+                    step=1,
+                    key="cal_year_inp",
                     label_visibility="collapsed",
                 )
                 st.session_state["cal_year"] = int(new_year)
@@ -396,7 +394,7 @@ class TrainingCalendar:
                 y = st.session_state["cal_year"]
                 if m == 12:
                     st.session_state["cal_month"] = 1
-                    st.session_state["cal_year"]  = y + 1
+                    st.session_state["cal_year"] = y + 1
                 else:
                     st.session_state["cal_month"] = m + 1
                 st.session_state["cal_selected_date"] = None
@@ -421,14 +419,10 @@ class TrainingCalendar:
         )
         st.markdown("")
 
-
-    def _render_calendar_grid(
-        self, df_month: pd.DataFrame, df_comp_month: pd.DataFrame, year: int, month: int
-    ):
+    def _render_calendar_grid(self, df_month: pd.DataFrame, df_comp_month: pd.DataFrame, year: int, month: int):
         today = date.today()
         selected = st.session_state.get("cal_selected_date")
 
-    
         html = """
         <style>
         .cal-table { width:100%; border-collapse:separate; border-spacing:4px; }
@@ -472,13 +466,13 @@ class TrainingCalendar:
                 df_comp_day = self.competitions.get_for_date(df_comp_month, current_date)
                 is_wettkampf = not df_comp_day.empty
 
-                is_today    = current_date == today
+                is_today = current_date == today
                 is_selected = current_date == selected
 
-                border = "2px solid #3B82F6" if is_today else (
-                         "2px solid #F59E0B" if is_selected else "1px solid #E5E7EB")
-                bg     = "#EFF6FF" if is_today else (
-                         "#FFFBEB" if is_selected else "#FAFAFA")
+                border = (
+                    "2px solid #3B82F6" if is_today else ("2px solid #F59E0B" if is_selected else "1px solid #E5E7EB")
+                )
+                bg = "#EFF6FF" if is_today else ("#FFFBEB" if is_selected else "#FAFAFA")
                 num_color = "#1D4ED8" if is_today else "#374151"
 
                 # Wettkampftag überschreibt Rahmen/Hintergrund (außer heute/ausgewählt bleibt sichtbar als Akzent)
@@ -491,7 +485,7 @@ class TrainingCalendar:
                 # Punkte
                 dots = ""
                 for _, row in aktiv_df.iterrows():
-                    akt   = row.get("Aktivität", "Sonstiges")
+                    akt = row.get("Aktivität", "Sonstiges")
                     color = AKTIVITAET_FARBEN.get(akt, "#6B7280")
                     dots += f'<span class="cal-dot" style="background:{color}"></span>'
 
@@ -505,9 +499,11 @@ class TrainingCalendar:
                 dauer_html = f'<div class="cal-info">{total_min} min</div>' if total_min else ""
 
                 # Schmerzen
-                hat_schmerzen = aktiv_df["Schmerzen_Beschwerden"].apply(
-                    lambda x: _schmerzen_kategorie(x) != "Keine"
-                ).any() if not aktiv_df.empty else False
+                hat_schmerzen = (
+                    aktiv_df["Schmerzen_Beschwerden"].apply(lambda x: _schmerzen_kategorie(x) != "Keine").any()
+                    if not aktiv_df.empty
+                    else False
+                )
                 schmerz = '<span style="color:#EF4444;font-size:0.7rem">⚠️</span>' if hat_schmerzen else ""
 
                 # Wettkampf-Badge
@@ -539,10 +535,7 @@ class TrainingCalendar:
 
         # Klick-Auswahl per Selectbox (kompakt, kein Button-Chaos)
         cal_weeks_flat = calendar.monthcalendar(year, month)
-        alle_tage = [
-            date(year, month, d)
-            for week in cal_weeks_flat for d in week if d != 0
-        ]
+        alle_tage = [date(year, month, d) for week in cal_weeks_flat for d in week if d != 0]
         tage_labels = {d: d.strftime("%d. %b (%A)") for d in alle_tage}
 
         selected_day = st.selectbox(
@@ -555,17 +548,13 @@ class TrainingCalendar:
 
     # -- Tag-Detail ----------------------------------------------------------
 
-    def _render_day_detail(
-        self, df_athlete: pd.DataFrame, df_comp_athlete: pd.DataFrame, selected_date: date
-    ):
+    def _render_day_detail(self, df_athlete: pd.DataFrame, df_comp_athlete: pd.DataFrame, selected_date: date):
         df_day = self.data.get_for_date(df_athlete, selected_date)
         df_comp_day = self.competitions.get_for_date(df_comp_athlete, selected_date)
 
         wochentag = df_day["Wochentag"].iloc[0] if not df_day.empty else ""
         st.markdown("---")
-        st.markdown(
-            f"### 📋 {wochentag}, {selected_date.strftime('%d. %B %Y')}"
-        )
+        st.markdown(f"### 📋 {wochentag}, {selected_date.strftime('%d. %B %Y')}")
 
         # Wettkampf-Hinweis
         if not df_comp_day.empty:
@@ -595,21 +584,21 @@ class TrainingCalendar:
             return
 
         for _, row in aktiv_df.iterrows():
-            akt       = row.get("Aktivität", "Sonstiges")
-            color     = AKTIVITAET_FARBEN.get(akt, "#6B7280")
-            fokus     = row.get("Fokus", "")
-            gefuehl   = row.get("Gefühl", "")
-            g_emoji   = GEFUEHL_EMOJI.get(gefuehl, "❓")
+            akt = row.get("Aktivität", "Sonstiges")
+            color = AKTIVITAET_FARBEN.get(akt, "#6B7280")
+            fokus = row.get("Fokus", "")
+            gefuehl = row.get("Gefühl", "")
+            g_emoji = GEFUEHL_EMOJI.get(gefuehl, "❓")
             schmerzen = row.get("Schmerzen_Beschwerden", "Keine")
-            s_kat     = _schmerzen_kategorie(schmerzen)
-            s_color   = SCHMERZEN_FARBE.get(s_kat, "#6B7280")
+            s_kat = _schmerzen_kategorie(schmerzen)
+            s_color = SCHMERZEN_FARBE.get(s_kat, "#6B7280")
             kommentar = row.get("Kommentar", "")
-            einheit   = row.get("Einheit_Des_Tages", "")
-            dauer     = int(row.get("Dauer_Minuten", 0))
-            distanz   = float(row.get("Distanz_km", 0))
-            hf_avg    = int(row.get("Ø_Herzfrequenz", 0))
-            hf_max    = int(row.get("Max_Herzfrequenz", 0))
-            kalorien  = int(row.get("Kalorienverbrauch", 0))
+            einheit = row.get("Einheit_Des_Tages", "")
+            dauer = int(row.get("Dauer_Minuten", 0))
+            distanz = float(row.get("Distanz_km", 0))
+            hf_avg = int(row.get("Ø_Herzfrequenz", 0))
+            hf_max = int(row.get("Max_Herzfrequenz", 0))
+            kalorien = int(row.get("Kalorienverbrauch", 0))
 
             with st.container(border=True):
                 # Titel-Zeile
@@ -625,29 +614,25 @@ class TrainingCalendar:
                     st.markdown(f"**{einheit}**")
                 with c_right:
                     st.markdown(
-                        f"<div style='text-align:right;font-size:0.85rem'>"
-                        f"{g_emoji} {gefuehl}</div>",
+                        f"<div style='text-align:right;font-size:0.85rem'>{g_emoji} {gefuehl}</div>",
                         unsafe_allow_html=True,
                     )
 
                 m1, m2, m3, m4, m5 = st.columns(5)
-                m1.metric("Dauer",    f"{dauer} min")
-                m2.metric("Distanz",  f"{distanz:.1f} km" if distanz else "–")
-                m3.metric("Ø HF",     f"{hf_avg} bpm" if hf_avg else "–")
-                m4.metric("Max HF",   f"{hf_max} bpm" if hf_max else "–")
+                m1.metric("Dauer", f"{dauer} min")
+                m2.metric("Distanz", f"{distanz:.1f} km" if distanz else "–")
+                m3.metric("Ø HF", f"{hf_avg} bpm" if hf_avg else "–")
+                m4.metric("Max HF", f"{hf_max} bpm" if hf_max else "–")
                 m5.metric("Kalorien", f"{kalorien} kcal" if kalorien else "–")
 
-                
                 st.markdown(
                     f"<span style='background:{s_color};color:white;padding:2px 8px;"
                     f"border-radius:8px;font-size:0.75rem'> {schmerzen}</span>",
                     unsafe_allow_html=True,
                 )
 
-               
                 if kommentar:
                     st.caption(f"💬 {kommentar}")
-
 
     # -- Feedback --------------------------------------------------------
 
@@ -658,8 +643,7 @@ class TrainingCalendar:
         if role == "athlete":
             with st.form(key="feedback_form", clear_on_submit=True):
                 nachricht = st.text_area(
-                    "Wie lief dein Training? Anmerkungen, Beschwerden oder Fragen "
-                    "gehen direkt an deinen Trainer.",
+                    "Wie lief dein Training? Anmerkungen, Beschwerden oder Fragen gehen direkt an deinen Trainer.",
                     height=100,
                     placeholder="z. B. Rechtes Knie zwickt seit dem Lauf am Dienstag …",
                 )
@@ -688,8 +672,7 @@ class TrainingCalendar:
                     icon = "✅" if r["Gelesen"] else "🆕"
                     with st.container(border=True):
                         st.markdown(
-                            f"{icon} **{r['Zeitstempel']}** — "
-                            f"{MONATE_DE[int(r['Monat']) - 1]} {int(r['Jahr'])}"
+                            f"{icon} **{r['Zeitstempel']}** — {MONATE_DE[int(r['Monat']) - 1]} {int(r['Jahr'])}"
                         )
                         st.write(r["Nachricht"])
                         if not r["Gelesen"]:
@@ -731,29 +714,29 @@ class TrainingCalendar:
         st.markdown(f"### Monatsübersicht – {athlet}")
 
         total_einheiten = len(aktiv)
-        total_min       = int(aktiv["Dauer_Minuten"].sum())
-        total_km        = aktiv["Distanz_km"].sum()
-        total_kcal      = int(aktiv["Kalorienverbrauch"].sum())
-        avg_hf          = int(aktiv["Ø_Herzfrequenz"][aktiv["Ø_Herzfrequenz"] > 0].mean()) \
-                          if (aktiv["Ø_Herzfrequenz"] > 0).any() else 0
-        ruhetage        = len(df_month[df_month["_ist_ruhetag"]]["Datum"].dt.date.unique())
-        schmerzen_count = aktiv["Schmerzen_Beschwerden"].apply(
-            lambda x: _schmerzen_kategorie(x) != "Keine"
-        ).sum()
+        total_min = int(aktiv["Dauer_Minuten"].sum())
+        total_km = aktiv["Distanz_km"].sum()
+        total_kcal = int(aktiv["Kalorienverbrauch"].sum())
+        avg_hf = (
+            int(aktiv["Ø_Herzfrequenz"][aktiv["Ø_Herzfrequenz"] > 0].mean())
+            if (aktiv["Ø_Herzfrequenz"] > 0).any()
+            else 0
+        )
+        ruhetage = len(df_month[df_month["_ist_ruhetag"]]["Datum"].dt.date.unique())
+        schmerzen_count = aktiv["Schmerzen_Beschwerden"].apply(lambda x: _schmerzen_kategorie(x) != "Keine").sum()
 
         # KPI-Zeile 1
         c1, c2, c3, c4 = st.columns(4)
-        c1.metric("Einheiten",       total_einheiten)
-        c2.metric("Gesamtdauer",
-                  f"{total_min // 60}h {total_min % 60}min")
-        c3.metric("Distanz",         f"{total_km:.1f} km")
-        c4.metric("Kalorien",        f"{total_kcal:,} kcal")
+        c1.metric("Einheiten", total_einheiten)
+        c2.metric("Gesamtdauer", f"{total_min // 60}h {total_min % 60}min")
+        c3.metric("Distanz", f"{total_km:.1f} km")
+        c4.metric("Kalorien", f"{total_kcal:,} kcal")
 
         # KPI-Zeile 2
         c5, c6, c7, _ = st.columns(4)
         c5.metric("Ø Herzfrequenz", f"{avg_hf} bpm" if avg_hf else "–")
-        c6.metric("Ruhetage",        ruhetage)
-        c7.metric("Schmerz-Einh.",  schmerzen_count)
+        c6.metric("Ruhetage", ruhetage)
+        c7.metric("Schmerz-Einh.", schmerzen_count)
 
         # Größerer Abstand zwischen den Kennzahlen und den Diagrammen
         st.markdown("<div style='margin-top:2.5rem'></div>", unsafe_allow_html=True)
@@ -774,24 +757,14 @@ class TrainingCalendar:
         with col_chart2:
             st.markdown("**Distanz nach Aktivität (km)**")
             dist_km = (
-                aktiv.groupby("Aktivität")["Distanz_km"]
-                .sum()
-                .reset_index()
-                .sort_values("Distanz_km", ascending=False)
+                aktiv.groupby("Aktivität")["Distanz_km"].sum().reset_index().sort_values("Distanz_km", ascending=False)
             )
             self._aktivitaet_bar_chart(dist_km, "Distanz_km", "km")
 
         # Gefühls-Verteilung
         st.markdown("**Tagesgefühl-Verteilung**")
-        gefuehl_counts = (
-            aktiv["Gefühl"]
-            .value_counts()
-            .reset_index()
-            .rename(columns={"count": "Anzahl"})
-        )
-        gefuehl_counts["Gefühl"] = gefuehl_counts["Gefühl"].apply(
-            lambda g: f"{GEFUEHL_EMOJI.get(g, '')} {g}"
-        )
+        gefuehl_counts = aktiv["Gefühl"].value_counts().reset_index().rename(columns={"count": "Anzahl"})
+        gefuehl_counts["Gefühl"] = gefuehl_counts["Gefühl"].apply(lambda g: f"{GEFUEHL_EMOJI.get(g, '')} {g}")
         gefuehl_chart = (
             alt.Chart(gefuehl_counts)
             .mark_bar(color="#9CA3AF")
@@ -806,11 +779,9 @@ class TrainingCalendar:
 
         # Schmerzen-Übersicht
         with st.expander("Schmerzen & Beschwerden im Monat"):
-            schmerz_df = aktiv[
-                aktiv["Schmerzen_Beschwerden"].apply(
-                    lambda x: _schmerzen_kategorie(x) != "Keine"
-                )
-            ][["Datum", "Aktivität", "Schmerzen_Beschwerden", "Gefühl", "Kommentar"]]
+            schmerz_df = aktiv[aktiv["Schmerzen_Beschwerden"].apply(lambda x: _schmerzen_kategorie(x) != "Keine")][
+                ["Datum", "Aktivität", "Schmerzen_Beschwerden", "Gefühl", "Kommentar"]
+            ]
 
             if schmerz_df.empty:
                 st.success("Keine Beschwerden im gewählten Monat")
@@ -818,7 +789,6 @@ class TrainingCalendar:
                 schmerz_df = schmerz_df.copy()
                 schmerz_df["Datum"] = schmerz_df["Datum"].dt.strftime("%d.%m.%Y")
                 st.dataframe(schmerz_df, use_container_width=True, hide_index=True)
-
 
 
 def render_calendar(
@@ -856,12 +826,11 @@ def render_calendar(
         from training_calendar import render_trainer_feedback_inbox
         render_trainer_feedback_inbox()
     """
-    data         = TrainingData(csv_path=csv_path)
+    data = TrainingData(csv_path=csv_path)
     competitions = CompetitionData(csv_path=wettkaempfe_csv)
-    feedback     = FeedbackData(csv_path=feedback_csv)
-    cal          = TrainingCalendar(data, competitions, feedback)
+    feedback = FeedbackData(csv_path=feedback_csv)
+    cal = TrainingCalendar(data, competitions, feedback)
     cal.render(role=role, current_user=current_user)
-
 
 
 if __name__ == "__main__":
@@ -880,9 +849,16 @@ if __name__ == "__main__":
         if demo_role == "athlete":
             demo_user = st.selectbox(
                 "Athlet-Name (Simulation)",
-                ["Anne Haug", "Jan Frodeno", "Daniela Ryf",
-                 "Chrissie Wellington", "Gustav Iden",
-                 "Kristian Blummenfelt", "Lucy Charles-Barclay", "Patrick Lange"],
+                [
+                    "Anne Haug",
+                    "Jan Frodeno",
+                    "Daniela Ryf",
+                    "Chrissie Wellington",
+                    "Gustav Iden",
+                    "Kristian Blummenfelt",
+                    "Lucy Charles-Barclay",
+                    "Patrick Lange",
+                ],
             )
 
     render_calendar(role=demo_role, current_user=demo_user)

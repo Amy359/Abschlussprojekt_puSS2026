@@ -4,8 +4,18 @@ import plotly.express as px
 
 
 MONATE_DE = [
-    "Januar", "Februar", "März", "April", "Mai", "Juni",
-    "Juli", "August", "September", "Oktober", "November", "Dezember",
+    "Januar",
+    "Februar",
+    "März",
+    "April",
+    "Mai",
+    "Juni",
+    "Juli",
+    "August",
+    "September",
+    "Oktober",
+    "November",
+    "Dezember",
 ]
 
 
@@ -61,8 +71,7 @@ def lade_daten():
         # Sortierschlüssel (z.B. 202601 für Januar 2026) + lesbares Label (z.B. "Januar 2026")
         df["Monat_Sortierschluessel"] = df["Jahr"] * 100 + df["Monat"]
         df["Monat_Label"] = [
-            f"{MONATE_DE[m - 1]} {j}" if 1 <= m <= 12 else "Unbekannt"
-            for m, j in zip(df["Monat"], df["Jahr"])
+            f"{MONATE_DE[m - 1]} {j}" if 1 <= m <= 12 else "Unbekannt" for m, j in zip(df["Monat"], df["Jahr"])
         ]
 
     df_regen["Schlaf_Stunden"] = df_regen["Schlaf_Dauer"].apply(extrahiere_schlaf_stunden)
@@ -86,8 +95,9 @@ def zeige_auswertung(athlet_name, df_train, df_regen):
 
     # --- Monatsauswahl (gilt für die gesamte Auswertung) ---
     monats_optionen = (
-        pd.concat([df_t_ath[["Monat_Sortierschluessel", "Monat_Label"]],
-                   df_r_ath[["Monat_Sortierschluessel", "Monat_Label"]]])
+        pd.concat(
+            [df_t_ath[["Monat_Sortierschluessel", "Monat_Label"]], df_r_ath[["Monat_Sortierschluessel", "Monat_Label"]]]
+        )
         .drop_duplicates("Monat_Label")
         .sort_values("Monat_Sortierschluessel")["Monat_Label"]
         .tolist()
@@ -101,8 +111,9 @@ def zeige_auswertung(athlet_name, df_train, df_regen):
     heute = pd.Timestamp.now()
     aktueller_schluessel = heute.year * 100 + heute.month
     monats_schluessel_liste = (
-        pd.concat([df_t_ath[["Monat_Sortierschluessel", "Monat_Label"]],
-                   df_r_ath[["Monat_Sortierschluessel", "Monat_Label"]]])
+        pd.concat(
+            [df_t_ath[["Monat_Sortierschluessel", "Monat_Label"]], df_r_ath[["Monat_Sortierschluessel", "Monat_Label"]]]
+        )
         .drop_duplicates("Monat_Label")
         .sort_values("Monat_Sortierschluessel")["Monat_Sortierschluessel"]
         .tolist()
@@ -113,9 +124,7 @@ def zeige_auswertung(athlet_name, df_train, df_regen):
         default_index = len(monats_optionen) - 1  # letzter verfügbarer Monat
 
     st.markdown("### Monat auswählen")
-    selected_monat = st.selectbox(
-        "Monat", monats_optionen, index=default_index, key="auswertung_monat_select"
-    )
+    selected_monat = st.selectbox("Monat", monats_optionen, index=default_index, key="auswertung_monat_select")
 
     # Daten auf den gewählten Monat einschränken
     df_t_ath = df_t_ath[df_t_ath["Monat_Label"] == selected_monat].copy()
@@ -144,17 +153,15 @@ def zeige_auswertung(athlet_name, df_train, df_regen):
 
         # Chronologische Reihenfolge der Wochen auf der x-Achse sicherstellen
         wochen_reihenfolge = (
-            woche_aktivitaet.drop_duplicates("Woche_Label")
-            .sort_values("Woche_Nr")["Woche_Label"]
-            .tolist()
+            woche_aktivitaet.drop_duplicates("Woche_Label").sort_values("Woche_Nr")["Woche_Label"].tolist()
         )
 
         AKTIVITAET_FARBEN = {
             "Schwimmen": "#3B82F6",
             "Radfahren": "#F59E0B",
-            "Laufen":    "#10B981",
-            "Kraft":     "#8B5CF6",
-            "Ruhetag":   "#9CA3AF",
+            "Laufen": "#10B981",
+            "Kraft": "#8B5CF6",
+            "Ruhetag": "#9CA3AF",
             "Sonstiges": "#EC4899",
         }
 
@@ -173,7 +180,7 @@ def zeige_auswertung(athlet_name, df_train, df_regen):
             )
             fig_km.update_xaxes(title="Woche")
             fig_km.update_yaxes(title="Distanz (km)")
-            st.plotly_chart(fig_km, use_container_width=True)
+            st.plotly_chart(fig_km, width="stretch")
 
         st.markdown("### Leistungsfaktoren & Schmerzprotokoll:")
         col_left, col_right = st.columns(2)
@@ -187,8 +194,8 @@ def zeige_auswertung(athlet_name, df_train, df_regen):
             if pd.notna(ruhepuls_schnitt) and ruhepuls_schnitt > 0 and pd.notna(max_puls):
                 vo2max = 15.3 * (max_puls / ruhepuls_schnitt)
                 st.write(f"**Geschätzte VO2max:** {vo2max:.1f} ml/min/kg")
-                
-                # 2. Geschätzte FTP (hrFTP) 
+
+                # 2. Geschätzte FTP (hrFTP)
                 # Als Faustformel für Radsportler wird oft 75-80% der HFmax als Schwellenbereich angenommen.
                 # Dies ist eine Schätzung, da kein Leistungsmesser vorliegt.
                 hr_ftp_schätzung = max_puls * 0.82  # Klassischer Richtwert für Schwellen-HF
@@ -202,16 +209,13 @@ def zeige_auswertung(athlet_name, df_train, df_regen):
             # 3. TSS Berechnung
             df_aktiv = df_t_ath[df_t_ath["Aktivitaet"].str.lower() != "ruhetag"].copy()
             if not df_aktiv.empty and pd.notna(max_puls) and max_puls > 0:
-                schwellen_hf = 0.82 * max_puls # Verwendung des gleichen Wertes wie oben
+                schwellen_hf = 0.82 * max_puls  # Verwendung des gleichen Wertes wie oben
                 df_aktiv["TSS"] = (
-                    (df_aktiv["Dauer_Minuten"] / 60)
-                    * (df_aktiv["Ø_Herzfrequenz"] / schwellen_hf) ** 2
-                    * 100
+                    (df_aktiv["Dauer_Minuten"] / 60) * (df_aktiv["Ø_Herzfrequenz"] / schwellen_hf) ** 2 * 100
                 )
                 tss_gesamt = df_aktiv["TSS"].sum()
                 st.write(f"**TSS (geschätzt, Monat gesamt):** {tss_gesamt:.0f}")
                 st.caption("Berechnung basiert auf hrTSS (HF-basierter Stress Score).")
-
 
         with col_right:
             st.subheader("⚠️ Schmerz- & Beschwerdeprotokoll")
@@ -261,7 +265,7 @@ def zeige_auswertung(athlet_name, df_train, df_regen):
                     category_orders={"Woche_Label": wochen_reihenfolge_regen},
                     markers=True,
                 ).update_xaxes(title="Woche"),
-                use_container_width=True,
+                width="stretch",
             )
             col_g2.plotly_chart(
                 px.line(
@@ -273,7 +277,7 @@ def zeige_auswertung(athlet_name, df_train, df_regen):
                     category_orders={"Woche_Label": wochen_reihenfolge_regen},
                     markers=True,
                 ).update_xaxes(title="Woche"),
-                use_container_width=True,
+                width="stretch",
             )
         else:
             st.info("Keine Regenerationsdaten für diesen Monat vorhanden.")

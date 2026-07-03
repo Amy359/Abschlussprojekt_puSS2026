@@ -6,13 +6,11 @@ from streamlit_calendar import calendar
 
 from personenklasse import Person
 from auswertung import lade_daten, zeige_auswertung
-
-#für die feedback box das einfügen:
-# from training_calendar import render_trainer_feedback_inbox
-#render_trainer_feedback_inbox()
+from training_calendar import render_trainer_feedback_inbox
 
 
 # HILFSFUNKTIONEN
+# KALENDER
 def lade_wettkaempfe():
     """Lädt die Wettkampfdaten."""
 
@@ -122,23 +120,27 @@ def wettkampf_hinzufuegen(df):
         st.rerun()
 
 
+# GESAMTÜBERSICHT
+def zeige_gesamtuebersicht(df_train, df_regen):
+    pass
+
+
 # HAUPTFUNKTION
 def trainer_dashboard(person):
 
     # Daten laden
     df_train, df_regen = lade_daten()
 
-    # Überschrift
-    st.title("🏋️ Trainer Dashboard")
-
-    # Navigation
-    seite = st.sidebar.radio("Navigation", ["📅 Wettkampfkalender", "📊 Gesamtübersicht", "👥 Athleten"])
+    # Navigation und sidebar
+    athlet_name = person.get_vollname()
+    st.sidebar.title(f"Hallo, {athlet_name}!")
+    menu = st.sidebar.radio("Menü", ["📅 Wettkampfkalender", "📊 Gesamtübersicht", "👥 Athleten"])
 
     # ------------------------
     # Kalender
     # ------------------------
-    if seite == "📅 Wettkampfkalender":
-        st.header("📅 Wettkampfkalender")
+    if menu == "📅 Wettkampfkalender":
+        st.header("Wettkampfkalender")
 
         df_wettkaempfe = lade_wettkaempfe()
 
@@ -149,22 +151,23 @@ def trainer_dashboard(person):
     # ------------------------
     # Gesamtübersicht
     # ------------------------
-    elif seite == "📊 Gesamtübersicht":
+    elif menu == "📊 Gesamtübersicht":
         st.header("Gesamtübersicht")
-
-        st.write("Hier kommen später Diagramme aller Athleten hin.")
-
+        zeige_gesamtuebersicht(df_train, df_regen)
     # ------------------------
     # Athleten
     # ------------------------
-    elif seite == "👥 Athleten":
+    elif menu == "👥 Athleten":
         st.header("Athleten")
 
         athleten = Person.get_athleten()
 
-        for athlet in athleten:
-            if st.button(athlet.get_vollname()):
+        for i, athlet in enumerate(athleten):
+            if st.button(athlet.get_vollname(), key=f"trainer_athlet_{i}"):
                 zeige_auswertung(athlet.get_vollname(), df_train, df_regen)
+
+        # Feedback von Athleten
+        render_trainer_feedback_inbox()
 
 
 # def show_trainer_dashboard():
