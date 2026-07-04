@@ -158,11 +158,11 @@ def zeige_auswertung(athlet_name, df_train, df_regen):
 
         AKTIVITAET_FARBEN = {
             "Schwimmen": "#3B82F6",
-            "Radfahren": "#F59E0B",
-            "Laufen": "#10B981",
+            "Radfahren": "#FF33B1",
+            "Laufen": "#0B7A55",
             "Kraft": "#8B5CF6",
             "Ruhetag": "#9CA3AF",
-            "Sonstiges": "#EC4899",
+            "Sonstiges": "#FFEB38",
         }
 
         if woche_aktivitaet.empty:

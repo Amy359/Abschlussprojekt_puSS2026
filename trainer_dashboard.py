@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 from streamlit_calendar import calendar
+import plotly.express as px
 
 from personenklasse import Person
 from auswertung import lade_daten, zeige_auswertung
@@ -122,7 +123,136 @@ def wettkampf_hinzufuegen(df):
 
 # GESAMTÜBERSICHT
 def zeige_gesamtuebersicht(df_train, df_regen):
-    pass
+    """Zeigt die Gesamtübersicht aller Athleten."""
+
+    st.header("📊 Gesamtübersicht aller Athleten")
+    st.write("Kennzahlen und Trainingsdaten des gesamten Teams")
+
+    # -------------------------------
+    # Durchschnittswerte Regeneration
+    # -------------------------------
+    schlaf = df_regen["Schlaf_Stunden"].mean()
+    ruhepuls = df_regen["Ruhepuls_bpm"].mean()
+    hrv = df_regen["HRV_ms"].mean()
+    kalorien = df_regen["Kalorien"].mean()
+
+    h = int(schlaf)
+    m = int((schlaf - h) * 60)
+
+    c1, c2, c3, c4 = st.columns(4)
+
+    c1.metric("😴 Ø Schlaf", f"{h}h {m}m")
+    c2.metric("❤️ Ø Ruhepuls", f"{ruhepuls:.1f} bpm")
+    c3.metric("📈 Ø HRV", f"{hrv:.0f} ms")
+    c4.metric("🔥 Ø Kalorien", f"{kalorien:.0f} kcal")
+
+    st.divider()
+
+    # -------------------------------
+    # Trainingsdistanzen nach Sportart
+    # -------------------------------
+    st.subheader("🏋️ Trainingsdistanzen des Teams")
+
+    df_distanz = df_train[df_train["Aktivitaet"].str.lower() != "ruhetag"].copy()
+
+    if "Datum" in df_distanz.columns:
+        df_distanz["Monat"] = df_distanz["Datum"].dt.strftime("%B %Y")
+
+        monat = st.selectbox(
+            "Monat auswählen",
+            sorted(df_distanz["Monat"].unique(), reverse=True),
+        )
+
+        df_distanz = df_distanz[df_distanz["Monat"] == monat]
+
+    distanzen = df_distanz.groupby("Aktivitaet")["Distanz_km"].sum().reset_index()
+
+    AKTIVITAET_FARBEN: dict[str, str] = {
+        "Schwimmen": "#3B82F6",
+        "Radfahren": "#FF33B1",
+        "Laufen": "#0B7A55",
+        "Kraft": "#8B5CF6",
+        "Ruhetag": "#9CA3AF",
+        "Sonstiges": "#FFEB38",
+    }
+
+    fig = px.bar(
+        distanzen,
+        x="Aktivitaet",
+        y="Distanz_km",
+        color="Aktivitaet",
+        color_discrete_map=AKTIVITAET_FARBEN,
+        title="Trainingsdistanzen nach Sportart",
+        text="Distanz_km",
+    )
+
+    fig.update_traces(
+        texttemplate="%{text:.1f} km",
+        textposition="outside",
+    )
+
+    fig.update_layout(
+        showlegend=False,
+        yaxis_title="Distanz (km)",
+        uniformtext_minsize=8,
+        uniformtext_mode="hide",
+    )
+
+    fig.update_yaxes(rangemode="tozero")
+
+    st.plotly_chart(fig, width="stretch")
+
+    st.divider()
+
+    # -------------------------------
+    # Athletenvergleich
+    # -------------------------------
+    st.subheader("🏆 Athletenvergleich")
+
+    vergleich = (
+        df_train.groupby("Athlet")
+        .agg(
+            Distanz_km=("Distanz_km", "sum"),
+            Trainings=("Datum", "count"),
+            Max_Puls=("Max_Herzfrequenz", "max"),
+        )
+        .reset_index()
+    )
+
+    regen = (
+        df_regen.groupby("Athlet")
+        .agg(
+            Schlaf=("Schlaf_Stunden", "mean"),
+            Ruhepuls=("Ruhepuls_bpm", "mean"),
+            HRV=("HRV_ms", "mean"),
+        )
+        .reset_index()
+    )
+
+    vergleich = vergleich.merge(regen, on="Athlet", how="left")
+
+    # Sieger hervorheben
+    beste_distanz = vergleich.loc[vergleich["Distanz_km"].idxmax(), "Athlet"]
+    bester_schlaf = vergleich.loc[vergleich["Schlaf"].idxmax(), "Athlet"]
+    beste_hrv = vergleich.loc[vergleich["HRV"].idxmax(), "Athlet"]
+
+    c1, c2, c3 = st.columns(3)
+
+    c1.success(f"🥇 Meiste Trainingskilometer\n\n{beste_distanz}")
+    c2.success(f"😴 Längster Schlaf\n\n{bester_schlaf}")
+    c3.success(f"❤️ Höchste HRV\n\n{beste_hrv}")
+
+    st.dataframe(
+        vergleich.style.format(
+            {
+                "Distanz_km": "{:.1f}",
+                "Schlaf": "{:.1f}",
+                "Ruhepuls": "{:.1f}",
+                "HRV": "{:.0f}",
+            }
+        ),
+        width="stretch",
+    )
 
 
 # HAUPTFUNKTION
