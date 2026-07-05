@@ -5,10 +5,17 @@ import os
 
 
 def hash_password(password):
+    """Erzeugt einen SHA-256 Hash für das übergebene Passwort (Klartext-String)."""
     return hashlib.sha256(password.encode()).hexdigest()
 
 
 def register():
+    """Zeigt das Registrierungsformular an und legt bei Absenden einen neuen
+    Benutzer in 'data/users_secure.csv' an.
+
+    Prüft, ob beide Passwort-Eingaben übereinstimmen und ob der aus Vor- und
+    Nachname gebildete Benutzername bereits existiert, bevor der neue Eintrag
+    (mit gehashtem Passwort) gespeichert wird."""
 
     st.title("📝 Registrierung")
 

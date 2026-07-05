@@ -21,6 +21,9 @@ MONATE_DE = [
 
 # --- HILFSFUNKTIONEN ---
 def extrahiere_schlaf_stunden(schlaf_str):
+    """Wandelt einen Schlafdauer-String (z. B. '7 h 30 min') in eine Dezimalzahl
+    an Stunden um (z. B. 7.5). Gibt 0.0 zurück, wenn der Wert fehlt oder sich
+    nicht parsen lässt."""
     try:
         if pd.isna(schlaf_str):
             return 0.0
@@ -33,6 +36,8 @@ def extrahiere_schlaf_stunden(schlaf_str):
 
 
 def get_color(beschwerde):
+    """Ordnet einer Beschwerde-Bezeichnung ('leicht', 'mittel', 'stark') eine
+    Hintergrundfarbe (CSS-Style-String) für die Tabellendarstellung zu."""
     b = str(beschwerde).lower()
     if "leicht" in b:
         return "background-color: #86efac"  # Grün

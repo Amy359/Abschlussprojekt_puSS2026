@@ -24,10 +24,15 @@ def lade_wettkaempfe():
 
 
 def speichere_wettkaempfe(df):
+    """Speichert das Wettkampf-DataFrame als Semikolon-getrennte CSV-Datei
+    unter 'data/wettkaempfe.csv'."""
     df.to_csv("data/wettkaempfe.csv", sep=";", index=False, encoding="utf-8")
 
 
 def zeige_wettkaempfe(df):
+    """Rendert die Wettkämpfe aus dem übergebenen DataFrame als Events in
+    einem Monatskalender (streamlit_calendar). Zeigt einen Hinweis an,
+    falls noch keine Wettkämpfe vorhanden sind."""
     if df.empty:
         st.info("Noch keine Wettkämpfe eingetragen.")
         return
@@ -61,6 +66,9 @@ def zeige_wettkaempfe(df):
 
 
 def wettkampf_hinzufuegen(df):
+    """Zeigt ein Formular zum Erfassen eines neuen Wettkampfs (Datum, Athlet,
+    Name, Ort, Distanz) an und hängt den Eintrag bei Absenden an das
+    übergebene DataFrame an, bevor er in der CSV gespeichert wird."""
     st.subheader("➕ Neuen Wettkampf eintragen")
 
     with st.form("neuer_wettkampf"):
@@ -257,6 +265,11 @@ def zeige_gesamtuebersicht(df_train, df_regen):
 
 # HAUPTFUNKTION
 def trainer_dashboard(person):
+    """Hauptansicht für eingeloggte Trainer.
+
+    Baut die Sidebar-Navigation auf (Wettkampfkalender, Gesamtübersicht,
+    Athleten) und rendert je nach Auswahl die entsprechende Unterseite
+    sowie die Feedback-Inbox der Athleten."""
 
     # Daten laden
     df_train, df_regen = lade_daten()

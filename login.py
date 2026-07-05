@@ -45,6 +45,11 @@ def check_login(username, password):
 
 
 def login():
+    """Rendert die Login-Maske (Logo, Benutzername/Passwort-Felder, Buttons).
+
+    Bei erfolgreichem Login werden 'logged_in' und 'person' im Session-State
+    gesetzt und die Seite neu geladen. Über den Button "Registrieren" wechselt
+    die App in die Registrierungsansicht."""
     # 1. Definiere das CSS mit deinem eigenen Key
     st.markdown(
         """
@@ -98,7 +103,8 @@ def login():
 
 
 def logout():
-    """Zeigt den Logout-Button an."""
+    """Zeigt in der Sidebar einen Logout-Button an und setzt bei Klick
+    den Login-Status sowie die gespeicherte Person zurück."""
 
     if st.sidebar.button("Logout"):
         st.session_state.logged_in = False
@@ -108,6 +114,10 @@ def logout():
 
 
 def set_background(image_file):
+    """Setzt ein lokales Bild als Vollbild-Hintergrund der Streamlit-App.
+
+    Das Bild wird base64-kodiert und per CSS (background-image) in
+    den .stApp-Container eingebunden."""
     with open(image_file, "rb") as f:
         img = base64.b64encode(f.read()).decode()
 

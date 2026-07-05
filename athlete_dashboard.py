@@ -8,10 +8,14 @@ from auswertung import lade_daten, zeige_auswertung
 
 
 def save_to_csv(df, filename):
+    """Speichert ein DataFrame als Semikolon-getrennte CSV-Datei (UTF-8)."""
     df.to_csv(filename, sep=";", index=False, encoding="utf-8")
 
 
 def zeige_training_eingabe(athlet_name):
+    """Zeigt das Formular zur Eingabe eines Trainingseintrags (Wohlbefinden,
+    Sportart, Dauer, Distanz, Puls usw.) und hängt den Eintrag bei Absenden
+    an 'data/triathlon_training.csv' an."""
     st.header("Trainingstagebuch")
 
     df_train, _ = lade_daten()
@@ -100,6 +104,9 @@ def zeige_training_eingabe(athlet_name):
 
 
 def zeige_regen_eingabe(athlet_name):
+    """Zeigt das Formular zur Eingabe eines Regenerationseintrags (Schlaf,
+    Erholung, Maßnahmen, Körpergefühl usw.) und hängt den Eintrag bei
+    Absenden an 'data/triathlon_regeneration.csv' an."""
 
     st.header("Regenerationstagebuch")
 
@@ -179,6 +186,11 @@ def zeige_regen_eingabe(athlet_name):
 
 
 def athlete_dashboard(person):
+    """Hauptansicht für eingeloggte Athleten.
+
+    Baut die Sidebar-Navigation auf (Kalender, Eingaben, Auswertung,
+    Datenexport) und rendert je nach Auswahl die entsprechende Unterseite
+    für die übergebene Person (ein Person-Objekt mit Rolle 'Athlet')."""
 
     athlet_name = person.get_vollname()
     df_train, df_regen = lade_daten()

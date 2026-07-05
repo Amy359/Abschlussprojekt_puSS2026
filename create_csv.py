@@ -10,6 +10,7 @@ df = pd.read_csv(input_file, delimiter=';')
 
 # Hash-Funktion
 def hash_password(password):
+    """Erzeugt einen SHA-256 Hash für das übergebene Passwort (Klartext-String)."""
     return hashlib.sha256(password.encode()).hexdigest()
 
 # Passwort-Spalte erzeugen (basierend auf Geburtsdatum)

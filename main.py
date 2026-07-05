@@ -1,3 +1,10 @@
+"""Haupteinstiegspunkt der Triathlon-Dashboard-App.
+
+Lädt beim Start die Personendaten aus der CSV, verwaltet den Login-Status
+im Session-State und leitet je nach Login-Status und Rolle (Athlet/Trainer)
+zur passenden Ansicht (Login, Registrierung, Athleten- oder Trainer-Dashboard)
+weiter."""
+
 import streamlit as st
 
 from personenklasse import Person

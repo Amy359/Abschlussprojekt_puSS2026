@@ -73,6 +73,8 @@ class TrainingData:
     """Lädt und verwaltet die Trainingsdaten aus der CSV."""
 
     def __init__(self, csv_path: Path = CSV_PATH):
+        """Initialisiert die TrainingData-Instanz mit dem Pfad zur
+        Trainings-CSV. Die Datei wird erst bei Bedarf über load() gelesen."""
         self.csv_path = csv_path
         self._df: Optional[pd.DataFrame] = None
 
@@ -96,6 +98,9 @@ class TrainingData:
         return self._df
 
     def _normalize(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Bereinigt die eingelesenen Trainingsdaten: trimmt Spaltennamen,
+        parst das Datum, wandelt numerische Spalten um (fehlende Werte -> 0),
+        trimmt Textspalten und ergänzt die Hilfsspalte '_ist_ruhetag'."""
 
         df.columns = [c.strip() for c in df.columns]
 
@@ -125,17 +130,25 @@ class TrainingData:
         return df.reset_index(drop=True)
 
     def get_athletes(self) -> list[str]:
+        """Gibt eine sortierte Liste aller in den Trainingsdaten vorkommenden
+        Athletennamen zurück."""
         df = self.load()
         return sorted(df["Athlet"].dropna().unique().tolist())
 
     def get_for_athlete(self, athlete: str) -> pd.DataFrame:
+        """Gibt eine Kopie der Trainingsdaten gefiltert auf den angegebenen
+        Athleten zurück."""
         return self.load()[self.load()["Athlet"] == athlete].copy()
 
     def get_for_month(self, df: pd.DataFrame, year: int, month: int) -> pd.DataFrame:
+        """Filtert das übergebene DataFrame auf Einträge im angegebenen
+        Jahr und Monat."""
         mask = (df["Datum"].dt.year == year) & (df["Datum"].dt.month == month)
         return df[mask]
 
     def get_for_date(self, df: pd.DataFrame, target: date) -> pd.DataFrame:
+        """Filtert das übergebene DataFrame auf Einträge des angegebenen
+        Kalendertags."""
         return df[df["Datum"].dt.date == target]
 
 
@@ -143,10 +156,16 @@ class CompetitionData:
     """Lädt und verwaltet die Wettkampfdaten aus wettkaempfe.csv."""
 
     def __init__(self, csv_path: Path = WETTKAMPF_CSV_PATH):
+        """Initialisiert die CompetitionData-Instanz mit dem Pfad zur
+        Wettkampf-CSV. Die Datei wird erst bei Bedarf über load() gelesen."""
         self.csv_path = csv_path
         self._df: Optional[pd.DataFrame] = None
 
     def load(self) -> pd.DataFrame:
+        """Liest die Wettkampf-CSV ein und normalisiert Datum und Textspalten.
+
+        Existiert die Datei nicht, wird ein leeres DataFrame mit den
+        erwarteten Spalten zurückgegeben, da Wettkämpfe optional sind."""
         if self._df is not None:
             return self._df
 
@@ -171,14 +190,20 @@ class CompetitionData:
         return self._df
 
     def get_for_athlete(self, athlete: str) -> pd.DataFrame:
+        """Gibt eine Kopie der Wettkampfdaten gefiltert auf den angegebenen
+        Athleten zurück."""
         df = self.load()
         return df[df["Athlet"] == athlete].copy()
 
     def get_for_month(self, df: pd.DataFrame, year: int, month: int) -> pd.DataFrame:
+        """Filtert das übergebene DataFrame auf Wettkämpfe im angegebenen
+        Jahr und Monat."""
         mask = (df["Datum"].dt.year == year) & (df["Datum"].dt.month == month)
         return df[mask]
 
     def get_for_date(self, df: pd.DataFrame, target: date) -> pd.DataFrame:
+        """Filtert das übergebene DataFrame auf Wettkämpfe am angegebenen
+        Kalendertag."""
         return df[df["Datum"].dt.date == target]
 
 
@@ -186,14 +211,20 @@ class FeedbackData:
     """Speichert und lädt Feedback-Nachrichten von Athlet:innen an den Trainer."""
 
     def __init__(self, csv_path: Path = FEEDBACK_CSV_PATH):
+        """Initialisiert die FeedbackData-Instanz mit dem Pfad zur
+        Feedback-CSV."""
         self.csv_path = csv_path
 
     def _ensure_file(self):
+        """Stellt sicher, dass der Ordner und die Feedback-CSV existieren;
+        legt bei Bedarf eine leere Datei mit den erwarteten Spalten an."""
         self.csv_path.parent.mkdir(parents=True, exist_ok=True)
         if not self.csv_path.exists():
             pd.DataFrame(columns=FEEDBACK_COLUMNS).to_csv(self.csv_path, sep=";", index=False)
 
     def load(self) -> pd.DataFrame:
+        """Liest die Feedback-CSV ein, ergänzt fehlende Spalten und wandelt
+        die 'Gelesen'-Spalte in einen sauberen Boolean-Typ um."""
         self._ensure_file()
         try:
             df = pd.read_csv(self.csv_path, sep=";", encoding="utf-8")
@@ -209,6 +240,9 @@ class FeedbackData:
         return df
 
     def add(self, athlet: str, jahr: int, monat: int, nachricht: str):
+        """Fügt eine neue Feedback-Nachricht eines Athleten (mit Zeitstempel,
+        Jahr, Monat, Nachrichtentext, Status 'ungelesen') hinzu und
+        speichert sie in der CSV."""
         df = self.load()
         neu = pd.DataFrame(
             [
@@ -226,14 +260,20 @@ class FeedbackData:
         df.to_csv(self.csv_path, sep=";", index=False)
 
     def get_for_athlete(self, athlet: str) -> pd.DataFrame:
+        """Gibt alle Feedback-Nachrichten des angegebenen Athleten zurück,
+        neueste zuerst."""
         df = self.load()
         return df[df["Athlet"] == athlet].sort_values("Zeitstempel", ascending=False)
 
     def get_unread(self) -> pd.DataFrame:
+        """Gibt alle noch ungelesenen Feedback-Nachrichten zurück, neueste
+        zuerst."""
         df = self.load()
         return df[~df["Gelesen"]].sort_values("Zeitstempel", ascending=False)
 
     def mark_as_read(self, index):
+        """Markiert die Feedback-Nachricht mit dem angegebenen DataFrame-Index
+        als gelesen und speichert die Änderung in der CSV."""
         df = self.load()
         if index in df.index:
             df.loc[index, "Gelesen"] = True
@@ -279,6 +319,8 @@ class TrainingCalendar:
         competitions: Optional[CompetitionData] = None,
         feedback: Optional[FeedbackData] = None,
     ):
+        """Initialisiert den Kalender mit den benötigten Datenquellen
+        (Trainings-, Wettkampf- und Feedback-Daten)."""
         self.data = data
         self.competitions = competitions or CompetitionData()
         self.feedback = feedback or FeedbackData()
@@ -286,6 +328,11 @@ class TrainingCalendar:
     # -- Öffentliche Methode -------------------------------------------------
 
     def render(self, role: str = "trainer", current_user: Optional[str] = None):
+        """Rendert den kompletten Kalender: Athletenauswahl, Monatsnavigation,
+        Legende, Kalendergitter, Tagesdetails, Feedback-Bereich und
+        Monatsstatistik. role steuert, ob eine Athletenauswahl (Trainer)
+        angezeigt wird oder nur der angemeldete Athlet (current_user)
+        sichtbar ist."""
         self._init_session_state()
 
         selected_athlete = self._render_athlete_selector(role, current_user)
@@ -318,6 +365,8 @@ class TrainingCalendar:
 
     @staticmethod
     def _init_session_state():
+        """Initialisiert die für den Kalender benötigten Session-State-Werte
+        (aktuelles Jahr/Monat, ausgewähltes Datum), falls noch nicht gesetzt."""
         today = date.today()
         for k, v in {
             "cal_year": today.year,
@@ -328,6 +377,10 @@ class TrainingCalendar:
                 st.session_state[k] = v
 
     def _render_athlete_selector(self, role: str, current_user: Optional[str]) -> Optional[str]:
+        """Zeigt je nach Rolle entweder eine Athleten-Dropdown-Auswahl
+        (Trainer) oder nur den Namen des angemeldeten Athleten an und gibt
+        den ausgewählten Athletennamen zurück (oder None, falls keine
+        gültige Auswahl möglich ist)."""
         athletes = self.data.get_athletes()
 
         if role == "athlete":
@@ -351,6 +404,9 @@ class TrainingCalendar:
 
     @staticmethod
     def _render_month_navigation():
+        """Rendert die Monatsnavigation (Vor-/Zurück-Buttons sowie Monats-
+        und Jahresauswahl) und aktualisiert bei Änderung den Session-State
+        ('cal_year', 'cal_month', 'cal_selected_date')."""
         col_prev, col_mid, col_next = st.columns([1, 4, 1])
 
         with col_prev:
@@ -403,6 +459,8 @@ class TrainingCalendar:
 
     @staticmethod
     def _render_legend():
+        """Rendert die Farblegende der Aktivitäten sowie den Hinweis-Stil
+        für Wettkampftage oberhalb des Kalendergitters."""
         parts = []
         for aktivitaet, color in AKTIVITAET_FARBEN.items():
             parts.append(
@@ -420,6 +478,11 @@ class TrainingCalendar:
         st.markdown("")
 
     def _render_calendar_grid(self, df_month: pd.DataFrame, df_comp_month: pd.DataFrame, year: int, month: int):
+        """Rendert das Monatskalender-Gitter als HTML-Tabelle: pro Tag werden
+        Aktivitäts-Punkte, Ruhetag-Hinweis, Trainingsdauer, Schmerz-Warnung
+        und Wettkampf-Badge angezeigt. Darunter bietet eine Selectbox die
+        Auswahl eines Tages für die Detailansicht (aktualisiert
+        'cal_selected_date' im Session-State)."""
         today = date.today()
         selected = st.session_state.get("cal_selected_date")
 
@@ -549,6 +612,10 @@ class TrainingCalendar:
     # -- Tag-Detail ----------------------------------------------------------
 
     def _render_day_detail(self, df_athlete: pd.DataFrame, df_comp_athlete: pd.DataFrame, selected_date: date):
+        """Zeigt die Detailansicht für einen ausgewählten Tag: Wettkampf-
+        Hinweis (falls vorhanden), Ruhetag-Hinweis sowie für jede
+        Trainingseinheit Aktivität, Kennzahlen (Dauer, Distanz, Puls,
+        Kalorien), Beschwerden und Kommentar."""
         df_day = self.data.get_for_date(df_athlete, selected_date)
         df_comp_day = self.competitions.get_for_date(df_comp_athlete, selected_date)
 
@@ -637,6 +704,10 @@ class TrainingCalendar:
     # -- Feedback --------------------------------------------------------
 
     def _render_feedback_section(self, athlete: str, role: str, year: int, month: int):
+        """Rendert den Feedback-Bereich: Athleten können eine Nachricht an
+        den Trainer senden und ihren bisherigen Feedback-Verlauf einsehen;
+        Trainer sehen den Feedback-Verlauf des ausgewählten Athleten und
+        können Nachrichten als gelesen markieren."""
         st.markdown("---")
         st.markdown("### 💬 Feedback an den Trainer")
 
@@ -706,6 +777,10 @@ class TrainingCalendar:
         st.altair_chart(chart, use_container_width=True)
 
     def _render_monthly_stats(self, df_month: pd.DataFrame, athlet: str):
+        """Rendert die Monatsübersicht mit Kennzahlen (Einheiten, Dauer,
+        Distanz, Kalorien, Ø Herzfrequenz, Ruhetage, Schmerz-Einheiten)
+        sowie Diagrammen zur Verteilung nach Aktivität und Tagesgefühl,
+        inklusive einer aufklappbaren Liste dokumentierter Beschwerden."""
         aktiv = df_month[~df_month["_ist_ruhetag"]]
         if aktiv.empty:
             return
