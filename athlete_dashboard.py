@@ -198,7 +198,7 @@ def athlete_dashboard(person):
     # Sidebar
     st.sidebar.title(f"Hallo, {athlet_name}!")
 
-    menu = st.sidebar.radio("Menü", ["📅 Mein Kalender", "⌨ Eingaben", "📊 Meine Auswertung", "💾 Daten exportieren"])
+    menu = st.sidebar.selectbox("Menü", ["📅 Mein Kalender", "⌨ Eingaben", "📊 Meine Auswertung", "💾 Daten exportieren"])
 
     # Untermenü für "Eingaben"
     eingabe_typ = None
