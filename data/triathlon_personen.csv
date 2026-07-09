@@ -1,9 +1,11 @@
-Vorname;Nachname;Geburtsdatum;Nationalitaet;Rolle;Spezialisierung;Erfolge_Lizenzen
-Jan;Frodeno;18.08.1981;Deutsch;Athlet;Langdistanz (Ironman);Olympiasieger 2008, 3x Ironman Weltmeister (2015, 2016, 2019)
-Anne;Haug;20.01.1983;Deutsch;Athlet;Langdistanz (Ironman);Ironman Weltmeisterin 2019, 2x Challenge Roth Siegerin
-Patrick;Lange;25.08.1986;Deutsch;Athlet;Langdistanz (Ironman);3x Ironman Weltmeister (2017, 2018, 2024), Marathon-Streckenrekord Kona
-Lucy;Charles-Barclay;15.09.1993;Britisch;Athlet;Langdistanz (Ironman);Ironman Weltmeisterin 2023, 2x Ironman 70.3 Weltmeisterin
-Gustav;Iden;01.05.1996;Norwegisch;Athlet;Langdistanz / Kurzdistanz;Ironman Weltmeister 2022, 2x Ironman 70.3 Weltmeister (2019, 2021)
-Daniela;Ryf;29.05.1987;Schweizerisch;Athlet;Langdistanz (Ironman);5x Ironman Weltmeisterin, 5x Ironman 70.3 Weltmeisterin
-Chrissie;Wellington;18.02.1977;Britisch;Athlet;Langdistanz (Ironman);4x Ironman Weltmeisterin, Ungeschlagen auf der Langdistanz
-Dan;Lorang;17.08.1979;Luxemburgisch;Trainer;Triathlon & Radsport;Erfolgscoach von Frodeno und Haug, Head of Performance im Profiradsport
+Vorname;Nachname;Geburtsdatum;Nationalitaet;Rolle;Spezialisierung;Erfolge_Lizenzen;Trainer;Verein
+Jan;Frodeno;18.08.1981;Deutsch;Athlet;Langdistanz (Ironman);Olympiasieger 2008, 3x Ironman Weltmeister (2015, 2016, 2019);;
+Anne;Haug;20.01.1983;Deutsch;Athlet;Langdistanz (Ironman);Ironman Weltmeisterin 2019, 2x Challenge Roth Siegerin;;
+Patrick;Lange;25.08.1986;Deutsch;Athlet;Langdistanz (Ironman);3x Ironman Weltmeister (2017, 2018, 2024), Marathon-Streckenrekord Kona;;
+Lucy;Charles-Barclay;15.09.1993;Britisch;Athlet;Langdistanz (Ironman);Ironman Weltmeisterin 2023, 2x Ironman 70.3 Weltmeisterin;;
+Gustav;Iden;01.05.1996;Norwegisch;Athlet;Langdistanz / Kurzdistanz;Ironman Weltmeister 2022, 2x Ironman 70.3 Weltmeister (2019, 2021);;
+Daniela;Ryf;29.05.1987;Schweizerisch;Athlet;Langdistanz (Ironman);5x Ironman Weltmeisterin, 5x Ironman 70.3 Weltmeisterin;;
+Chrissie;Wellington;18.02.1977;Britisch;Athlet;Langdistanz (Ironman);4x Ironman Weltmeisterin, Ungeschlagen auf der Langdistanz;;
+Dan;Lorang;17.08.1979;Luxemburgisch;Trainer;Triathlon & Radsport;Erfolgscoach von Frodeno und Haug, Head of Performance im Profiradsport;;
+Coach;Beispiel;01.01.2000;Norwegisch;Trainer;;;;TV Beispiel
+Leonie;Schwerin;15.09.2004;Deutsch;Athlet;Sprintdistanz;;Coach beispiel;Svgg Triathlon

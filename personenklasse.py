@@ -14,7 +14,16 @@ class Person:
     ERLAUBTE_ROLLEN = ["Athlet", "Trainer"]
     _alle_personen = []  # Hier werden alle erstellten Personen-Objekte gesammelt
 
-    def __init__(self, vorname: str, nachname: str, geburtsdatum: str, nationalitaet: str, rolle: str):
+    def __init__(
+        self,
+        vorname: str,
+        nachname: str,
+        geburtsdatum: str,
+        nationalitaet: str,
+        rolle: str,
+        trainer: str = "",
+        verein: str = "",
+    ):
         """Erstellt eine neue Person und registriert sie automatisch in der
         Klassenliste '_alle_personen'.
 
@@ -25,6 +34,8 @@ class Person:
         self.nachname = nachname
         self.geburtsdatum = datetime.strptime(geburtsdatum, "%d.%m.%Y").date()
         self.nationalitaet = nationalitaet
+        self.trainer = trainer
+        self.verein = verein
 
         self.spezialisierung = []
         self.erfolge = []
@@ -68,6 +79,14 @@ class Person:
         Vor- und Nachnamen, getrennt durch einen Punkt (z. B. 'anna.mustermann')."""
         return f"{self.vorname.lower()}.{self.nachname.lower()}"
 
+    def get_trainer(self) -> str:
+        """Gibt den zugeordneten Trainer zurück."""
+        return self.trainer
+
+    def get_verein(self) -> str:
+        """Gibt den Verein der Person zurück."""
+        return self.verein
+
     @property  # Methode als Attribut
     def id(self):
         """Eindeutige ID der Person; entspricht dem Login-Namen."""
@@ -94,6 +113,15 @@ class Person:
         return [p for p in cls._alle_personen if p.get_role() == "Trainer"]
 
     @classmethod
+    def get_athleten_von_trainer(cls, trainer_name: str):
+        """Gibt alle Athleten zurück, die einem Trainer zugeordnet sind."""
+        return [
+            p
+            for p in cls.get_athleten()
+            if getattr(p, "trainer", "") == trainer_name
+        ]
+
+    @classmethod
     def daten_geladen(cls):
         """Gibt True zurück, sobald mindestens eine Person-Instanz existiert
         (d. h. ob die CSV bereits eingelesen wurde)."""
@@ -103,6 +131,7 @@ class Person:
     @staticmethod  # benötigt kein Objekt/ Klasse als Eingabeparameter
     def load_data_from_csv(dateiname: str):
         """Liest eine CSV-Datei ein und erstellt automatisch die Personen-Objekte."""
+        Person._alle_personen = []
         dateipfad = f"data/{dateiname}"  # csv dateien sind immer im data ordner abgelegt
         try:
             with open(dateipfad, mode="r", encoding="utf-8") as file:
@@ -116,6 +145,8 @@ class Person:
                         geburtsdatum=row["Geburtsdatum"],
                         nationalitaet=row["Nationalitaet"],
                         rolle=row["Rolle"],
+                        trainer=row.get("Trainer", ""),
+                        verein=row.get("Verein", ""),
                     )
                     # Optionale Zusatzattribute befüllen
                     if row.get("Spezialisierung"):

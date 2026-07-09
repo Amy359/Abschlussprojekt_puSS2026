@@ -1,11 +1,12 @@
 import os
 import streamlit as st
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, date
 from streamlit_calendar import calendar
 import plotly.express as px
 
 from personenklasse import Person
+from login import hash_password
 from auswertung import lade_daten, zeige_auswertung
 from training_calendar import render_trainer_feedback_inbox
 
@@ -27,6 +28,135 @@ def speichere_wettkaempfe(df):
     """Speichert das Wettkampf-DataFrame als Semikolon-getrennte CSV-Datei
     unter 'data/wettkaempfe.csv'."""
     df.to_csv("data/wettkaempfe.csv", sep=";", index=False, encoding="utf-8")
+
+
+def athlet_hinzufuegen(trainer):
+    """Zeigt ein Formular zum Anlegen eines neuen Athleten an."""
+
+    st.header("Athlet hinzufügen")
+
+    if "athlet_hinzufuegen_erfolg" in st.session_state:
+        st.success(st.session_state.pop("athlet_hinzufuegen_erfolg"))
+
+    trainer_name = trainer.get_vollname()
+    formular_version = st.session_state.get("athlet_hinzufuegen_formular_version", 0)
+
+    with st.form("athlet_hinzufuegen"):
+        col1, col2 = st.columns(2)
+
+        vorname = col1.text_input("Vorname", key=f"athlet_vorname_{formular_version}")
+        nachname = col2.text_input("Nachname", key=f"athlet_nachname_{formular_version}")
+
+        geburtsdatum = col1.date_input(
+            "Geburtsdatum",
+            value=date(1990, 1, 1),
+            min_value=date(1920, 1, 1),
+            max_value=date.today(),
+            key=f"athlet_geburtsdatum_{formular_version}",
+        )
+        nationalitaet = col2.text_input("Nationalität", key=f"athlet_nationalitaet_{formular_version}")
+
+        spezialisierung = col1.text_input("Spezialisierung", key=f"athlet_spezialisierung_{formular_version}")
+        col2.text_input("Trainer", value=trainer_name, disabled=True, key=f"athlet_trainer_{formular_version}")
+
+        verein = st.text_input("Verein", key=f"athlet_verein_{formular_version}")
+
+        speichern = st.form_submit_button("💾 Athlet speichern")
+
+    if speichern:
+        vorname = vorname.strip().title()
+        nachname = nachname.strip().title()
+        nationalitaet = nationalitaet.strip().title()
+        spezialisierung = spezialisierung.strip().title()
+        verein = verein.strip().title()
+
+        if not vorname or not nachname:
+            st.error("Vorname und Nachname müssen ausgefüllt sein.")
+            return
+
+        personen_datei = "data/triathlon_personen.csv"
+        users_datei = "data/users_secure.csv"
+        geburtsdatum_text = geburtsdatum.strftime("%d.%m.%Y")
+        username = f"{vorname.lower()}.{nachname.lower()}"
+
+        df_personen = pd.read_csv(personen_datei, sep=";")
+        df_users = pd.read_csv(users_datei, sep=";")
+
+        df_users["user_login"] = (
+            df_users["Vorname"].astype(str).str.lower() + "." + df_users["Nachname"].astype(str).str.lower()
+        )
+
+        if username in df_users["user_login"].values:
+            st.error("Dieser Benutzername existiert bereits.")
+            return
+
+        gleicher_name = (df_personen["Vorname"].astype(str).str.lower() == vorname.lower()) & (
+            df_personen["Nachname"].astype(str).str.lower() == nachname.lower()
+        )
+
+        if gleicher_name.any():
+            st.error("Ein Athlet mit diesem Vor- und Nachnamen existiert bereits.")
+            return
+
+        neuer_athlet = {
+            "Vorname": vorname,
+            "Nachname": nachname,
+            "Geburtsdatum": geburtsdatum_text,
+            "Nationalitaet": nationalitaet,
+            "Rolle": "Athlet",
+            "Spezialisierung": spezialisierung,
+            "Erfolge_Lizenzen": "",
+            "Trainer": trainer_name,
+            "Verein": verein,
+        }
+
+        for spalte in neuer_athlet:
+            if spalte not in df_personen.columns:
+                df_personen[spalte] = ""
+
+        df_personen = pd.concat(
+            [df_personen, pd.DataFrame([neuer_athlet])],
+            ignore_index=True,
+        )
+
+        df_personen.to_csv(
+            personen_datei,
+            sep=";",
+            index=False,
+            encoding="utf-8",
+        )
+
+        neuer_user = {
+            "Vorname": vorname,
+            "Nachname": nachname,
+            "Password_Hash": hash_password(geburtsdatum_text),
+        }
+
+        for spalte in neuer_user:
+            if spalte not in df_users.columns:
+                df_users[spalte] = ""
+
+        df_users = pd.concat(
+            [
+                df_users.drop(columns=["user_login"], errors="ignore"),
+                pd.DataFrame([neuer_user]),
+            ],
+            ignore_index=True,
+        )
+
+        df_users.to_csv(
+            users_datei,
+            sep=";",
+            index=False,
+            encoding="utf-8",
+        )
+
+        Person.load_data_from_csv("triathlon_personen.csv")
+
+        athlet = f"{vorname} {nachname}"
+        st.session_state.athlet_hinzufuegen_erfolg = f"{athlet} wurde erfolgreich angelegt."
+        st.session_state.athlet_hinzufuegen_formular_version = formular_version + 1
+        st.rerun()
 
 
 def zeige_wettkaempfe(df):
@@ -277,8 +407,15 @@ def trainer_dashboard(person):
     # Navigation und sidebar
     athlet_name = person.get_vollname()
     st.sidebar.title(f"Hallo, {athlet_name}!")
-    menu = st.sidebar.radio("Menü", ["📅 Wettkampfkalender", "📊 Gesamtübersicht", "👥 Athleten"])
+    menu = st.sidebar.selectbox("Menü", ["📅 Wettkampfkalender", "📊 Gesamtübersicht", "👥 Athleten"])
 
+    # Untermenü für "Athleten"
+    eingabe_typ = None
+    if menu == "👥 Athleten":
+        eingabe_typ = st.sidebar.radio(
+            "Optionen",
+            ["Athleten anzeigen", "Athleten - Feedback anzeigen", "Neuen Athlet hinzufügen"],
+        )
     # ------------------------
     # Kalender
     # ------------------------
@@ -301,16 +438,29 @@ def trainer_dashboard(person):
     # Athleten
     # ------------------------
     elif menu == "👥 Athleten":
-        st.header("Athleten")
+        if eingabe_typ == "Athleten anzeigen":
+            st.header("Athleten")
 
-        athleten = Person.get_athleten()
+            athleten = Person.get_athleten()
 
-        for i, athlet in enumerate(athleten):
-            if st.button(athlet.get_vollname(), key=f"trainer_athlet_{i}"):
-                zeige_auswertung(athlet.get_vollname(), df_train, df_regen)
+            for i, athlet in enumerate(athleten):
+                athlet_name = athlet.get_vollname()
 
-        # Feedback von Athleten
-        render_trainer_feedback_inbox()
+                if st.button(athlet_name, key=f"trainer_athlet_{i}"):
+                    if st.session_state.get("ausgewaehlter_athlet") == athlet_name:
+                        st.session_state.ausgewaehlter_athlet = None
+                    else:
+                        st.session_state.ausgewaehlter_athlet = athlet_name
+
+                if st.session_state.get("ausgewaehlter_athlet") == athlet_name:
+                    zeige_auswertung(athlet_name, df_train, df_regen)
+
+        elif eingabe_typ == "Athleten - Feedback anzeigen":
+            # Feedback von Athleten
+            render_trainer_feedback_inbox()
+
+        elif eingabe_typ == "Neuen Athlet hinzufügen":
+            athlet_hinzufuegen(person)
 
 
 # def show_trainer_dashboard():
