@@ -41,6 +41,18 @@ SCHMERZEN_FARBE: dict[str, str] = {
 }
 
 WOCHENTAGE = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
+# Übersetzung der (immer englischen, locale-unabhängigen) pandas-Wochentagsnamen
+# ins Deutsche - so ist keine 'de_DE'-Systemlocale nötig, die auf gehosteten
+# Umgebungen (z. B. Streamlit Community Cloud) oft nicht installiert ist
+WOCHENTAGE_DE = {
+    "Monday": "Montag",
+    "Tuesday": "Dienstag",
+    "Wednesday": "Mittwoch",
+    "Thursday": "Donnerstag",
+    "Friday": "Freitag",
+    "Saturday": "Samstag",
+    "Sunday": "Sonntag",
+}
 MONATE_DE = [
     "Januar",
     "Februar",
@@ -652,7 +664,7 @@ class TrainingCalendar:
         # Klick-Auswahl per Selectbox (kompakt, kein Button-Chaos)
         cal_weeks_flat = calendar.monthcalendar(year, month)
         alle_tage = [date(year, month, d) for week in cal_weeks_flat for d in week if d != 0]
-        tage_labels = {d: d.strftime("%d. %b (%A)") for d in alle_tage}
+        tage_labels = {d: f"{d.day:02d}. {MONATE_DE[d.month - 1][:3]} ({WOCHENTAGE_DE[d.strftime('%A')]})" for d in alle_tage}
 
         selected_day = st.selectbox(
             "Tag auswählen für Details",
@@ -674,7 +686,8 @@ class TrainingCalendar:
 
         wochentag = df_day["Wochentag"].iloc[0] if not df_day.empty else ""
         st.markdown("---")
-        st.markdown(f"### 📋 {wochentag}, {selected_date.strftime('%d. %B %Y')}")
+        datum_de = f"{selected_date.day:02d}. {MONATE_DE[selected_date.month - 1]} {selected_date.year}"
+        st.markdown(f"### 📋 {wochentag}, {datum_de}")
 
         # Wettkampf-Hinweis
         if not df_comp_day.empty:

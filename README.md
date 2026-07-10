@@ -134,7 +134,7 @@ Deployment über [Streamlit Community Cloud](https://share.streamlit.io) (kosten
 2. Auf [share.streamlit.io](https://share.streamlit.io) mit dem GitHub-Account einloggen
 3. "New app" → Repository und Branch wählen, als **Main file path** `main.py` angeben, "Deploy" klicken
 
-🔗 **Live-Demo:** *(Link zu website)*
+🔗 **Live-Demo:** *https://triiiconnect.streamlit.app/*
 
 > **Hinweis:** Da alle Daten in `data/*.csv` gespeichert werden (siehe [Datenhaltung](#datenhaltung)), setzt Streamlit Community Cloud den Dateistand bei jedem Neustart der App (z. B. nach einem Code-Push oder nach längerer Inaktivität) auf den zuletzt committeten Stand zurück. Über die Web-Oberfläche neu angelegte Athlet:innen oder Einträge bleiben also nur bis zum nächsten Neustart erhalten.
 

@@ -6,7 +6,7 @@ import plotly.express as px
 # damit es für 'triathlon_training.csv' nur eine Stelle im Code gibt, die
 # Spalten umbenennt, doppelte Kategoriespalten zusammenführt und Typen
 # umwandelt - Kalender und Auswertung sehen so garantiert dieselben Daten.
-from training_calendar import TrainingData, spalten_zusammenfuehren, MONATE_DE, AKTIVITAET_FARBEN
+from training_calendar import TrainingData, spalten_zusammenfuehren, MONATE_DE, WOCHENTAGE_DE, AKTIVITAET_FARBEN
 
 
 # --- HILFSFUNKTIONEN ---
@@ -140,7 +140,7 @@ def lade_daten():
             f"{MONATE_DE[m - 1]} {j}" if 1 <= m <= 12 else "Unbekannt" for m, j in zip(df["Monat"], df["Jahr"])
         ]
 
-        df["Wochentag"] = df["Datum"].dt.day_name(locale="de_DE")
+        df["Wochentag"] = df["Datum"].dt.day_name().map(WOCHENTAGE_DE)
 
     # --------------------------------------------------
     # Schlafstunden berechnen

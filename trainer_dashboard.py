@@ -9,7 +9,7 @@ import plotly.express as px
 from personenklasse import Person
 from login import hash_password
 from auswertung import lade_daten, zeige_auswertung
-from training_calendar import render_trainer_feedback_inbox, AKTIVITAET_FARBEN
+from training_calendar import render_trainer_feedback_inbox, AKTIVITAET_FARBEN, MONATE_DE
 
 
 # HILFSFUNKTIONEN
@@ -438,12 +438,22 @@ def zeige_gesamtuebersicht(df_train, df_regen):
     df_distanz = df_train[df_train["Aktivitaet"].str.lower() != "ruhetag"].copy()
 
     if "Datum" in df_distanz.columns:
-        df_distanz["Monat"] = df_distanz["Datum"].dt.strftime("%B %Y")
+        # Eigene Monatslabels statt strftime("%B %Y"): locale-unabhängig (funktioniert
+        # auch ohne 'de_DE'-Systemlocale) und per Sortierschlüssel chronologisch statt
+        # alphabetisch sortierbar (sonst käme z. B. "April" vor "Januar")
+        sortierschluessel = df_distanz["Datum"].dt.year * 100 + df_distanz["Datum"].dt.month
+        df_distanz["Monat"] = [
+            f"{MONATE_DE[m - 1]} {j}" for m, j in zip(df_distanz["Datum"].dt.month, df_distanz["Datum"].dt.year)
+        ]
 
-        monat = st.selectbox(
-            "Monat auswählen",
-            sorted(df_distanz["Monat"].unique(), reverse=True),
+        monat_optionen = (
+            pd.DataFrame({"schluessel": sortierschluessel, "label": df_distanz["Monat"]})
+            .drop_duplicates()
+            .sort_values("schluessel", ascending=False)["label"]
+            .tolist()
         )
+
+        monat = st.selectbox("Monat auswählen", monat_optionen)
 
         df_distanz = df_distanz[df_distanz["Monat"] == monat]
 
