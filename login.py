@@ -150,15 +150,6 @@ def logout(person=None):
         section[data-testid="stSidebarUserContent"] [data-testid="stElementContainer"]:first-child {{
             margin-top: -1rem;
         }}
-        /* Begrüßung ('Hallo,' + Name) als zwei eng aufeinanderfolgende Titelzeilen
-        statt einem einzeiligen Text, damit lange Namen nicht mitten im Wort umbrechen */
-        section[data-testid="stSidebarUserContent"] h1 {{
-            margin: 0 !important;
-            line-height: 1.15;
-        }}
-        section[data-testid="stSidebarUserContent"] [data-testid="stElementContainer"]:has(h1) + [data-testid="stElementContainer"]:has(h1) {{
-            margin-top: -0.6rem !important;
-        }}
         </style>
         """,
         unsafe_allow_html=True,

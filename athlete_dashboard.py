@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import io
 from datetime import datetime
+from html import escape
 from pathlib import Path
 from training_calendar import render_calendar
 from auswertung import lade_daten, zeige_auswertung
@@ -229,10 +230,13 @@ def athlete_dashboard(person):
 
     # Sidebar
     st.sidebar.image("images/logo.png")
-    # Zwei separate Titel statt einem String, damit lange Namen nicht mitten
-    # im Wort umbrechen, sondern 'Hallo,' und der Name je eine eigene Zeile bekommen
-    st.sidebar.title("Hallo,")
-    st.sidebar.title(f"{athlet_name}!")
+    # Manueller Zeilenumbruch statt einem einzeiligen Titel, damit lange Namen
+    # nicht mitten im Wort umbrechen, sondern 'Hallo,' und der Name je eine
+    # eigene Zeile bekommen
+    st.sidebar.markdown(
+        f"<h1 style='margin:0;line-height:1.2'>Hallo,<br>{escape(athlet_name)}!</h1>",
+        unsafe_allow_html=True,
+    )
 
     menu = st.sidebar.selectbox(
         "Menü", ["📅 Mein Kalender", "⌨ Eingaben", "📊 Meine Auswertung", "💾 Daten exportieren"]

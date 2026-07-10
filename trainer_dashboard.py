@@ -2,6 +2,7 @@ import os
 import streamlit as st
 import pandas as pd
 from datetime import datetime, date
+from html import escape
 from streamlit_calendar import calendar
 import plotly.express as px
 
@@ -542,10 +543,10 @@ def trainer_dashboard(person):
     # bis er zum Dashboard zurückkehrt
     if st.session_state.get("zeige_profil_bearbeitung"):
         st.sidebar.image("images/logo.png")
-        # Zwei separate Titel statt einem String, damit lange Namen nicht mitten
-        # im Wort umbrechen, sondern 'Hallo,' und der Name je eine eigene Zeile bekommen
-        st.sidebar.title("Hallo,")
-        st.sidebar.title(f"{trainer_name}!")
+        st.sidebar.markdown(
+            f"<h1 style='margin:0;line-height:1.2'>Hallo,<br>{escape(trainer_name)}!</h1>",
+            unsafe_allow_html=True,
+        )
         st.header("Profil bearbeiten")
         if st.button("← Zurück zum Dashboard"):
             st.session_state.zeige_profil_bearbeitung = False
@@ -558,10 +559,10 @@ def trainer_dashboard(person):
 
     # Navigation und sidebar
     st.sidebar.image("images/logo.png")
-    # Zwei separate Titel statt einem String, damit lange Namen nicht mitten
-    # im Wort umbrechen, sondern 'Hallo,' und der Name je eine eigene Zeile bekommen
-    st.sidebar.title("Hallo,")
-    st.sidebar.title(f"{trainer_name}!")
+    st.sidebar.markdown(
+        f"<h1 style='margin:0;line-height:1.2'>Hallo,<br>{escape(trainer_name)}!</h1>",
+        unsafe_allow_html=True,
+    )
     menu = st.sidebar.selectbox("Menü", ["📅 Wettkampfkalender", "📊 Gesamtübersicht", "👥 Athleten"])
 
     # Untermenü für "Athleten"
