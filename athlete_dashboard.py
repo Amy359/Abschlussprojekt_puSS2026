@@ -55,44 +55,63 @@ def zeige_training_eingabe(athlet_name):
 
         st.subheader("Trainingsdaten")
 
-        sportart = st.selectbox(
-            "Sportart",
+        aktivitaet = st.selectbox(
+            "Aktivität",
             ["Schwimmen", "Radfahren", "Laufen", "Krafttraining", "Koppeltraining", "Mobilität", "Sonstiges"],
         )
 
-        dauer = st.number_input("Dauer (Minuten)", min_value=0)
+        col_dauer1, col_dauer2 = st.columns(2)
+        dauer_stunden = col_dauer1.number_input("Dauer (Stunden)", min_value=0, step=1)
+        dauer_minuten = col_dauer2.number_input("Dauer (Minuten)", min_value=0, max_value=55, step=5)
+        dauer = dauer_stunden * 60 + dauer_minuten
 
-        distanz = st.number_input("Distanz (km)", min_value=0.0, step=0.1)
+        col_distanz1, col_distanz2 = st.columns(2)
+        distanz_km = col_distanz1.number_input("Distanz (km)", min_value=0, step=1)
+        distanz_m = col_distanz2.number_input("Distanz (m)", min_value=0, max_value=950, step=50)
+        distanz = distanz_km + (distanz_m / 1000)
 
         intensitaet = st.select_slider(
             "Intensität", options=["Regeneration", "Locker", "Mittel", "Hart", "Wettkampfnah"]
         )
 
-        durchschnittspuls = st.number_input("Durchschnittspuls (optional)", min_value=0)
+        durchschnittspuls = st.number_input("Durchschnittspuls (optional)", min_value=0, value=30)
 
-        max_puls = st.number_input("Maximalpuls (optional)", min_value=0)
+        max_puls = st.number_input("Maximalpuls (optional)", min_value=0, value=100)
 
         if st.form_submit_button("Training speichern"):
+            # Tagebuch und Auffälligkeiten werden in der Kategoriespalte
+            # 'Kommentar' gespeichert - derselben Spalte, in der auch die
+            # Trainer im Kalender ihre Kommentare sehen
+            kommentar = " | ".join(text for text in [tagebuch.strip(), auffaelligkeiten.strip()] if text)
+
             new_row = pd.DataFrame(
                 [
                     {
                         "Datum": datum.strftime("%Y-%m-%d"),
                         "Athlet": athlet_name,
-                        "Wohlbefinden": wohlbefinden,
-                        "Energielevel": energie,
-                        "Trainingszufriedenheit": trainingsgefuehl,
-                        "Trainingstagebuch": tagebuch,
-                        "Auffaelligkeiten": auffaelligkeiten,
-                        "Beschwerden": beschwerden,
-                        "Sportart": sportart,
+                        "Aktivitaet": aktivitaet,
                         "Dauer_Minuten": dauer,
                         "Distanz_km": distanz,
                         "Intensitaet": intensitaet,
-                        "Durchschnittspuls": durchschnittspuls,
-                        "Maximalpuls": max_puls,
+                        "Ø_Herzfrequenz": durchschnittspuls,
+                        "Max_Herzfrequenz": max_puls,
+                        "Gefühl": wohlbefinden,
+                        "Energielevel": energie,
+                        "Trainingszufriedenheit": trainingsgefuehl,
+                        "Kommentar": kommentar,
+                        "Schmerzen": beschwerden,
                     }
                 ]
             )
+
+            # new_row auf genau die Spalten der bestehenden CSV zurechtstutzen:
+            # pd.concat() würde sonst für jeden Dict-Key, der (z. B. durch einen
+            # Tippfehler) nicht exakt einem bestehenden Spaltennamen entspricht,
+            # stillschweigend eine neue Spalte anlegen statt einen Fehler zu werfen
+            for col in df_train.columns:
+                if col not in new_row.columns:
+                    new_row[col] = pd.NA
+            new_row = new_row[df_train.columns]
 
             df_train = pd.concat([df_train, new_row], ignore_index=True)
 
@@ -160,21 +179,34 @@ def zeige_regen_eingabe(athlet_name):
         notizen = st.text_area("Sonstige Gedanken", height=120)
 
         if st.form_submit_button("Regeneration speichern"):
+            # Die Kategoriespalte 'Schlaf_Gefuehl' speichert Text, der Slider
+            # liefert aber eine Zahl (1-5) - hier in die passende Textstufe
+            # übersetzen, bevor der Datensatz gespeichert wird
+            schlafqualitaet_text = {5: "Sehr gut", 4: "Gut", 3: "Mittelmäßig", 2: "Schlecht", 1: "Sehr schlecht"}
+
             new_row = pd.DataFrame(
                 [
                     {
                         "Datum": datum.strftime("%Y-%m-%d"),
                         "Athlet": athlet_name,
-                        "Schlafdauer": schlafdauer,
-                        "Schlafqualitaet": schlafqualitaet,
+                        "Schlaf_Dauer": schlafdauer,
+                        "Schlaf_Gefuehl": schlafqualitaet_text[schlafqualitaet],
                         "Erholung": erholung,
-                        "Regenerationsmassnahmen": ", ".join(massnahmen),
+                        "Regenerations_Massnahme": ", ".join(massnahmen),
                         "Koerpergefuehl": ", ".join(koerpergefuehl),
                         "Ernaehrung": ernaehrung,
                         "Notizen": notizen,
                     }
                 ]
             )
+
+            # new_row auf genau die Spalten der bestehenden CSV zurechtstutzen
+            # (siehe Kommentar in zeige_training_eingabe weiter oben)
+            for col in df_regen.columns:
+                if col not in new_row.columns:
+                    new_row[col] = pd.NA
+
+            new_row = new_row[df_regen.columns]
 
             df_regen = pd.concat([df_regen, new_row], ignore_index=True)
 
@@ -196,9 +228,15 @@ def athlete_dashboard(person):
     df_train, df_regen = lade_daten()
 
     # Sidebar
-    st.sidebar.title(f"Hallo, {athlet_name}!")
+    st.sidebar.image("images/logo.png")
+    # Zwei separate Titel statt einem String, damit lange Namen nicht mitten
+    # im Wort umbrechen, sondern 'Hallo,' und der Name je eine eigene Zeile bekommen
+    st.sidebar.title("Hallo,")
+    st.sidebar.title(f"{athlet_name}!")
 
-    menu = st.sidebar.selectbox("Menü", ["📅 Mein Kalender", "⌨ Eingaben", "📊 Meine Auswertung", "💾 Daten exportieren"])
+    menu = st.sidebar.selectbox(
+        "Menü", ["📅 Mein Kalender", "⌨ Eingaben", "📊 Meine Auswertung", "💾 Daten exportieren"]
+    )
 
     # Untermenü für "Eingaben"
     eingabe_typ = None

@@ -28,7 +28,9 @@ GEFUEHL_EMOJI: dict[str, str] = {
     "Sehr gut": "😄",
     "Gut": "🙂",
     "Normal": "😐",
+    "Neutral": "😐",
     "Müde": "😓",
+    "Erschöpft": "😩",
 }
 
 SCHMERZEN_FARBE: dict[str, str] = {
@@ -53,6 +55,31 @@ MONATE_DE = [
     "November",
     "Dezember",
 ]
+
+
+def _ist_leer(series: pd.Series) -> pd.Series:
+    """Gibt eine Boolean-Maske zurück: True dort, wo der Wert fehlt oder ein
+    leerer/whitespace-String ist."""
+    return series.isna() | (series.astype(str).str.strip().isin(["", "nan", "NaN", "<NA>"]))
+
+
+def spalten_zusammenfuehren(df: pd.DataFrame, kanonisch: str, alt_spalten: list[str]) -> pd.DataFrame:
+    """Führt eine oder mehrere alternative Spalten in die eine kanonische
+    Kategoriespalte zusammen: Wo die kanonische Spalte leer ist, wird der Wert
+    aus der ersten passenden alternativen Spalte übernommen. Die alternativen
+    Spalten werden anschließend entfernt, damit pro Kategorie nur eine Spalte
+    übrig bleibt (z. B. 'Aktivitaet' statt zusätzlich 'Sportart'). So bleibt
+    das Einlesen robust, falls eine Kategorie in der CSV unter mehreren
+    Spaltennamen vorkommt."""
+    if kanonisch not in df.columns:
+        df[kanonisch] = pd.NA
+    for alt_spalte in alt_spalten:
+        if alt_spalte not in df.columns or alt_spalte == kanonisch:
+            continue
+        leer = _ist_leer(df[kanonisch])
+        df.loc[leer, kanonisch] = df.loc[leer, alt_spalte]
+        df = df.drop(columns=[alt_spalte])
+    return df
 
 
 def _schmerzen_kategorie(wert: str) -> str:
@@ -92,21 +119,46 @@ class TrainingData:
             )
             st.stop()
 
-        df = pd.read_csv(self.csv_path, sep=";", encoding="utf-8")
+        try:
+            df = pd.read_csv(self.csv_path, sep=";", encoding="utf-8")
+        except UnicodeDecodeError:
+            df = pd.read_csv(self.csv_path, sep=";", encoding="cp1252")
+
+        df.columns = df.columns.str.strip()
+
+        # Neue CSV-Spalten auf interne Namen abbilden
+        df = df.rename(
+            columns={
+                "Aktivität": "Aktivitaet",
+                "Schmerzen_Beschwerden": "Schmerzen",
+            }
+        )
+
         df = self._normalize(df)
         self._df = df
         return self._df
 
     def _normalize(self, df: pd.DataFrame) -> pd.DataFrame:
         """Bereinigt die eingelesenen Trainingsdaten: trimmt Spaltennamen,
-        parst das Datum, wandelt numerische Spalten um (fehlende Werte -> 0),
-        trimmt Textspalten und ergänzt die Hilfsspalte '_ist_ruhetag'."""
+        parst das Datum, führt doppelte Kategoriespalten zusammen, wandelt
+        numerische Spalten um (fehlende Werte -> 0), trimmt Textspalten und
+        ergänzt die Hilfsspalte '_ist_ruhetag'."""
 
         df.columns = [c.strip() for c in df.columns]
 
         # Datum
         df["Datum"] = pd.to_datetime(df["Datum"], format="%Y-%m-%d", errors="coerce")
         df = df.dropna(subset=["Datum"])
+
+        # Doppelte Kategoriespalten zusammenführen, BEVOR numerisch/getrimmt
+        # wird - sonst würden z. B. Werte aus 'Durchschnittspuls' nie in die
+        # numerische Umwandlung von 'Ø_Herzfrequenz' einfließen
+        df = spalten_zusammenfuehren(df, "Aktivitaet", ["Sportart"])
+        df = spalten_zusammenfuehren(df, "Gefühl", ["Wohlbefinden"])
+        df = spalten_zusammenfuehren(df, "Schmerzen", ["Beschwerden"])
+        df = spalten_zusammenfuehren(df, "Ø_Herzfrequenz", ["Durchschnittspuls"])
+        df = spalten_zusammenfuehren(df, "Max_Herzfrequenz", ["Maximalpuls"])
+        df = spalten_zusammenfuehren(df, "Kommentar", ["Trainingstagebuch", "Auffaelligkeiten"])
 
         for col in ["Dauer_Minuten", "Distanz_km", "Ø_Herzfrequenz", "Max_Herzfrequenz", "Kalorienverbrauch"]:
             if col in df.columns:
@@ -116,16 +168,16 @@ class TrainingData:
             "Athlet",
             "Wochentag",
             "Einheit_Des_Tages",
-            "Aktivität",
+            "Aktivitaet",
             "Fokus",
             "Gefühl",
-            "Schmerzen_Beschwerden",
+            "Schmerzen",
             "Kommentar",
         ]:
             if col in df.columns:
                 df[col] = df[col].fillna("").astype(str).str.strip()
 
-        df["_ist_ruhetag"] = df["Aktivität"].str.lower() == "ruhetag"
+        df["_ist_ruhetag"] = df["Aktivitaet"].str.lower() == "ruhetag"
 
         return df.reset_index(drop=True)
 
@@ -343,7 +395,6 @@ class TrainingCalendar:
         df_athlete = self.data.get_for_athlete(selected_athlete)
         df_comp_athlete = self.competitions.get_for_athlete(selected_athlete)
 
-        st.markdown("---")
         self._render_month_navigation()
 
         year = st.session_state["cal_year"]
@@ -377,10 +428,10 @@ class TrainingCalendar:
                 st.session_state[k] = v
 
     def _render_athlete_selector(self, role: str, current_user: Optional[str]) -> Optional[str]:
-        """Zeigt je nach Rolle entweder eine Athleten-Dropdown-Auswahl
-        (Trainer) oder nur den Namen des angemeldeten Athleten an und gibt
-        den ausgewählten Athletennamen zurück (oder None, falls keine
-        gültige Auswahl möglich ist)."""
+        """Zeigt für Trainer eine Athleten-Dropdown-Auswahl an; für Athleten
+        gibt es keine Auswahl anzuzeigen. Gibt den ausgewählten bzw.
+        angemeldeten Athletennamen zurück (oder None, falls keine gültige
+        Auswahl möglich ist)."""
         athletes = self.data.get_athletes()
 
         if role == "athlete":
@@ -390,7 +441,6 @@ class TrainingCalendar:
             if current_user not in athletes:
                 st.warning(f"Keine Daten für **{current_user}** gefunden.")
                 return None
-            st.success(f"👤 Angemeldet als: **{current_user}**")
             return current_user
 
         # Trainer
@@ -410,7 +460,7 @@ class TrainingCalendar:
         col_prev, col_mid, col_next = st.columns([1, 4, 1])
 
         with col_prev:
-            if st.button("◀", use_container_width=True, help="Vormonat"):
+            if st.button("◀", width="stretch", help="Vormonat"):
                 m = st.session_state["cal_month"]
                 y = st.session_state["cal_year"]
                 if m == 1:
@@ -445,7 +495,7 @@ class TrainingCalendar:
                 st.session_state["cal_year"] = int(new_year)
 
         with col_next:
-            if st.button("▶", use_container_width=True, help="Nächster Monat"):
+            if st.button("▶", width="stretch", help="Nächster Monat"):
                 m = st.session_state["cal_month"]
                 y = st.session_state["cal_year"]
                 if m == 12:
@@ -548,7 +598,7 @@ class TrainingCalendar:
                 # Punkte
                 dots = ""
                 for _, row in aktiv_df.iterrows():
-                    akt = row.get("Aktivität", "Sonstiges")
+                    akt = row.get("Aktivitaet", "Sonstiges")
                     color = AKTIVITAET_FARBEN.get(akt, "#6B7280")
                     dots += f'<span class="cal-dot" style="background:{color}"></span>'
 
@@ -563,7 +613,7 @@ class TrainingCalendar:
 
                 # Schmerzen
                 hat_schmerzen = (
-                    aktiv_df["Schmerzen_Beschwerden"].apply(lambda x: _schmerzen_kategorie(x) != "Keine").any()
+                    aktiv_df["Schmerzen"].apply(lambda x: _schmerzen_kategorie(x) != "Keine").any()
                     if not aktiv_df.empty
                     else False
                 )
@@ -594,6 +644,9 @@ class TrainingCalendar:
         # Anzahl Wochen bestimmt die Höhe
         num_weeks = len(calendar.monthcalendar(year, month))
         height = 60 + num_weeks * 115
+        # components.html() rendert das Gitter in einem isolierten iframe -
+        # Klicks darin können nicht direkt an Streamlit zurückgemeldet werden,
+        # deshalb übernimmt die Selectbox darunter die eigentliche Tagesauswahl
         components.html(html, height=height, scrolling=False)
 
         # Klick-Auswahl per Selectbox (kompakt, kein Button-Chaos)
@@ -651,12 +704,12 @@ class TrainingCalendar:
             return
 
         for _, row in aktiv_df.iterrows():
-            akt = row.get("Aktivität", "Sonstiges")
+            akt = row.get("Aktivitaet", "Sonstiges")
             color = AKTIVITAET_FARBEN.get(akt, "#6B7280")
             fokus = row.get("Fokus", "")
             gefuehl = row.get("Gefühl", "")
             g_emoji = GEFUEHL_EMOJI.get(gefuehl, "❓")
-            schmerzen = row.get("Schmerzen_Beschwerden", "Keine")
+            schmerzen = row.get("Schmerzen", "Keine")
             s_kat = _schmerzen_kategorie(schmerzen)
             s_color = SCHMERZEN_FARBE.get(s_kat, "#6B7280")
             kommentar = row.get("Kommentar", "")
@@ -755,26 +808,26 @@ class TrainingCalendar:
     def _aktivitaet_bar_chart(df: pd.DataFrame, value_col: str, y_title: str):
         """Balkendiagramm, dessen Balkenfarben zu AKTIVITAET_FARBEN passen
         (also identisch zu den Farben im Kalender/der Legende)."""
-        vorhandene = [a for a in AKTIVITAET_FARBEN if a in df["Aktivität"].unique()]
+        vorhandene = [a for a in AKTIVITAET_FARBEN if a in df["Aktivitaet"].unique()]
         chart = (
             alt.Chart(df)
             .mark_bar()
             .encode(
-                x=alt.X("Aktivität:N", sort=vorhandene, title=None),
+                x=alt.X("Aktivitaet:N", sort=vorhandene, title=None),
                 y=alt.Y(f"{value_col}:Q", title=y_title),
                 color=alt.Color(
-                    "Aktivität:N",
+                    "Aktivitaet:N",
                     scale=alt.Scale(
                         domain=vorhandene,
                         range=[AKTIVITAET_FARBEN[a] for a in vorhandene],
                     ),
                     legend=None,
                 ),
-                tooltip=["Aktivität", alt.Tooltip(f"{value_col}:Q", title=y_title)],
+                tooltip=["Aktivitaet", alt.Tooltip(f"{value_col}:Q", title=y_title)],
             )
             .properties(height=280)
         )
-        st.altair_chart(chart, use_container_width=True)
+        st.altair_chart(chart, width="stretch")
 
     def _render_monthly_stats(self, df_month: pd.DataFrame, athlet: str):
         """Rendert die Monatsübersicht mit Kennzahlen (Einheiten, Dauer,
@@ -798,7 +851,7 @@ class TrainingCalendar:
             else 0
         )
         ruhetage = len(df_month[df_month["_ist_ruhetag"]]["Datum"].dt.date.unique())
-        schmerzen_count = aktiv["Schmerzen_Beschwerden"].apply(lambda x: _schmerzen_kategorie(x) != "Keine").sum()
+        schmerzen_count = aktiv["Schmerzen"].apply(lambda x: _schmerzen_kategorie(x) != "Keine").sum()
 
         # KPI-Zeile 1
         c1, c2, c3, c4 = st.columns(4)
@@ -820,9 +873,9 @@ class TrainingCalendar:
         col_chart1, col_chart2 = st.columns(2)
 
         with col_chart1:
-            st.markdown("**Dauer nach Aktivität (Minuten)**")
+            st.markdown("**Dauer nach Aktivitaet (Minuten)**")
             dist_dauer = (
-                aktiv.groupby("Aktivität")["Dauer_Minuten"]
+                aktiv.groupby("Aktivitaet")["Dauer_Minuten"]
                 .sum()
                 .reset_index()
                 .sort_values("Dauer_Minuten", ascending=False)
@@ -830,9 +883,9 @@ class TrainingCalendar:
             self._aktivitaet_bar_chart(dist_dauer, "Dauer_Minuten", "Minuten")
 
         with col_chart2:
-            st.markdown("**Distanz nach Aktivität (km)**")
+            st.markdown("**Distanz nach Aktivitaet (km)**")
             dist_km = (
-                aktiv.groupby("Aktivität")["Distanz_km"].sum().reset_index().sort_values("Distanz_km", ascending=False)
+                aktiv.groupby("Aktivitaet")["Distanz_km"].sum().reset_index().sort_values("Distanz_km", ascending=False)
             )
             self._aktivitaet_bar_chart(dist_km, "Distanz_km", "km")
 
@@ -850,12 +903,12 @@ class TrainingCalendar:
             )
             .properties(height=280)
         )
-        st.altair_chart(gefuehl_chart, use_container_width=True)
+        st.altair_chart(gefuehl_chart, width="stretch")
 
         # Schmerzen-Übersicht
         with st.expander("Schmerzen & Beschwerden im Monat"):
-            schmerz_df = aktiv[aktiv["Schmerzen_Beschwerden"].apply(lambda x: _schmerzen_kategorie(x) != "Keine")][
-                ["Datum", "Aktivität", "Schmerzen_Beschwerden", "Gefühl", "Kommentar"]
+            schmerz_df = aktiv[aktiv["Schmerzen"].apply(lambda x: _schmerzen_kategorie(x) != "Keine")][
+                ["Datum", "Aktivitaet", "Schmerzen", "Gefühl", "Kommentar"]
             ]
 
             if schmerz_df.empty:
@@ -863,7 +916,7 @@ class TrainingCalendar:
             else:
                 schmerz_df = schmerz_df.copy()
                 schmerz_df["Datum"] = schmerz_df["Datum"].dt.strftime("%d.%m.%Y")
-                st.dataframe(schmerz_df, use_container_width=True, hide_index=True)
+                st.dataframe(schmerz_df, width="stretch", hide_index=True)
 
 
 def render_calendar(

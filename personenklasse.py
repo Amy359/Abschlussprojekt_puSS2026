@@ -68,6 +68,9 @@ class Person:
         """Berechnet das aktuelle Alter der Person in Jahren anhand des
         Geburtsdatums und des heutigen Datums."""
         heute = date.today()
+        # Differenz der Jahreszahlen, minus 1 falls der Geburtstag dieses Jahr
+        # noch nicht war: (Monat, Tag)-Tupel lassen sich wie Datumswerte
+        # vergleichen, und True/False verhält sich beim Subtrahieren wie 1/0
         return (
             heute.year
             - self.geburtsdatum.year
@@ -79,18 +82,9 @@ class Person:
         Vor- und Nachnamen, getrennt durch einen Punkt (z. B. 'anna.mustermann')."""
         return f"{self.vorname.lower()}.{self.nachname.lower()}"
 
-    def get_trainer(self) -> str:
-        """Gibt den zugeordneten Trainer zurück."""
-        return self.trainer
-
     def get_verein(self) -> str:
         """Gibt den Verein der Person zurück."""
         return self.verein
-
-    @property  # Methode als Attribut
-    def id(self):
-        """Eindeutige ID der Person; entspricht dem Login-Namen."""
-        return self.get_loginname()
 
     def spezialisierung_hinzufuegen(self, disziplin: str):
         """Fügt der Person eine weitere Spezialisierung/Disziplin hinzu."""
@@ -131,6 +125,8 @@ class Person:
     @staticmethod  # benötigt kein Objekt/ Klasse als Eingabeparameter
     def load_data_from_csv(dateiname: str):
         """Liest eine CSV-Datei ein und erstellt automatisch die Personen-Objekte."""
+        # Registry vor dem Neu-Einlesen leeren, sonst würden bei einem erneuten
+        # Aufruf (z. B. nach einer Neuregistrierung) alle Personen doppelt erscheinen
         Person._alle_personen = []
         dateipfad = f"data/{dateiname}"  # csv dateien sind immer im data ordner abgelegt
         try:
@@ -156,39 +152,3 @@ class Person:
             print(f"Erfolgreich: Daten aus '{dateipfad}' wurden geladen.")
         except FileNotFoundError:
             print(f"Fehler: Die Datei '{dateipfad}' wurde nicht gefunden.")
-
-    # --- STECKBRIEF ---
-    def steckbrief_anzeigen(self):
-        """Gibt einen formatierten Steckbrief der Person (Rolle, Alter,
-        Nationalität, Fokus/Spezialisierung) auf der Konsole aus."""
-        trenner = "-" * 30
-        print(f"\n{trenner}\nPROFIL: {self.get_vollname().upper()}\n{trenner}")
-        print(f"Rolle:          {self.get_role()}")
-        print(f"Alter:          {self.get_alter()} Jahre ({self.geburtsdatum.strftime('%d.%m.%Y')})")
-        print(f"Nationalität:   {self.nationalitaet}")
-        print(f"Fokus:          {', '.join(self.spezialisierung) if self.spezialisierung else 'Keine Angabe'}")
-        print(trenner)
-
-
-# --- Anwendungsbeispiel ---
-if __name__ == "__main__":
-    Person.load_data_from_csv("triathlon_personen.csv")
-
-    alle_athleten = Person.get_athleten()
-    alle_trainer = Person.get_trainer()
-
-    # Test-Ausgabe: Wie viele wurden geladen?
-    print(f"\nGeladene Athleten: {len(alle_athleten)}")
-    print(f"Geladene Trainer:  {len(alle_trainer)}")
-
-    # Kurzsteckbriefe aller Athleten anzeigen
-    print("\n--- ZEIGE ALLE ATHLETEN ---")
-    for athlet in alle_athleten:
-        print(
-            f"- {athlet.get_vollname()} ({athlet.get_alter()} Jahre, {athlet.nationalitaet if hasattr(athlet, 'nationalitaet') else 'K.A.'})"
-        )
-
-    # Steckbrief von Trainer Dan Lorang anzeigen
-    print("\n--- TRAINER PROFILE ---")
-    for trainer in alle_trainer:
-        trainer.steckbrief_anzeigen()

@@ -2,21 +2,11 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-
-MONATE_DE = [
-    "Januar",
-    "Februar",
-    "März",
-    "April",
-    "Mai",
-    "Juni",
-    "Juli",
-    "August",
-    "September",
-    "Oktober",
-    "November",
-    "Dezember",
-]
+# Trainingsdaten werden über TrainingData eingelesen (siehe training_calendar.py),
+# damit es für 'triathlon_training.csv' nur eine Stelle im Code gibt, die
+# Spalten umbenennt, doppelte Kategoriespalten zusammenführt und Typen
+# umwandelt - Kalender und Auswertung sehen so garantiert dieselben Daten.
+from training_calendar import TrainingData, spalten_zusammenfuehren, MONATE_DE, AKTIVITAET_FARBEN
 
 
 # --- HILFSFUNKTIONEN ---
@@ -48,38 +38,118 @@ def get_color(beschwerde):
     return "background-color: #e5e7eb"  # Default Grau
 
 
-@st.cache_data  # wenn nichts neues eingelesen wird, arbeitet streamlit immer mit den letzten daten
+@st.cache_data
 def lade_daten():
-    """Diese Funktion lädt und bereinigt Daten aus einer csv Datei."""
+    """Lädt und bereinigt Trainings- und Regenerationsdaten.
+
+    Die Trainingsdaten kommen über TrainingData (siehe training_calendar.py),
+    das Spaltennamen und doppelte Kategoriespalten bereits normalisiert -
+    dieselbe Normalisierung, die auch der Kalender verwendet. Nur die
+    Regenerationsdaten werden hier eingelesen, da es dafür (noch) keine
+    eigene Datenklasse gibt."""
+
+    df_train = TrainingData().load()
+
     try:
-        df_train = pd.read_csv("data/triathlon_training.csv", sep=";", encoding="utf-8")
         df_regen = pd.read_csv("data/triathlon_regeneration.csv", sep=";", encoding="utf-8")
-    except (UnicodeDecodeError, FileNotFoundError):
-        try:
-            df_train = pd.read_csv("data/triathlon_training.csv", sep=";", encoding="cp1252")
-            df_regen = pd.read_csv("data/triathlon_regeneration.csv", sep=";", encoding="cp1252")
-        except FileNotFoundError:
-            st.error("🚨 Fehler: Die CSV-Dateien wurden nicht im Ordner 'data' gefunden!")
-            st.stop()
+    except UnicodeDecodeError:
+        df_regen = pd.read_csv("data/triathlon_regeneration.csv", sep=";", encoding="cp1252")
+    except FileNotFoundError:
+        st.error("🚨 Fehler: Die Regenerations-CSV wurde nicht gefunden.")
+        st.stop()
 
-    # Spaltennamen bereinigen & umbenennen
-    df_train.columns = df_train.columns.str.strip()
     df_regen.columns = df_regen.columns.str.strip()
-    df_train = df_train.rename(columns={"Aktivität": "Aktivitaet", "Schmerzen_Beschwerden": "Schmerzen"})
-    df_regen = df_regen.rename(columns={"Ernaehrung_Kalorien_kcal": "Kalorien"})
 
-    # Datumsformatierung & Berechnungen
+    rename_regen = {
+        "Ernaehrung_Kalorien_kcal": "Kalorien",
+    }
+    rename_regen = {k: v for k, v in rename_regen.items() if k in df_regen.columns}
+    df_regen = df_regen.rename(columns=rename_regen)
+    df_regen = df_regen.loc[:, ~df_regen.columns.duplicated()]
+
+    # --------------------------------------------------
+    # Doppelte Kategoriespalten der Regenerationsdaten zusammenführen (z. B.
+    # wenn ein Eingabeformular versehentlich in eine neue statt in die
+    # bestehende Spalte schreibt) - für Trainingsdaten übernimmt das bereits
+    # TrainingData.load() weiter oben
+    # --------------------------------------------------
+
+    if "Schlafqualitaet" in df_regen.columns:
+        schlafqualitaet_text = {
+            5: "Sehr gut",
+            4: "Gut",
+            3: "Mittelmäßig",
+            2: "Schlecht",
+            1: "Sehr schlecht",
+        }
+        schlafqualitaet_zahl = pd.to_numeric(df_regen["Schlafqualitaet"], errors="coerce").round()
+        df_regen["Schlafqualitaet"] = schlafqualitaet_zahl.map(schlafqualitaet_text)
+    df_regen = spalten_zusammenfuehren(df_regen, "Schlaf_Dauer", ["Schlafdauer"])
+    df_regen = spalten_zusammenfuehren(df_regen, "Schlaf_Gefuehl", ["Schlafqualitaet"])
+    df_regen = spalten_zusammenfuehren(df_regen, "Regenerations_Massnahme", ["Regenerationsmassnahmen"])
+
+    # --------------------------------------------------
+    # Fehlende Spalten ergänzen
+    # --------------------------------------------------
+
+    # Spalten ergänzen, die für die Auswertung gebraucht werden, aber nicht
+    # zum Kern-Schema von TrainingData gehören (z. B. weil sie erst mit den
+    # neueren Eingabeformularen dazugekommen sind)
+    train_spalten = {
+        "Datum": pd.NaT,
+        "Athlet": "",
+        "Aktivitaet": "",
+        "Dauer_Minuten": 0,
+        "Distanz_km": 0.0,
+        "Intensitaet": "",
+        "Ø_Herzfrequenz": 0,
+        "Max_Herzfrequenz": 0,
+        "Gefühl": "",
+        "Energielevel": 0,
+        "Trainingszufriedenheit": 0,
+        "Kommentar": "",
+        "Schmerzen": "",
+    }
+
+    for spalte, standard in train_spalten.items():
+        if spalte not in df_train.columns:
+            df_train[spalte] = standard
+
+    # --------------------------------------------------
+    # Monats-/Jahres-Hilfsspalten für die Monatsauswahl in der Auswertung
+    # (Dauer_Minuten/Distanz_km/Ø_Herzfrequenz/Max_Herzfrequenz sind für
+    # df_train bereits durch TrainingData numerisch, nur df_regen braucht das
+    # Datum hier noch neu)
+    # --------------------------------------------------
+
     for df in [df_train, df_regen]:
-        df["Datum"] = pd.to_datetime(df["Datum"], format="%Y-%m-%d", errors="coerce")
+        df["Datum"] = pd.to_datetime(
+            df["Datum"],
+            errors="coerce",
+        )
+
         df["Jahr"] = df["Datum"].dt.year.fillna(0).astype(int)
         df["Monat"] = df["Datum"].dt.month.fillna(0).astype(int)
-        # Sortierschlüssel (z.B. 202601 für Januar 2026) + lesbares Label (z.B. "Januar 2026")
+
+        # Zahl wie 202601 für Januar 2026: lässt sich rein numerisch sortieren,
+        # ohne dass Januar 2027 vor Dezember 2026 einsortiert wird (was bei
+        # alphabetischer Sortierung von 'Monat_Label' passieren würde)
         df["Monat_Sortierschluessel"] = df["Jahr"] * 100 + df["Monat"]
+
         df["Monat_Label"] = [
             f"{MONATE_DE[m - 1]} {j}" if 1 <= m <= 12 else "Unbekannt" for m, j in zip(df["Monat"], df["Jahr"])
         ]
 
-    df_regen["Schlaf_Stunden"] = df_regen["Schlaf_Dauer"].apply(extrahiere_schlaf_stunden)
+        df["Wochentag"] = df["Datum"].dt.day_name(locale="de_DE")
+
+    # --------------------------------------------------
+    # Schlafstunden berechnen
+    # --------------------------------------------------
+
+    if "Schlaf_Dauer" in df_regen.columns:
+        df_regen["Schlaf_Stunden"] = df_regen["Schlaf_Dauer"].apply(extrahiere_schlaf_stunden)
+    else:
+        df_regen["Schlaf_Stunden"] = 0
 
     return df_train, df_regen
 
@@ -112,7 +182,9 @@ def zeige_auswertung(athlet_name, df_train, df_regen):
         st.info("Keine Daten für diesen Athleten vorhanden.")
         return
 
-    # Standardmäßig den aktuellen Monat vorauswählen, falls vorhanden
+    # Standardmäßig den aktuellen Monat vorauswählen, falls Daten dafür
+    # existieren - sonst zeigt die Selectbox sinnvollerweise den letzten
+    # Monat, für den tatsächlich Einträge vorhanden sind (s. else-Zweig unten)
     heute = pd.Timestamp.now()
     aktueller_schluessel = heute.year * 100 + heute.month
     monats_schluessel_liste = (
@@ -160,15 +232,6 @@ def zeige_auswertung(athlet_name, df_train, df_regen):
         wochen_reihenfolge = (
             woche_aktivitaet.drop_duplicates("Woche_Label").sort_values("Woche_Nr")["Woche_Label"].tolist()
         )
-
-        AKTIVITAET_FARBEN = {
-            "Schwimmen": "#3B82F6",
-            "Radfahren": "#FF33B1",
-            "Laufen": "#0B7A55",
-            "Kraft": "#8B5CF6",
-            "Ruhetag": "#9CA3AF",
-            "Sonstiges": "#FFEB38",
-        }
 
         if woche_aktivitaet.empty:
             st.info("Keine Trainingsdaten für diesen Monat vorhanden.")

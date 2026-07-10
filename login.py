@@ -96,17 +96,79 @@ def login():
                     st.rerun()
                 else:
                     st.error("Benutzername oder Passwort falsch!")
-            
+
             if st.button("Registrieren"):
                 st.session_state.page = "register"
                 st.rerun()
 
 
-def logout():
+def logout(person=None):
     """Zeigt in der Sidebar einen Logout-Button an und setzt bei Klick
-    den Login-Status sowie die gespeicherte Person zurück."""
+    den Login-Status sowie die gespeicherte Person zurück.
 
-    if st.sidebar.button("Logout"):
+    Trainer erhalten zusätzlich einen 'Profil bearbeiten'-Button direkt über
+    dem Logout-Button, der in trainer_dashboard.py das eigene
+    Bearbeitungsformular öffnet."""
+
+    ist_trainer = person is not None and person.get_role() == "Trainer"
+    # Genug Platz am unteren Sidebar-Rand freihalten, damit der fix positionierte
+    # Logout- (und ggf. Profil-bearbeiten-)Button keinen Inhalt überdeckt
+    sidebar_padding_bottom = "134px" if ist_trainer else "90px"
+
+    st.sidebar.markdown(
+        f"""
+        <style>
+        section[data-testid="stSidebar"] .st-key-logout-button {{
+            position: fixed;
+            bottom: 24px;
+            width: 16rem;
+        }}
+        section[data-testid="stSidebar"] .st-key-profil-bearbeiten-button {{
+            position: fixed;
+            bottom: 68px;
+            width: 16rem;
+        }}
+        section[data-testid="stSidebar"] .st-key-logout-button button,
+        section[data-testid="stSidebar"] .st-key-profil-bearbeiten-button button {{
+            width: 100%;
+        }}
+        section[data-testid="stSidebar"] > div {{
+            padding-top: 0;
+            padding-bottom: {sidebar_padding_bottom};
+        }}
+        section[data-testid="stSidebarHeader"] {{
+            min-height: 0;
+            height: auto;
+            padding: 0;
+        }}
+        section[data-testid="stSidebarUserContent"] {{
+            padding-top: 0 !important;
+        }}
+        section[data-testid="stSidebarUserContent"] > div:first-child {{
+            margin-top: 0 !important;
+        }}
+        section[data-testid="stSidebarUserContent"] [data-testid="stElementContainer"]:first-child {{
+            margin-top: -1rem;
+        }}
+        /* Begrüßung ('Hallo,' + Name) als zwei eng aufeinanderfolgende Titelzeilen
+        statt einem einzeiligen Text, damit lange Namen nicht mitten im Wort umbrechen */
+        section[data-testid="stSidebarUserContent"] h1 {{
+            margin: 0 !important;
+            line-height: 1.15;
+        }}
+        section[data-testid="stSidebarUserContent"] [data-testid="stElementContainer"]:has(h1) + [data-testid="stElementContainer"]:has(h1) {{
+            margin-top: -0.6rem !important;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    if ist_trainer and st.sidebar.button("Profil bearbeiten", key="profil-bearbeiten-button"):
+        st.session_state.zeige_profil_bearbeitung = True
+        st.rerun()
+
+    if st.sidebar.button("Logout", key="logout-button"):
         st.session_state.logged_in = False
         st.session_state.person = None
 

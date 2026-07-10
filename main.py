@@ -46,9 +46,9 @@ if not st.session_state.logged_in:
 # ----------------------------
 else:
 
-    logout()
-
     person = st.session_state.person
+
+    logout(person)
 
     if person.get_role() == "Trainer":
         trainer_dashboard.trainer_dashboard(person)
