@@ -1,8 +1,11 @@
+import io
 import os
 import streamlit as st
 import pandas as pd
 from datetime import datetime, date
 from html import escape
+from pathlib import Path
+from PIL import Image, ImageDraw, ImageFont
 from streamlit_calendar import calendar
 import plotly.express as px
 
@@ -10,6 +13,43 @@ from personenklasse import Person
 from login import hash_password
 from auswertung import lade_daten, zeige_auswertung
 from training_calendar import render_trainer_feedback_inbox, AKTIVITAET_FARBEN, MONATE_DE
+
+PROFILBILDER_ORDNER = Path("images")
+AVATAR_FARBEN = ["#3B82F6", "#FF33B1", "#0B7A55", "#8B5CF6", "#F59E0B", "#EF4444", "#14B8A6"]
+
+
+def _initialen_avatar(person, groesse=64):
+    """Erzeugt ein Avatar-Bild (farbiger Kreis-Hintergrund mit den Initialen der
+    Person) als PNG-Bytes - dient als Platzhalter, solange kein Profilbild
+    hochgeladen wurde. Die Farbe wird deterministisch aus dem Login-Namen
+    abgeleitet, damit dieselbe Person bei jedem Aufruf denselben Farbton bekommt."""
+    initialen = f"{person.vorname[0]}{person.nachname[0]}".upper()
+    farbe = AVATAR_FARBEN[sum(ord(c) for c in person.get_loginname()) % len(AVATAR_FARBEN)]
+
+    bild = Image.new("RGB", (groesse, groesse), farbe)
+    draw = ImageDraw.Draw(bild)
+    font = ImageFont.load_default(size=int(groesse * 0.42))
+    bbox = draw.textbbox((0, 0), initialen, font=font)
+    text_breite, text_hoehe = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    draw.text(
+        ((groesse - text_breite) / 2 - bbox[0], (groesse - text_hoehe) / 2 - bbox[1]),
+        initialen,
+        fill="white",
+        font=font,
+    )
+
+    puffer = io.BytesIO()
+    bild.save(puffer, format="PNG")
+    return puffer.getvalue()
+
+
+def profilbild_quelle(person, groesse=64):
+    """Gibt das hochgeladene Profilbild der Person zurück, falls vorhanden,
+    sonst ein generiertes Initialen-Avatar."""
+    pfad = PROFILBILDER_ORDNER / f"{person.get_loginname()}.png"
+    if pfad.exists():
+        return str(pfad)
+    return _initialen_avatar(person, groesse)
 
 
 # HILFSFUNKTIONEN
@@ -177,6 +217,8 @@ def person_bearbeiten_formular(person):
     alter_vorname, alter_nachname = person.vorname, person.nachname
     ist_athlet = person.get_role() == "Athlet"
 
+    st.image(profilbild_quelle(person), width=96)
+
     with st.form(f"bearbeiten_form_{person.get_loginname()}"):
         col1, col2 = st.columns(2)
 
@@ -195,6 +237,8 @@ def person_bearbeiten_formular(person):
             spezialisierung = col1.text_input("Spezialisierung", value=", ".join(person.spezialisierung))
 
         verein = st.text_input("Verein", value=person.verein)
+
+        profilbild_upload = st.file_uploader("Profilbild (optional)", type=["png", "jpg", "jpeg"])
 
         st.caption(
             "Hinweis: Das Geburtsdatum ist gleichzeitig das Passwort. Bei einer "
@@ -263,6 +307,16 @@ def person_bearbeiten_formular(person):
 
     df_users.to_csv(users_datei, sep=";", index=False, encoding="utf-8")
 
+    # Profilbild-Datei ist über den Login-Namen an die Person gebunden - bei einer
+    # Umbenennung zieht das bestehende Bild mit um, ein neuer Upload überschreibt es
+    altes_profilbild = PROFILBILDER_ORDNER / f"{alter_vorname.lower()}.{alter_nachname.lower()}.png"
+    neues_profilbild = PROFILBILDER_ORDNER / f"{vorname.lower()}.{nachname.lower()}.png"
+    if name_geaendert and altes_profilbild.exists() and altes_profilbild != neues_profilbild:
+        altes_profilbild.rename(neues_profilbild)
+    if profilbild_upload is not None:
+        PROFILBILDER_ORDNER.mkdir(parents=True, exist_ok=True)
+        Image.open(profilbild_upload).convert("RGB").save(neues_profilbild, format="PNG")
+
     # Personen-Registry neu aufbauen, damit die Änderung sofort überall sichtbar ist
     Person.load_data_from_csv("triathlon_personen.csv")
 
@@ -279,6 +333,15 @@ def person_bearbeiten_formular(person):
     st.rerun()
 
 
+def _athlet_zeile_mit_bild(athlet, key):
+    """Rendert eine Zeile mit Profilbild (bzw. Initialen-Avatar) und Namens-Button
+    für einen Athleten. Gibt True zurück, wenn der Button in diesem Lauf
+    angeklickt wurde."""
+    col_bild, col_name = st.columns([1, 6])
+    col_bild.image(profilbild_quelle(athlet), width=48)
+    return col_name.button(athlet.get_vollname(), key=key)
+
+
 def athlet_bearbeiten_liste():
     """Zeigt eine Liste aller Athleten; ein Klick auf einen Athleten öffnet
     darunter dessen vorausgefülltes Bearbeitungsformular (person_bearbeiten_formular)."""
@@ -293,7 +356,7 @@ def athlet_bearbeiten_liste():
     for i, athlet in enumerate(athleten):
         athlet_name = athlet.get_vollname()
 
-        if st.button(athlet_name, key=f"bearbeiten_athlet_{i}"):
+        if _athlet_zeile_mit_bild(athlet, key=f"bearbeiten_athlet_{i}"):
             if st.session_state.get("athlet_bearbeiten_ausgewaehlt") == athlet_name:
                 st.session_state.athlet_bearbeiten_ausgewaehlt = None
             else:
@@ -618,7 +681,7 @@ def trainer_dashboard(person):
                 # Klick auf den bereits ausgewählten Athleten klappt die
                 # Auswertung wieder zu (Toggle), Klick auf einen anderen
                 # Athleten wechselt die Auswahl
-                if st.button(athlet_name, key=f"trainer_athlet_{i}"):
+                if _athlet_zeile_mit_bild(athlet, key=f"trainer_athlet_{i}"):
                     if st.session_state.get("ausgewaehlter_athlet") == athlet_name:
                         st.session_state.ausgewaehlter_athlet = None
                     else:
