@@ -337,7 +337,7 @@ def _athlet_zeile_mit_bild(athlet, key):
     """Rendert eine Zeile mit Profilbild (bzw. Initialen-Avatar) und Namens-Button
     für einen Athleten. Gibt True zurück, wenn der Button in diesem Lauf
     angeklickt wurde."""
-    col_bild, col_name = st.columns([1, 6])
+    col_bild, col_name = st.columns([1, 15], gap="small", vertical_alignment="center")
     col_bild.image(profilbild_quelle(athlet), width=48)
     return col_name.button(athlet.get_vollname(), key=key)
 
